@@ -1,9 +1,14 @@
 import * as React from 'react';
-import Link from 'next/link'
 import { useRouter } from "next/router";
+
+import { useMediaQuery } from '../../Hookes';
+import { Page } from '../types';
+import { MobileNav } from '../MobileNav';
+import { DesktopNav } from '../DesktopNav';
+
 import * as S from './Header.styles'
 
-const pages = [{
+const pages: Page[] = [{
   label: 'Home',
   href: '/'
 }, {
@@ -13,22 +18,18 @@ const pages = [{
 
 export const Navbar = () => {
   const router = useRouter()
+  const isMobile = useMediaQuery(800)
 
   return (
     <header>
       <S.Container>
         <S.Wrapper>
           <S.Logo>capital veículos</S.Logo>
-
-          <nav>
-            <S.NavLinks>
-              {pages.map(({ label, href }) => (
-                <Link key={label} href={href}>
-                  <S.NavLink active={router.asPath === href}>{label}</S.NavLink>
-                </Link>
-              ))}
-            </S.NavLinks>
-          </nav>
+          {
+            isMobile
+              ? <MobileNav path={router.asPath} pages={pages} />
+              : <DesktopNav path={router.asPath} pages={pages} />
+          }
         </S.Wrapper>
       </S.Container>
     </header>

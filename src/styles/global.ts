@@ -8,10 +8,10 @@ export const GlobalStyles = createGlobalStyle`
     box-sizing: border-box;
   }
   body {
-    background: ${theme.colors.black};
-    font-family: ${theme.font.family};
+    background: ${theme.colors.secondary};
+    font-family: ${theme.font.secondary.family};
     overflow-x: hidden;
-    color: ${theme.colors.white};
+    color: ${theme.colors.fontPrimary};
   }
   button {
     cursor: pointer;
@@ -24,7 +24,7 @@ export const GlobalStyles = createGlobalStyle`
     list-style: none;
   }
   &::selection {
-    color: ${theme.colors.black};
-    background:  ${theme.colors.white};
+    color: ${theme.colors.primary};
+    background:  ${theme.colors.primary};
   }
 `

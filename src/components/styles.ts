@@ -5,6 +5,7 @@ export const NavLink = styled.a<{ active: boolean }>`
   font-family: ${({ theme }) => theme.font.primary.family};
   color: ${({ active, theme }) => active ? theme.colors.yellow : '#F4F7F5'} ;
   font-size: 14pt;
+  cursor: pointer;
 
   &:hover {
     color: ${({ theme }) => theme.colors.yellow};

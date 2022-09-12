@@ -32,7 +32,7 @@ export const MobileNav: React.FC<NavProps> = ({ path, pages }) => {
 
   return (
     <>
-      <Button onClick={toggleDrawer}><MenuIcon /></Button>
+      <Button onClick={toggleDrawer}><MenuIcon sx={{ color: 'white' }} /></Button>
       <Drawer
         anchor={'left'}
         open={state}

@@ -22,6 +22,7 @@ export const theme = {
     primary: '#474350',
     secondary: '#1C1C1C',
     yellow: '#FBB932',
-    fontPrimary: '#969696'
+    fontPrimary: '#969696',
+    white: '#f1f1f1'
   },
 }

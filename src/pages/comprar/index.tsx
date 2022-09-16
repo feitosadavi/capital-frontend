@@ -1,23 +1,33 @@
-
+import * as React from 'react'
 import type { GetServerSideProps, NextPage } from 'next'
 import Head from 'next/head'
+import qs from 'qs'
 
 import { Card, Filters, SearchBar } from '../../components'
 import { request } from '../../services/request'
 import { ComprarPageVehicle, Select } from '../../types'
 
 import * as S from './comprar.styles'
+import { AppContext } from '../../context/app.context'
 
 
 interface Props {
   vehicles: ComprarPageVehicle[]
-  selects: Select[]
 }
 
 const Home: NextPage<Props> = ({
   vehicles,
-  selects
 }) => {
+  const context = React.useContext(AppContext)
+  const [selects, setSelects] = React.useState<Select[]>([])
+
+  React.useEffect(() => {
+    const filters = qs.stringify(context.filters)
+    request<Select[]>(`http://localhost:3000/api/filter-options?filters=${filters}`)
+      .then(_selects => setSelects(_selects))
+      .catch(console.log)
+  }, [context.filters])
+
 
   return (
     <>
@@ -59,10 +69,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     }
   }
 
-  const selects = await request<Select[]>('http://localhost:3000/api/filter-options')
   const vehicles = await request<ComprarPageVehicle[]>('http://localhost:3000/api/vehicles')
 
-  const props: Props = { vehicles, selects }
+  const props: Props = { vehicles }
 
   return {
     props, // will be passed to the page component as props

@@ -4,6 +4,7 @@ import { Navbar } from '../components/Header/Header'
 import { ThemeProvider } from 'styled-components'
 
 import { GlobalStyles, theme } from '../styles'
+import { AppContextProvider } from '../context/app.context'
 
 export default function App ({ Component, pageProps }: AppProps) {
   return (
@@ -17,11 +18,13 @@ export default function App ({ Component, pageProps }: AppProps) {
         />
       </Head>
 
-      <ThemeProvider theme={theme}>
-        <GlobalStyles />
-        <Navbar />
-        <Component {...pageProps} />
-      </ThemeProvider>
+      <AppContextProvider>
+        <ThemeProvider theme={theme}>
+          <GlobalStyles />
+          <Navbar />
+          <Component {...pageProps} />
+        </ThemeProvider>
+      </AppContextProvider>
     </>
   )
 }

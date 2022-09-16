@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 
 export const GET_FILTER_OPTIONS = gql`
-query {
+query getVehicles ($modeloFilters: ModeloFiltersInput) {
   marcas {
 		data {
       attributes {
@@ -16,7 +16,7 @@ query {
       }
     }
   }
-  modelos {
+  modelos (filters: $modeloFilters) {
 		data {
       attributes {
         label

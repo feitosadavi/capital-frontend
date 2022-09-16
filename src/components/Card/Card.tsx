@@ -13,7 +13,6 @@ export const Card: React.FC<CardProps> = ({ vehicle }) => {
     style: 'currency',
     currency: 'BRL',
   });
-  console.log(vehicle);
 
   return (
     <S.Container>

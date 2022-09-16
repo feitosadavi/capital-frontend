@@ -13,4 +13,8 @@ export type Vehicle = {
   cor: string
   descricao: string
   photos: Photo[]
+  categoria: string
 }
+
+type FieldsToOmit = 'combustivel' | 'descricao' | 'categoria'
+export type ComprarPageVehicle = Omit<Vehicle, FieldsToOmit>

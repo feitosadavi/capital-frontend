@@ -2,15 +2,20 @@ import { gql, DocumentNode } from '@apollo/client'
 import client from '../services/api'
 
 export const useQuery = async (query: DocumentNode, setup?: boolean, variables?: Record<any, any>) => {
-  const { data } = await client.query({
-    query,
-    variables
-  })
-  if (setup) {
-    const gatheredFields = setupFields(data)
-    return gatheredFields
+  try {
+
+    const { data } = await client.query({
+      query,
+      variables
+    })
+    if (setup) {
+      const gatheredFields = setupFields(data)
+      return gatheredFields
+    }
+    return data
+  } catch (error) {
+
   }
-  return data
 }
 
 const setupFields = (obj: any) => {

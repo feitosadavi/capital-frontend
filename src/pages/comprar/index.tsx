@@ -24,17 +24,22 @@ const Home: NextPage<Props> = ({
 
   React.useEffect(() => {
     const filters = qs.stringify(context.filters)
+    const url = `http://localhost:3000/api/vehicles?${filters}`
 
-    request<Select[]>(`http://localhost:3000/api/filter-options?filters=${filters}`)
-      .then(_selects => setSelects(_selects))
-      .catch(console.log)
-
-    request<ComprarPageVehicle[]>(`http://localhost:3000/api/vehicles?filters=${filters}`)
+    request<ComprarPageVehicle[]>(url)
       .then(reqVehicles => {
         setVehicles(reqVehicles)
       })
       .catch(console.log)
   }, [context.filters])
+
+  React.useEffect(() => {
+    const filters = qs.stringify(context.filters)
+    request<Select[]>(`http://localhost:3000/api/filter-options?${filters}`)
+      .then(_selects => setSelects(_selects))
+      .catch(console.log)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [context.filters.marca])
 
   return (
     <>

@@ -28,11 +28,16 @@ const setupPhotos = (photos: any) => photos.map(({ attributes: { url, alternativ
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default async (req: NextApiRequest, res: NextApiResponse<Data>) => {
-  const filters = setupFilters(req)
+  try {
+    const filters = setupFilters(req)
 
-  const apiVehicles = await useQuery(GET_VEHICLES, false, { filters })
+    const apiVehicles = await useQuery(GET_VEHICLES, false, { filters })
 
-  const vehicles = setupFields(apiVehicles.veiculos.data)
+    const vehicles = setupFields(apiVehicles.veiculos.data)
 
-  res.status(200).json(vehicles)
+    res.status(200).json(vehicles)
+  } catch (error) {
+    console.log(('error'));
+
+  }
 }

@@ -2,24 +2,30 @@ import { NextApiRequest } from 'next'
 import qs from 'qs'
 
 const transformToStrapiFilter = (filters: any) => {
-  const strapiFilters = {} as any
+  try {
+    const strapiFilters = {} as any
 
-  for (const key of Object.keys(filters)) {
-    if (filters[key] !== '*') {
-      strapiFilters[key] = { label: { eq: filters[key] } }
+    for (const key of Object.keys(filters)) {
+      if (filters[key] !== '*') {
+        strapiFilters[key] = { label: { eq: filters[key] } }
+      }
     }
-  }
+    return strapiFilters
+  } catch (error) {
+    console.log('erro');
 
-  return strapiFilters
+  }
 }
 
 export const setupFilters = (req: NextApiRequest) => {
-  const queryStringFilters = req.query.filters as string
-  // console.log(queryStrigFil);
+  try {
+    const queryParams = req.query
+    if (queryParams) {
+      return transformToStrapiFilter(queryParams)
+    }
+    return {}
+  } catch (error) {
+    console.log('erro');
 
-  if (queryStringFilters) {
-    const parsedFilters = qs.parse(queryStringFilters)
-    return transformToStrapiFilter(parsedFilters)
   }
-  return {}
 }

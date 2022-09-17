@@ -28,7 +28,6 @@ const Home: NextPage<Props> = ({
       .catch(console.log)
   }, [context.filters])
 
-
   return (
     <>
       <Head>

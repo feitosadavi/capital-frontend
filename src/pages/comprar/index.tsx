@@ -56,7 +56,7 @@ const Home: NextPage<Props> = ({
         </S.Filters>
 
         <S.Content>
-          <SearchBar />
+          <SearchBar setVehicles={setVehicles} vehicles={vehicles} />
           <S.GridContainer>
             <S.Grid>
               {vehicles.map((vehicle) => (

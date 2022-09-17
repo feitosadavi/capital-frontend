@@ -48,8 +48,8 @@ query getVehicles ($modeloFilters: ModeloFiltersInput) {
 `
 
 export const GET_VEHICLES = gql`
-  query {
-  veiculos {
+  query ($filters: VeiculoFiltersInput) {
+  veiculos (filters: $filters) {
     data {
       attributes {
         km

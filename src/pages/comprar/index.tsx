@@ -12,19 +12,27 @@ import { AppContext } from '../../context/app.context'
 
 
 interface Props {
-  vehicles: ComprarPageVehicle[]
+  _vehicles: ComprarPageVehicle[]
 }
 
 const Home: NextPage<Props> = ({
-  vehicles,
+  _vehicles,
 }) => {
   const context = React.useContext(AppContext)
   const [selects, setSelects] = React.useState<Select[]>([])
+  const [vehicles, setVehicles] = React.useState<ComprarPageVehicle[]>(_vehicles)
 
   React.useEffect(() => {
     const filters = qs.stringify(context.filters)
+
     request<Select[]>(`http://localhost:3000/api/filter-options?filters=${filters}`)
       .then(_selects => setSelects(_selects))
+      .catch(console.log)
+
+    request<ComprarPageVehicle[]>(`http://localhost:3000/api/vehicles?filters=${filters}`)
+      .then(reqVehicles => {
+        setVehicles(reqVehicles)
+      })
       .catch(console.log)
   }, [context.filters])
 
@@ -46,8 +54,8 @@ const Home: NextPage<Props> = ({
           <SearchBar />
           <S.GridContainer>
             <S.Grid>
-              {new Array(10).fill(10).map((_, i) => (
-                <Card key={i} vehicle={vehicles[0]} />
+              {vehicles.map((vehicle) => (
+                <Card key={vehicle.cor} vehicle={vehicle} />
               ))}
             </S.Grid>
           </S.GridContainer>
@@ -68,9 +76,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     }
   }
 
-  const vehicles = await request<ComprarPageVehicle[]>('http://localhost:3000/api/vehicles')
+  const _vehicles = await request<ComprarPageVehicle[]>('http://localhost:3000/api/vehicles')
 
-  const props: Props = { vehicles }
+  const props: Props = { _vehicles }
 
   return {
     props, // will be passed to the page component as props

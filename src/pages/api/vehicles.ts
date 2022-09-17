@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { useQuery } from '../../Hookes/useQuery'
 import { GET_VEHICLES } from '../../services/queries'
 import { ComprarPageVehicle } from '../../types'
+import { setupFilters } from '../../utils'
 
 type Data = ComprarPageVehicle[]
 
@@ -26,8 +27,10 @@ const setupFields = (apiVehicles: any) => {
 const setupPhotos = (photos: any) => photos.map(({ attributes: { url, alternativeText } }: any) => ({ src: url, alt: alternativeText }))
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export default async (_req: NextApiRequest, res: NextApiResponse<Data>) => {
-  const apiVehicles = await useQuery(GET_VEHICLES, false)
+export default async (req: NextApiRequest, res: NextApiResponse<Data>) => {
+  const filters = setupFilters(req)
+
+  const apiVehicles = await useQuery(GET_VEHICLES, false, { filters })
 
   const vehicles = setupFields(apiVehicles.veiculos.data)
 

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import * as React from 'react'
 import Paper from '@mui/material/Paper';
 import InputBase from '@mui/material/InputBase';
@@ -8,6 +9,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import { Menu } from '../Menu';
 import { MeiliSearch } from 'meilisearch'
 import { ComprarPageVehicle } from '../../types';
+import { AppContext, Filters } from '../../context/app.context';
 
 interface Props {
   setVehicles: React.Dispatch<React.SetStateAction<ComprarPageVehicle[]>>
@@ -29,27 +31,45 @@ const setupFields = (apiVehicles: any) => {
   return vehiclesArray
 }
 
+const setupFilter = (filters: Filters) => {
+  let query = ''
+  const keys = Object.keys(filters)
+  for (const [index, key] of keys.entries()) {
+    const currentFilter = (filters as any)[key]
+    if (currentFilter !== '*') {
+      query += ` ${index !== 0 ? 'AND' : ''} ${key}.label='${currentFilter}'`
+    }
+  }
+  return query
+}
+
 export const SearchBar: React.FC<Props> = ({ setVehicles, vehicles }) => {
+  const context = React.useContext(AppContext)
   const [search, setSearch] = React.useState<string>('')
 
   const searchClient = new MeiliSearch({
     host: 'http://localhost:7700'
   })
 
+  const fetchVehicles = async () => {
+    const veiculo = searchClient.index('veiculo')
+
+    const filter = setupFilter(context.filters)
+
+    const res = await veiculo.search(search, { filter })
+
+    const _vehicles = setupFields(res.hits)
+    setVehicles(_vehicles)
+  }
+
   const isFirstMount = React.useRef<boolean>(true)
   React.useEffect(() => {
     if (isFirstMount.current) {
       isFirstMount.current = false
     } else {
-      const veiculo = searchClient.index('veiculo')
-      veiculo.search(search).then(res => {
-        const vehicles = setupFields(res.hits)
-        setVehicles(vehicles)
-
-      })
+      fetchVehicles()
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [search])
+  }, [search, context.filters])
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => setSearch(event.target.value)
 

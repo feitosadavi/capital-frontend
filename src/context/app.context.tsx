@@ -1,7 +1,6 @@
 import * as React from 'react'
-import { Select } from '../types'
 
-type Filters = {
+export type Filters = {
   anos: number
   marca: string
   modelo: string

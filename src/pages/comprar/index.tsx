@@ -22,16 +22,16 @@ const Home: NextPage<Props> = ({
   const [selects, setSelects] = React.useState<Select[]>([])
   const [vehicles, setVehicles] = React.useState<ComprarPageVehicle[]>(_vehicles)
 
-  React.useEffect(() => {
-    const filters = qs.stringify(context.filters)
-    const url = `http://localhost:3000/api/vehicles?${filters}`
+  // React.useEffect(() => {
+  //   const filters = qs.stringify(context.filters)
+  //   const url = `http://localhost:3000/api/vehicles?${filters}`
 
-    request<ComprarPageVehicle[]>(url)
-      .then(reqVehicles => {
-        setVehicles(reqVehicles)
-      })
-      .catch(console.log)
-  }, [context.filters])
+  //   request<ComprarPageVehicle[]>(url)
+  //     .then(reqVehicles => {
+  //       setVehicles(reqVehicles)
+  //     })
+  //     .catch(console.log)
+  // }, [context.filters])
 
   React.useEffect(() => {
     const filters = qs.stringify(context.filters)

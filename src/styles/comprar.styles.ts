@@ -19,11 +19,18 @@ export const Main = styled.main`
 export const Filters = styled.div`
   flex: 1;
   background-color: white;
+
+  @media screen and (max-width: 800px) {
+    display: none;
+  }
 `
 
 export const Content = styled.div`
   flex: 3;
-  padding-left: 1rem;
+
+  @media screen and (max-width: 800px) {
+    padding-left: 0;
+  }
 `
 
 export const GridContainer = styled.div`
@@ -32,7 +39,6 @@ export const GridContainer = styled.div`
   justify-content: center;
   align-items: center;
   row-gap: 2.5rem;
-
   margin-top: 1rem;
   width: 100%;
 `
@@ -43,4 +49,10 @@ export const Grid = styled.div`
   gap: 1rem;
   flex-wrap: wrap;
   width: 47rem;
+
+  @media screen and (max-width: 800px) {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
 `

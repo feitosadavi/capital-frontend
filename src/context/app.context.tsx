@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { PaginationInfo } from '../types'
+import { Select } from '../types'
 
 export type Filters = {
   anos: number
@@ -17,6 +17,8 @@ type ContextProps = {
   setPage: React.Dispatch<React.SetStateAction<number>>
   numberOfPages: number,
   setNumberOfPages: React.Dispatch<React.SetStateAction<number>>
+  isMobileFilterOpen: boolean
+  toogleMobileFilter: () => void
 }
 
 export const AppContext = React.createContext<ContextProps>({} as ContextProps)
@@ -26,6 +28,9 @@ export const AppContextProvider: React.FC<any> = ({ children }) => {
   const [page, setPage] = React.useState<number>(1)
   const [numberOfPages, setNumberOfPages] = React.useState<number>(1)
 
+  const [isMobileFilterOpen, setIsMobileFilterOpen] = React.useState<boolean>(false);
+  const toogleMobileFilter = () => setIsMobileFilterOpen(prevState => !prevState);
+
   return (
     <AppContext.Provider value={{
       filters,
@@ -33,7 +38,9 @@ export const AppContextProvider: React.FC<any> = ({ children }) => {
       page,
       setPage,
       numberOfPages,
-      setNumberOfPages
+      setNumberOfPages,
+      isMobileFilterOpen,
+      toogleMobileFilter
     }}>
       {children}
     </AppContext.Provider>

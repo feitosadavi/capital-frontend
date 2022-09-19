@@ -3,12 +3,13 @@ import type { GetStaticProps, NextPage } from 'next'
 import Head from 'next/head'
 import qs from 'qs'
 
-import { Card, Filters, Pagination, SearchBar } from '../../components'
+import { Card, Filters, MobileFilters, Pagination, SearchBar } from '../../components'
 import { request } from '../../services/request'
 import { ComprarPageVehicle, Select } from '../../types'
 
 import * as S from '../../styles/comprar.styles'
 import { AppContext } from '../../context/app.context'
+import { useMediaQuery } from '@mui/material'
 
 
 interface Props {
@@ -24,17 +25,6 @@ const Home: NextPage<Props> = ({
   const [selects, setSelects] = React.useState<Select[]>(_selects)
   const [vehicles, setVehicles] = React.useState<ComprarPageVehicle[]>(_vehicles)
 
-  // React.useEffect(() => {
-  //   const filters = qs.stringify(context.filters)
-  //   const url = `http://localhost:3000/api/vehicles?${filters}`
-
-  //   request<ComprarPageVehicle[]>(url)
-  //     .then(reqVehicles => {
-  //       setVehicles(reqVehicles)
-  //     })
-  //     .catch(console.log)
-  // }, [context.filters])
-
   const isFirstMount = React.useRef<boolean>(true)
   React.useEffect(() => {
     if (!isFirstMount.current) {
@@ -49,6 +39,13 @@ const Home: NextPage<Props> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [context.filters.marca])
 
+  const isMobile = useMediaQuery('(max-width:800px)')
+
+  const renderSelects = () =>
+    selects.map(select => (
+      <Filters key={select.label} select={select} />
+    ))
+
   return (
     <>
       <Head>
@@ -57,11 +54,12 @@ const Home: NextPage<Props> = ({
       </Head>
 
       <S.Main>
-        <S.Filters>
-          {selects.map(select => (
-            <Filters key={select.label} select={select} />
-          ))}
-        </S.Filters>
+        {
+          !isMobile
+            ? <S.Filters>{renderSelects()}</S.Filters>
+            : <MobileFilters>{renderSelects()}</MobileFilters>
+        }
+
 
         <S.Content>
           <SearchBar setVehicles={setVehicles} vehicles={vehicles} />

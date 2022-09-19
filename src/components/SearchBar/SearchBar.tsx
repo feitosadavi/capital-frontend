@@ -5,11 +5,13 @@ import InputBase from '@mui/material/InputBase';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import TuneIcon from '@mui/icons-material/Tune';
 import SearchIcon from '@mui/icons-material/Search';
 import { Menu } from '../Menu';
 import { MeiliSearch } from 'meilisearch'
 import { ComprarPageVehicle } from '../../types';
 import { AppContext, Filters } from '../../context/app.context';
+import { Button, useMediaQuery } from '@mui/material'
 
 interface Props {
   setVehicles: React.Dispatch<React.SetStateAction<ComprarPageVehicle[]>>
@@ -102,6 +104,7 @@ export const SearchBar: React.FC<Props> = ({ setVehicles, vehicles }) => {
 
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => setSearch(event.target.value)
+  const isMobile = useMediaQuery('(max-width:800px)')
 
   return (
     <>
@@ -128,7 +131,14 @@ export const SearchBar: React.FC<Props> = ({ setVehicles, vehicles }) => {
         <div style={{ padding: '.5rem' }}>{resultsCount} veículo{resultsCount !== 1 && 's'}</div>
       </Paper>
 
-      <Menu setOrderFilter={setOrderFilter} />
+      <div style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
+      }}>
+        <Menu setOrderFilter={setOrderFilter} />
+        <Button onClick={context.toogleMobileFilter}><TuneIcon sx={{ color: 'white' }} /></Button>
+      </div>
     </>
   );
 }

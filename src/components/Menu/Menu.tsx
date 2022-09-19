@@ -60,6 +60,10 @@ export const Menu: React.FC<Props> = ({ setOrderFilter }) => {
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
+        sx={{
+          marginTop: '.5rem',
+          fontSize: '10pt'
+        }}
       >
         Ordenar por: {label}
       </Button>
@@ -76,7 +80,14 @@ export const Menu: React.FC<Props> = ({ setOrderFilter }) => {
       >
         {
           sortOptions.map(sortOption => (
-            <MenuItem key={sortOption.label} onClick={() => handleClose(sortOption)}>{sortOption.label}</MenuItem>
+            <MenuItem
+              sx={{
+                fontSize: '12pt'
+              }}
+              key={sortOption.label}
+              onClick={() => handleClose(sortOption)}>
+              {sortOption.label}
+            </MenuItem>
           ))
         }
       </MUIMenu>

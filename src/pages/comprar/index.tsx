@@ -1,9 +1,9 @@
 import * as React from 'react'
-import type { GetServerSideProps, GetStaticProps, NextPage } from 'next'
+import type { GetStaticProps, NextPage } from 'next'
 import Head from 'next/head'
 import qs from 'qs'
 
-import { Card, Filters, SearchBar } from '../../components'
+import { Card, Filters, Pagination, SearchBar } from '../../components'
 import { request } from '../../services/request'
 import { ComprarPageVehicle, Select } from '../../types'
 
@@ -71,6 +71,8 @@ const Home: NextPage<Props> = ({
                 <Card key={vehicle.cor} vehicle={vehicle} />
               ))}
             </S.Grid>
+
+            <Pagination />
           </S.GridContainer>
         </S.Content>
       </S.Main>

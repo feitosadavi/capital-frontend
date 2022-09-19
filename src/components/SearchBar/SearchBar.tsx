@@ -43,33 +43,63 @@ const setupFilter = (filters: Filters) => {
   return query
 }
 
+const getCurrentPageFromUrl = (): number | null => {
+  const urlParams = new URLSearchParams(window.location.search)
+  const pageFromUrl = urlParams.get('page')
+  return pageFromUrl ? Number(pageFromUrl) : null
+}
+
 export const SearchBar: React.FC<Props> = ({ setVehicles, vehicles }) => {
   const context = React.useContext(AppContext)
   const [search, setSearch] = React.useState<string>('')
   const [orderFilter, setOrderFilter] = React.useState<string[]>(['createdAt:desc'])
+  const [resultsCount, setResultsCount] = React.useState<number>(0)
+
+  const ITENS_PER_PAGE = 1
 
   const searchClient = new MeiliSearch({
     host: 'http://localhost:7700'
   })
   const veiculoIndex = searchClient.index('veiculo')
 
-  const fetchVehicles = async () => {
+  const fetchVehicles = async (offset: number) => {
     const filter = setupFilter(context.filters)
 
-    const res = await veiculoIndex.search(search, { filter, sort: orderFilter })
+    const res = await veiculoIndex.search(search, {
+      filter,
+      sort: orderFilter,
+      limit: ITENS_PER_PAGE,
+      offset
+    })
 
     const _vehicles = setupFields(res.hits)
     setVehicles(_vehicles)
+    setResultsCount(res.estimatedTotalHits)
+
+    // pagination
+    context.setNumberOfPages(res.estimatedTotalHits)
   }
 
   const isFirstMount = React.useRef<boolean>(true)
   React.useEffect(() => {
     if (!isFirstMount.current) {
-      fetchVehicles()
+      fetchVehicles(0).then(() => {
+        context.setPage(1)
+      })
     } else {
       isFirstMount.current = false
     }
   }, [search, context.filters, orderFilter])
+
+  React.useEffect(() => {
+    if (!isFirstMount.current) {
+      const offset = (ITENS_PER_PAGE * (context.page ?? 0)) - 1
+      fetchVehicles(offset)
+    } else {
+      isFirstMount.current = false
+    }
+  }, [context.page])
+
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => setSearch(event.target.value)
 
@@ -95,7 +125,7 @@ export const SearchBar: React.FC<Props> = ({ setVehicles, vehicles }) => {
         </IconButton>
         <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
 
-        <div style={{ padding: '.5rem' }}>{vehicles.length} veículo{vehicles.length !== 1 && 's'}</div>
+        <div style={{ padding: '.5rem' }}>{resultsCount} veículo{resultsCount !== 1 && 's'}</div>
       </Paper>
 
       <Menu setOrderFilter={setOrderFilter} />

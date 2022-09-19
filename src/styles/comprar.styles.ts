@@ -28,9 +28,12 @@ export const Content = styled.div`
 
 export const GridContainer = styled.div`
   display: flex;
-  margin-top: 1rem;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  row-gap: 2.5rem;
+
+  margin-top: 1rem;
   width: 100%;
 `
 

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import type { GetServerSideProps, NextPage } from 'next'
+import type { GetServerSideProps, GetStaticProps, NextPage } from 'next'
 import Head from 'next/head'
 import qs from 'qs'
 
@@ -7,19 +7,21 @@ import { Card, Filters, SearchBar } from '../../components'
 import { request } from '../../services/request'
 import { ComprarPageVehicle, Select } from '../../types'
 
-import * as S from './comprar.styles'
+import * as S from '../../styles/comprar.styles'
 import { AppContext } from '../../context/app.context'
 
 
 interface Props {
   _vehicles: ComprarPageVehicle[]
+  _selects: Select[]
 }
 
 const Home: NextPage<Props> = ({
   _vehicles,
+  _selects
 }) => {
   const context = React.useContext(AppContext)
-  const [selects, setSelects] = React.useState<Select[]>([])
+  const [selects, setSelects] = React.useState<Select[]>(_selects)
   const [vehicles, setVehicles] = React.useState<ComprarPageVehicle[]>(_vehicles)
 
   // React.useEffect(() => {
@@ -33,11 +35,17 @@ const Home: NextPage<Props> = ({
   //     .catch(console.log)
   // }, [context.filters])
 
+  const isFirstMount = React.useRef<boolean>(true)
   React.useEffect(() => {
-    const filters = qs.stringify(context.filters)
-    request<Select[]>(`http://localhost:3000/api/filter-options?${filters}`)
-      .then(_selects => setSelects(_selects))
-      .catch(console.log)
+    if (!isFirstMount.current) {
+      const filters = qs.stringify(context.filters)
+      request<Select[]>(`http://localhost:3000/api/filter-options?${filters}`)
+        .then(_selects => setSelects(_selects))
+        .catch(console.log)
+    } else {
+      isFirstMount.current = true
+    }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [context.filters.marca])
 
@@ -70,7 +78,7 @@ const Home: NextPage<Props> = ({
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export const getStaticProps: GetStaticProps = async (context) => {
   const res = await fetch(`http://localhost:1337/api/veiculos?populate=*`)
 
   const apiData = (await res.json()).data[0]
@@ -82,8 +90,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }
 
   const _vehicles = await request<ComprarPageVehicle[]>('http://localhost:3000/api/vehicles')
+  const _selects = await request<Select[]>('http://localhost:3000/api/filter-options')
 
-  const props: Props = { _vehicles }
+  const props: Props = { _vehicles, _selects }
 
   return {
     props, // will be passed to the page component as props

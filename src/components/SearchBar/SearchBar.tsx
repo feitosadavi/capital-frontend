@@ -46,17 +46,17 @@ const setupFilter = (filters: Filters) => {
 export const SearchBar: React.FC<Props> = ({ setVehicles, vehicles }) => {
   const context = React.useContext(AppContext)
   const [search, setSearch] = React.useState<string>('')
+  const [orderFilter, setOrderFilter] = React.useState<string[]>(['createdAt:desc'])
 
   const searchClient = new MeiliSearch({
     host: 'http://localhost:7700'
   })
+  const veiculoIndex = searchClient.index('veiculo')
 
   const fetchVehicles = async () => {
-    const veiculo = searchClient.index('veiculo')
-
     const filter = setupFilter(context.filters)
 
-    const res = await veiculo.search(search, { filter })
+    const res = await veiculoIndex.search(search, { filter, sort: orderFilter })
 
     const _vehicles = setupFields(res.hits)
     setVehicles(_vehicles)
@@ -64,12 +64,12 @@ export const SearchBar: React.FC<Props> = ({ setVehicles, vehicles }) => {
 
   const isFirstMount = React.useRef<boolean>(true)
   React.useEffect(() => {
-    if (isFirstMount.current) {
-      isFirstMount.current = false
-    } else {
+    if (!isFirstMount.current) {
       fetchVehicles()
+    } else {
+      isFirstMount.current = false
     }
-  }, [search, context.filters])
+  }, [search, context.filters, orderFilter])
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => setSearch(event.target.value)
 
@@ -98,7 +98,7 @@ export const SearchBar: React.FC<Props> = ({ setVehicles, vehicles }) => {
         <div style={{ padding: '.5rem' }}>{vehicles.length} veículo{vehicles.length !== 1 && 's'}</div>
       </Paper>
 
-      <Menu />
+      <Menu setOrderFilter={setOrderFilter} />
     </>
   );
 }

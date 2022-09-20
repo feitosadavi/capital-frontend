@@ -2,6 +2,7 @@ import React from 'react'
 import { AppContext } from '../../context/app.context'
 import { bind } from '../../Hookes/bind'
 import { Select } from '../../types'
+import { Select as SelectEl } from '../index'
 import * as S from './Filters.styles'
 
 export const Filters: React.FC<{ select: Select }> = ({ select: { label, options, key } }) => {
@@ -23,14 +24,13 @@ export const Filters: React.FC<{ select: Select }> = ({ select: { label, options
 
 
   return (
-    <S.Filter>
-      <label htmlFor={key}>{label}</label>
-      <select onChange={handleChange} name={key} id={key}>
-        <option value='*'>Todos</option>
-        {options.map(option => (
-          <option key={option} value={option}>{option}</option>
-        ))}
-      </select>
-    </S.Filter>
+    <>
+      <SelectEl
+        id={key}
+        label={label}
+        options={options}
+        onChange={handleChange}
+      />
+    </>
   )
 }

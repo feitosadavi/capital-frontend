@@ -8,7 +8,7 @@ export const Container = styled.div`
   height: 18rem;
   background-color: ${({ theme }) => theme.colors.white};
   color:  ${({ theme }) => theme.colors.secondary};
-  border-radius: 1rem 1rem 0 1rem;
+  border-radius: .6rem .6rem 0 .6rem;
 `
 
 export const Header = styled.div`
@@ -19,7 +19,7 @@ export const Thumb = styled.div`
   width: 100%;
 
   .img {
-    border-radius: 0 1rem 0 0;
+    border-radius: 0 .6rem 0 0;
   }
 `
 

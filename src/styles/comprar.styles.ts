@@ -13,12 +13,19 @@ export const Main = styled.main`
   display: flex;
   justify-content: center;
   text-align: center;
+  column-gap: 1rem;
 
 `
 
 export const Filters = styled.div`
   flex: 1;
-  background-color: white;
+  padding: 1.5rem .8rem .8rem .8rem;
+  border-radius: .3rem;
+  background-color: ${({ theme }) => theme.colors.primary};
+  display: flex;
+  height: 70%;
+  flex-direction: column;
+  gap: 1rem;
 
   @media screen and (max-width: 800px) {
     display: none;

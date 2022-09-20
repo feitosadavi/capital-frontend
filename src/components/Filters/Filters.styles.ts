@@ -6,6 +6,7 @@ export const Container = styled.div`
   align-items: center;
   flex-direction: column;
   width: 100%;
+  padding: 2rem;
 `
 
 export const Filter = styled.div`

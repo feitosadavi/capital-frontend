@@ -19,9 +19,10 @@ export const theme = {
     }
   },
   colors: {
-    primary: '#474350',
-    secondary: '#1C1C1C',
-    yellow: '#FBB932',
+    primary: '#302F32',
+    secondary: '#1C1B1E',
+    // secondary: '#151412',
+    yellow: '#F1AD1C',
     fontPrimary: '#969696',
     white: '#f1f1f1'
   },

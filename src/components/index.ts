@@ -7,4 +7,5 @@ export * from './MobileNav'
 export * from './Menu'
 export * from './Pagination'
 export * from './SearchBar'
+export * from './Select'
 

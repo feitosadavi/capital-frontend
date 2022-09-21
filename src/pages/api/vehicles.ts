@@ -10,11 +10,10 @@ const setupFields = (apiVehicles: any) => {
   const vehiclesArray: ComprarPageVehicle[] = []
   for (const apiVehicle of apiVehicles) {
 
-    const setupedVehicleData: any = {}
+    const setupedVehicleData: any = { id: apiVehicle.id }
 
     const vehicleAttributes = apiVehicle.attributes
     for (const key of Object.keys(vehicleAttributes)) {
-
       setupedVehicleData[key] = (vehicleAttributes[key]?.data?.attributes?.label || vehicleAttributes[key])
     }
 
@@ -32,6 +31,7 @@ export default async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     const filters = setupFilters(req)
 
     const apiVehicles = await useQuery(GET_VEHICLES, false, { filters })
+    console.log({ apiVehicles: apiVehicles.veiculos.data });
 
     const vehicles = setupFields(apiVehicles.veiculos.data)
 

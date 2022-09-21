@@ -4,6 +4,7 @@ export type Photo = {
 }
 
 export type Vehicle = {
+  id: string
   preco: number
   anos: number
   marca: string

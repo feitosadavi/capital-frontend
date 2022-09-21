@@ -51,6 +51,7 @@ export const GET_VEHICLES = gql`
   query ($filters: VeiculoFiltersInput) {
   veiculos (filters: $filters) {
     data {
+      id
       attributes {
         km
         preco

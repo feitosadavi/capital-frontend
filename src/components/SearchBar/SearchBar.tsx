@@ -23,13 +23,16 @@ const setupPhotos = (photos: any) => photos.map(({ url, alternativeText }: any) 
 const setupFields = (apiVehicles: any) => {
   const vehiclesArray: ComprarPageVehicle[] = []
   for (const apiVehicle of apiVehicles) {
+    const id = apiVehicle.id.replace('veiculo-', '')
+
     const setupedVehicleData: any = {}
     for (const key of Object.keys(apiVehicle)) {
       setupedVehicleData[key] = (apiVehicle[key]?.label || apiVehicle[key])
     }
     const setupedPhotos = setupPhotos(setupedVehicleData.photos)
-    vehiclesArray.push({ ...setupedVehicleData, photos: setupedPhotos })
+    vehiclesArray.push({ ...setupedVehicleData, photos: setupedPhotos, id })
   }
+
   return vehiclesArray
 }
 
@@ -69,7 +72,9 @@ export const SearchBar: React.FC<Props> = ({ setVehicles, vehicles }) => {
       offset
     })
 
+
     const _vehicles = setupFields(res.hits)
+
     setVehicles(_vehicles)
     setResultsCount(res.estimatedTotalHits)
 

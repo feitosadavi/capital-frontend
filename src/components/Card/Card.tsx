@@ -3,6 +3,7 @@ import React from 'react'
 import * as S from './Card.styles'
 import { ComprarPageVehicle } from '../../types'
 import Image from 'next/image'
+import { useRouter } from 'next/router'
 
 type CardProps = {
   vehicle: ComprarPageVehicle
@@ -13,9 +14,13 @@ export const Card: React.FC<CardProps> = ({ vehicle }) => {
     style: 'currency',
     currency: 'BRL',
   });
+  const router = useRouter()
+  const handleClick = () => {
+    router.push(`/carros/${vehicle.id}`)
+  }
 
   return (
-    <S.Container>
+    <S.Container onClick={handleClick}>
       <S.Body>
         <S.Thumb>
           <Image src={vehicle.photos[0].src} alt={vehicle.photos[0].alt} width='500px' height='350px' className="img" />

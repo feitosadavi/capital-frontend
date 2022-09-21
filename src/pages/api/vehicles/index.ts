@@ -1,8 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { useQuery } from '../../Hookes/useQuery'
-import { GET_VEHICLES } from '../../services/queries'
-import { ComprarPageVehicle } from '../../types'
-import { setupFilters } from '../../utils'
+import { useQuery } from '../../../Hookes/useQuery'
+import { GET_VEHICLES } from '../../../services/queries'
+import { ComprarPageVehicle } from '../../../types'
+import { setupFilters } from '../../../utils'
 
 type Data = ComprarPageVehicle[]
 
@@ -31,7 +31,6 @@ export default async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     const filters = setupFilters(req)
 
     const apiVehicles = await useQuery(GET_VEHICLES, false, { filters })
-    console.log({ apiVehicles: apiVehicles.veiculos.data });
 
     const vehicles = setupFields(apiVehicles.veiculos.data)
 

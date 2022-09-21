@@ -74,7 +74,8 @@ export const SearchBar: React.FC<Props> = ({ setVehicles, vehicles }) => {
     setResultsCount(res.estimatedTotalHits)
 
     // pagination
-    context.setNumberOfPages(res.estimatedTotalHits)
+    const numberOfPages = Math.round(Math.ceil(res.estimatedTotalHits / ITENS_PER_PAGE))
+    context.setNumberOfPages(numberOfPages)
   }
 
   const isFirstMount = React.useRef<boolean>(true)

@@ -15,6 +15,7 @@ export const Select = styled.div`
   }
 
   select {
+    cursor: pointer;
     padding: .5rem;
 
     text-align: center;
@@ -28,5 +29,10 @@ export const Select = styled.div`
     border-radius: .4rem;
     border: none;
 
+    :disabled {
+      cursor: default;
+      background-color: #383838;
+      color: #727272;
+    }
   }
 `

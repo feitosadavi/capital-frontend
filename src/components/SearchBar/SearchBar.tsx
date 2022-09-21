@@ -36,19 +36,14 @@ const setupFields = (apiVehicles: any) => {
 const setupFilter = (filters: Filters) => {
   let query = ''
   const keys = Object.keys(filters)
-  for (const [index, key] of keys.entries()) {
+  for (const key of keys) {
     const currentFilter = (filters as any)[key]
     if (currentFilter !== '*') {
-      query += ` ${index !== 0 ? 'AND' : ''} ${key}.label='${currentFilter}'`
+      const isQueryEmpty = query.length === 0;
+      query += ` ${isQueryEmpty ? '' : 'AND'} ${key}.label='${currentFilter}'`
     }
   }
   return query
-}
-
-const getCurrentPageFromUrl = (): number | null => {
-  const urlParams = new URLSearchParams(window.location.search)
-  const pageFromUrl = urlParams.get('page')
-  return pageFromUrl ? Number(pageFromUrl) : null
 }
 
 export const SearchBar: React.FC<Props> = ({ setVehicles, vehicles }) => {
@@ -57,7 +52,7 @@ export const SearchBar: React.FC<Props> = ({ setVehicles, vehicles }) => {
   const [orderFilter, setOrderFilter] = React.useState<string[]>(['createdAt:desc'])
   const [resultsCount, setResultsCount] = React.useState<number>(0)
 
-  const ITENS_PER_PAGE = 1
+  const ITENS_PER_PAGE = 2
 
   const searchClient = new MeiliSearch({
     host: 'http://localhost:7700'
@@ -104,8 +99,8 @@ export const SearchBar: React.FC<Props> = ({ setVehicles, vehicles }) => {
 
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => setSearch(event.target.value)
-  const isMobile = useMediaQuery('(max-width:800px)')
 
+  const isMobile = useMediaQuery('(max-width:950px)')
   return (
     <>
       <Paper
@@ -137,7 +132,7 @@ export const SearchBar: React.FC<Props> = ({ setVehicles, vehicles }) => {
         alignItems: 'center'
       }}>
         <Menu setOrderFilter={setOrderFilter} />
-        <Button onClick={context.toogleMobileFilter}><TuneIcon sx={{ color: 'white' }} /></Button>
+        {isMobile && <Button onClick={context.toogleMobileFilter}><TuneIcon sx={{ color: 'white' }} /></Button>}
       </div>
     </>
   );

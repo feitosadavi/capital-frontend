@@ -22,9 +22,11 @@ export const bind = ({ parent, child }: BindProps) => {
 
     const childSelect = getElById(child)
 
-    parentSelectValue === '*'
-      ? childSelect.setAttribute('disabled', 'disabled')
-      : childSelect.removeAttribute('disabled')
+    if (parentSelectValue === '*') {
+      childSelect.setAttribute('disabled', 'disabled')
+    } else {
+      childSelect.removeAttribute('disabled')
+    }
   } catch (error) {
     console.error(error);
   }

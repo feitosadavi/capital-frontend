@@ -3,7 +3,6 @@ import { AppContext } from '../../context/app.context'
 import { bind } from '../../Hookes/bind'
 import { Select } from '../../types'
 import { Select as SelectEl } from '../index'
-import * as S from './Filters.styles'
 
 export const Filters: React.FC<{ select: Select }> = ({ select: { label, options, key } }) => {
   const context = React.useContext(AppContext)
@@ -19,8 +18,10 @@ export const Filters: React.FC<{ select: Select }> = ({ select: { label, options
       parent: 'marca',
       child: 'modelo'
     })
+
+    context.setFilters(prevState => ({ ...prevState, modelo: '*' }))
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [context.filters])
+  }, [context.filters.marca])
 
 
   return (

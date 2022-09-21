@@ -9,6 +9,9 @@ type Props = {
 }
 
 export const Select: React.FC<Props> = ({ id, label, options, onChange }) => {
+  // if (label === 'Marcas') console.log('Options: ', { [label]: options });
+  // if (label === 'Modelos') console.log('Options: ', { [label]: options });
+
   return (
     <S.Select>
       <label htmlFor={id}>{label}</label>

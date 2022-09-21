@@ -1,7 +1,6 @@
 import * as React from 'react'
 import type { GetStaticProps, NextPage } from 'next'
 import Head from 'next/head'
-import qs from 'qs'
 
 import { Card, Filters, MobileFilters, Pagination, SearchBar } from '../../components'
 import { request } from '../../services/request'
@@ -28,12 +27,11 @@ const Home: NextPage<Props> = ({
   const isFirstMount = React.useRef<boolean>(true)
   React.useEffect(() => {
     if (!isFirstMount.current) {
-      const filters = qs.stringify(context.filters)
-      request<Select[]>(`http://localhost:3000/api/filter-options?${filters}`)
+      request<Select[]>(`http://localhost:3000/api/filter-options?marca=${context.filters.marca}`)
         .then(_selects => setSelects(_selects))
         .catch(console.log)
     } else {
-      isFirstMount.current = true
+      isFirstMount.current = false
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

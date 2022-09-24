@@ -1,4 +1,5 @@
 export * from './Card'
+export * from './Carousel'
 export * from './DesktopNav'
 export * from './Filters'
 export * from './Header'

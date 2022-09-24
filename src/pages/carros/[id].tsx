@@ -3,7 +3,7 @@ import React from 'react'
 import { request } from '../../services/request'
 import { ComprarPageVehicle, Vehicle as VehicleType } from '../../types'
 
-import * as S from '../../styles/[id]'
+import * as S from '../../styles/[id].styled'
 import styled from 'styled-components'
 
 type VehicleProps = {
@@ -14,6 +14,7 @@ import { useFormik } from 'formik'
 import { Input } from '../../components/Input'
 import { Textarea } from '../../components/Textarea'
 import { Button } from '../../components/Button'
+import { Carousel } from '../../components'
 const REQUIRED_FIELD_MSG = 'Campo obrigatório'
 
 const MessageSchema = Yup.object().shape({
@@ -43,11 +44,12 @@ const Vehicle: React.FC<VehicleProps> = ({ _vehicle }) => {
     <S.Container>
       <S.Wrapper>
         <S.Head>
-          <S.Photos>PHOTOS</S.Photos>
+          <S.Photos>
+            <Carousel photos={_vehicle.photos} />
+          </S.Photos>
           <S.Contact>
             <S.ContactWrapper>
               <div>Envie a sua proposta e marcaremos uma visita! :)</div>
-
 
               <form onSubmit={handleSubmit} action="">
                 <S.ContactForm>

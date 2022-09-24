@@ -28,8 +28,9 @@ export const Head = styled.div`
 
 export const Photos = styled.div`
   ${xyCenter}
-
+  align-self: flex-start;
   flex: 3;
+  max-width: 50rem;
   background-color: ${({ theme }) => theme.colors.primary};
 
 `
@@ -38,6 +39,7 @@ export const Contact = styled.div`
   ${xyCenter}
   flex-direction: column;
   flex: 1;
+  max-width: 20rem;
   padding: 1rem 0 1rem 0;
   border-radius: .5rem;
   background-color: ${({ theme }) => theme.colors.primary};

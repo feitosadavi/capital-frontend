@@ -1,6 +1,11 @@
 export type Theme = typeof theme
 
 export const theme = {
+  breakpoints: {
+    md: '1000px',
+    sm: '550px'
+  },
+
   font: {
     primary: {
       family: 'Nunito',

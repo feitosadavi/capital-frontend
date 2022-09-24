@@ -43,6 +43,10 @@ export const Contact = styled.div`
   padding: 1rem 0 1rem 0;
   border-radius: .5rem;
   background-color: ${({ theme }) => theme.colors.primary};
+
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    display: none;
+  }
 `
 
 

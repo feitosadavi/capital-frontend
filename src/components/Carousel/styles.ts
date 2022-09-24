@@ -15,6 +15,10 @@ export const Container = styled.div`
   font-weight: 500;
   height: 25rem;
   max-height: 100vh;
+
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    height: 15rem;
+  }
 }
 
 .thumbnail .keen-slider__slide {

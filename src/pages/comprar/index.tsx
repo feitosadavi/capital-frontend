@@ -9,16 +9,19 @@ import { ComprarPageVehicle, Select } from '../../types'
 import * as S from '../../styles/comprar.styles'
 import { AppContext } from '../../context/app.context'
 import { useMediaQuery } from '@mui/material'
+import { fetchMeilisearch } from '../../Hookes'
 
 
 interface Props {
   _vehicles: ComprarPageVehicle[]
   _selects: Select[]
+  _resultsCount: number
 }
 
 const Home: NextPage<Props> = ({
   _vehicles,
-  _selects
+  _selects,
+  _resultsCount
 }) => {
   const context = React.useContext(AppContext)
   const [selects, setSelects] = React.useState<Select[]>(_selects)
@@ -27,10 +30,11 @@ const Home: NextPage<Props> = ({
   const isFirstMount = React.useRef<boolean>(true)
   React.useEffect(() => {
     if (!isFirstMount.current) {
-      request<Select[]>(`http://localhost:3000/api/filter-options?marca=${context.filters.marca}`)
+      request<Select[]>(`http://localhost:1337/api/filters?marca=${context.filters.marca}`)
         .then(_selects => setSelects(_selects))
         .catch(console.log)
     } else {
+      context.setResultsCount(_resultsCount)
       isFirstMount.current = false
     }
 
@@ -77,20 +81,15 @@ const Home: NextPage<Props> = ({
 }
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  const res = await fetch(`http://localhost:1337/api/veiculos?populate=*`)
+  const _selects = await request<Select[]>('http://localhost:1337/api/filters')
 
-  const apiData = (await res.json()).data[0]
+  const { data: _vehicles, resultsCount: _resultsCount } = await fetchMeilisearch<ComprarPageVehicle>('veiculo', '', {
+    sort: ['createdAt:desc'],
+    offset: 0
+  })
 
-  if (!apiData) {
-    return {
-      notFound: true,
-    }
-  }
-
-  const _vehicles = await request<ComprarPageVehicle[]>('http://localhost:3000/api/vehicles')
-  const _selects = await request<Select[]>('http://localhost:3000/api/filter-options')
-
-  const props: Props = { _vehicles, _selects }
+  const props: Props = { _vehicles, _selects, _resultsCount }
+  console.log({ _selects });
 
   return {
     props, // will be passed to the page component as props

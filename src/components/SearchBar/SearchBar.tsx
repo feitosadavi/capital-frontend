@@ -8,32 +8,14 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import TuneIcon from '@mui/icons-material/Tune';
 import SearchIcon from '@mui/icons-material/Search';
 import { Menu } from '../Menu';
-import { MeiliSearch } from 'meilisearch'
 import { ComprarPageVehicle } from '../../types';
 import { AppContext, Filters } from '../../context/app.context';
 import { Button, useMediaQuery } from '@mui/material'
+import { fetchMeilisearch } from '../../Hookes';
 
 interface Props {
   setVehicles: React.Dispatch<React.SetStateAction<ComprarPageVehicle[]>>
   vehicles: ComprarPageVehicle[]
-}
-
-const setupPhotos = (photos: any) => photos.map(({ url, alternativeText }: any) => ({ src: url, alt: alternativeText }))
-
-const setupFields = (apiVehicles: any) => {
-  const vehiclesArray: ComprarPageVehicle[] = []
-  for (const apiVehicle of apiVehicles) {
-    const id = apiVehicle.id.replace('veiculo-', '')
-
-    const setupedVehicleData: any = {}
-    for (const key of Object.keys(apiVehicle)) {
-      setupedVehicleData[key] = (apiVehicle[key]?.label || apiVehicle[key])
-    }
-    const setupedPhotos = setupPhotos(setupedVehicleData.photos)
-    vehiclesArray.push({ ...setupedVehicleData, photos: setupedPhotos, id })
-  }
-
-  return vehiclesArray
 }
 
 const setupFilter = (filters: Filters) => {
@@ -53,33 +35,20 @@ export const SearchBar: React.FC<Props> = ({ setVehicles, vehicles }) => {
   const context = React.useContext(AppContext)
   const [search, setSearch] = React.useState<string>('')
   const [orderFilter, setOrderFilter] = React.useState<string[]>(['createdAt:desc'])
-  const [resultsCount, setResultsCount] = React.useState<number>(0)
-
-  const ITENS_PER_PAGE = 2
-
-  const searchClient = new MeiliSearch({
-    host: 'http://localhost:7700'
-  })
-  const veiculoIndex = searchClient.index('veiculo')
 
   const fetchVehicles = async (offset: number) => {
     const filter = setupFilter(context.filters)
 
-    const res = await veiculoIndex.search(search, {
+    const { data, resultsCount, numberOfPages } = await fetchMeilisearch<ComprarPageVehicle>('veiculo', search, {
       filter,
       sort: orderFilter,
-      limit: ITENS_PER_PAGE,
       offset
     })
 
-
-    const _vehicles = setupFields(res.hits)
-
-    setVehicles(_vehicles)
-    setResultsCount(res.estimatedTotalHits)
+    setVehicles(data)
 
     // pagination
-    const numberOfPages = Math.round(Math.ceil(res.estimatedTotalHits / ITENS_PER_PAGE))
+    context.setResultsCount(resultsCount)
     context.setNumberOfPages(numberOfPages)
   }
 
@@ -96,7 +65,7 @@ export const SearchBar: React.FC<Props> = ({ setVehicles, vehicles }) => {
 
   React.useEffect(() => {
     if (!isFirstMount.current) {
-      const offset = (ITENS_PER_PAGE * (context.page ?? 0)) - 1
+      const offset = (2 * (context.page ?? 0)) - 1
       fetchVehicles(offset)
     } else {
       isFirstMount.current = false
@@ -129,7 +98,7 @@ export const SearchBar: React.FC<Props> = ({ setVehicles, vehicles }) => {
         </IconButton>
         <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
 
-        <div style={{ padding: '.5rem' }}>{resultsCount} veículo{resultsCount !== 1 && 's'}</div>
+        <div style={{ padding: '.5rem' }}>{context.resultsCount} veículo{context.resultsCount !== 1 && 's'}</div>
       </Paper>
 
       <div style={{

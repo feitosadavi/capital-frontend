@@ -178,19 +178,26 @@ const Vehicle: React.FC<VehicleProps> = ({ _vehicle }) => {
 
 // This function gets called at build time
 export const getStaticPaths = async () => {
-  const _vehicles = await request<ComprarPageVehicle[]>('http://localhost:3000/api/vehicles')
-  const paths = _vehicles.map(({ id }) => ({
-    params: { id },
+  const { data } = await request<{ data: ComprarPageVehicle[] }>('http://localhost:1337/api/veiculos?populate=*')
+  // console.log({ data });
+
+  const paths = data.map(({ id }) => ({
+    params: { id: String(id) },
   }))
+
+  console.log(paths);
+
   // We'll pre-render only these paths at build time.
   // { fallback: false } means other routes should 404.
   return { paths, fallback: false }
 }
 
 export const getStaticProps: GetStaticProps<VehicleProps> = async ({ params }) => {
-  const _vehicle = await request<VehicleType>(`http://localhost:3000/api/vehicles/${params?.id}`)
+  const { data } = await request<{ data: VehicleType }>(`http://localhost:1337/api/veiculos/${params?.id}?populate=*`)
 
-  const props: VehicleProps = { _vehicle }
+  const props: VehicleProps = { _vehicle: data }
+  console.log({ VEHICLE: data });
+  console.log({ VEHICLEPHOTOS: data.photos });
 
   return { props }
 }

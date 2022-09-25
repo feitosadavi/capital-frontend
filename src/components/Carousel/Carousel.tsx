@@ -6,19 +6,19 @@ import * as S from './styles'
 import { Photo } from '../../types'
 import Image from 'next/image'
 
-function ThumbnailPlugin (mainRef) {
-  return (slider) => {
+function ThumbnailPlugin (mainRef: any) {
+  return (slider: any) => {
     function removeActive () {
-      slider.slides.forEach((slide) => {
+      slider.slides.forEach((slide: any) => {
         slide.classList.remove("active")
       })
     }
-    function addActive (idx) {
+    function addActive (idx: any) {
       slider.slides[idx].classList.add("active")
     }
 
     function addClickEvents () {
-      slider.slides.forEach((slide, idx) => {
+      slider.slides.forEach((slide: any, idx: any) => {
         slide.addEventListener("click", () => {
           if (mainRef.current) mainRef.current.moveToIdx(idx)
         })
@@ -29,7 +29,7 @@ function ThumbnailPlugin (mainRef) {
       if (!mainRef.current) return
       addActive(slider.track.details.rel)
       addClickEvents()
-      mainRef.current.on("animationStarted", (main) => {
+      mainRef.current.on("animationStarted", (main: any) => {
         removeActive()
         const next = main.animator.targetIdx || 0
         addActive(main.track.absToRel(next))

@@ -134,6 +134,20 @@ export const GET_VEHICLE = gql`
             }
           }
         }
+        categoria {
+          data {
+            attributes{
+              label
+            }
+          }
+        }
+        combustivel {
+          data {
+            attributes{
+              label
+            }
+          }
+        }
         photos {
           data {
             attributes {

@@ -1,10 +1,8 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-
   width: 100%;
   
-
 .number-slide {
   background: grey;
   display: flex;
@@ -25,6 +23,10 @@ export const Container = styled.div`
   font-size: 30px;
   margin-top: 10px;
   height: 100px;
+
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    height: 60px;
+  }
 }
 
 .thumbnail .keen-slider__slide {

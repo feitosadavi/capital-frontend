@@ -4,7 +4,6 @@ import { request } from '../../services/request'
 import { ComprarPageVehicle, Vehicle as VehicleType } from '../../types'
 
 import * as S from '../../styles/[id].styled'
-import styled from 'styled-components'
 
 type VehicleProps = {
   _vehicle: VehicleType
@@ -14,7 +13,8 @@ import { useFormik } from 'formik'
 import { Input } from '../../components/Input'
 import { Textarea } from '../../components/Textarea'
 import { Button } from '../../components/Button'
-import { Carousel } from '../../components'
+import { Carousel, SwipeableDrawer } from '../../components'
+import { Drawer, useMediaQuery } from '@mui/material'
 const REQUIRED_FIELD_MSG = 'Campo obrigatório'
 
 const MessageSchema = Yup.object().shape({
@@ -40,65 +40,138 @@ const Vehicle: React.FC<VehicleProps> = ({ _vehicle }) => {
     onSubmit: onSubmit
   });
 
+  const ContactForm = () => (
+    <S.ContactWrapper>
+      <div>Envie a sua proposta e marcaremos uma visita! :)</div>
+
+      <form onSubmit={handleSubmit} action="">
+        <S.ContactForm>
+          <Input
+            id='nome'
+            placeholder='Seu nome'
+            label='Nome'
+            onChange={handleChange}
+            value={values.nome}
+            error={errors['nome']}
+          />
+          <Input
+            id='email'
+            placeholder='Seu email'
+            label='Email'
+            type='email'
+            onChange={handleChange}
+            value={values.email}
+            error={errors['email']}
+          />
+          <Input
+            id='telefone'
+            placeholder='Seu telefone'
+            label='Telefone'
+            type='phone'
+            onChange={handleChange}
+            value={values.telefone}
+            error={errors['telefone']}
+          />
+          <Textarea
+            id='mensagem'
+            label='Mensagem'
+            placeholder='Sua mensagem'
+            onChange={handleChange}
+            value={values.mensagem}
+            error={errors['mensagem']}
+          />
+
+          <Button
+            label='ENVIAR'
+            type='submit'
+          />
+        </S.ContactForm>
+      </form>
+
+    </S.ContactWrapper>
+  )
+
+  const isMobile = useMediaQuery('(max-width:1000px)')
+  const [isContactDrawerOpen, setIsContactDrawerOpen] = React.useState<boolean>(false)
+  const toggleContactDrawer = () => setIsContactDrawerOpen(!isContactDrawerOpen)
+
+  const detailInfos = [{
+    label: 'Categoria',
+    value: _vehicle.categoria
+  }, {
+    label: 'Modelo',
+    value: _vehicle.modelo
+  }, {
+    label: 'Km',
+    value: _vehicle.km
+  }, {
+    label: 'Anos',
+    value: _vehicle.anos
+  }, {
+    label: 'Combustível',
+    value: _vehicle.combustivel
+  }, {
+    label: 'Cor',
+    value: _vehicle.cor
+  }]
+
+  const currencyFormatter = new Intl.NumberFormat('pt-BR', {
+    style: 'currency',
+    currency: 'BRL',
+  });
+
   return (
     <S.Container>
       <S.Wrapper>
-        <S.Head>
-          <S.Photos>
-            <Carousel photos={_vehicle.photos} />
-          </S.Photos>
-          <S.Contact>
-            <S.ContactWrapper>
-              <div>Envie a sua proposta e marcaremos uma visita! :)</div>
 
-              <form onSubmit={handleSubmit} action="">
-                <S.ContactForm>
-                  <Input
-                    id='nome'
-                    placeholder='Seu nome'
-                    label='Nome'
-                    onChange={handleChange}
-                    value={values.nome}
-                    error={errors['nome']}
-                  />
-                  <Input
-                    id='email'
-                    placeholder='Seu email'
-                    label='Email'
-                    type='email'
-                    onChange={handleChange}
-                    value={values.email}
-                    error={errors['email']}
-                  />
-                  <Input
-                    id='telefone'
-                    placeholder='Seu telefone'
-                    label='Telefone'
-                    type='phone'
-                    onChange={handleChange}
-                    value={values.telefone}
-                    error={errors['telefone']}
-                  />
-                  <Textarea
-                    id='mensagem'
-                    label='Mensagem'
-                    placeholder='Sua mensagem'
-                    onChange={handleChange}
-                    value={values.mensagem}
-                    error={errors['mensagem']}
-                  />
+        <S.Section >
+          <Carousel photos={_vehicle.photos} />
+          <S.Description>
+            <div className='main_info'>
+              <div className='main_info-left'>{_vehicle.marca} {_vehicle.modelo}</div>
+              <div className='main_info-right'>{currencyFormatter.format(_vehicle.preco)}</div>
+            </div>
 
-                  <Button
-                    label='ENVIAR'
-                    type='submit'
-                  />
-                </S.ContactForm>
-              </form>
+            <p>{_vehicle.descricao}</p>
+          </S.Description>
 
-            </S.ContactWrapper>
-          </S.Contact>
-        </S.Head>
+          <S.Details>
+            {detailInfos.map(({ label, value }) => (
+              <S.Info key={label}>
+                <span className='label'>{label}</span>
+                <span className='value'>{value}</span>
+              </S.Info>
+            ))}
+          </S.Details>
+        </S.Section>
+
+        <S.Aside>
+          <ContactForm />
+        </S.Aside>
+        {
+          isMobile &&
+          <>
+            <Drawer
+              anchor={'right'}
+              open={isContactDrawerOpen}
+              onClose={toggleContactDrawer}
+            >
+              <ContactForm />
+            </Drawer>
+            <div style={{
+              position: 'fixed',
+              left: '0',
+              bottom: '3rem',
+              display: 'flex',
+              justifyContent: 'center',
+              width: '100%',
+            }}>
+              <S.ContactDrawerButton onClick={toggleContactDrawer}>Tenho interesse!</S.ContactDrawerButton>
+            </div>
+          </>
+        }
       </S.Wrapper>
+
     </S.Container>
   )
 }

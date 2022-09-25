@@ -6,8 +6,6 @@ import { Select as SelectEl } from '../index'
 
 export const Filters: React.FC<{ select: Select }> = ({ select: { label, options, key } }) => {
   const context = React.useContext(AppContext)
-  console.log({ label, options, key });
-
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     event.preventDefault()
     context.setFilters(prevState => ({ ...prevState, [key]: event.target.value }))

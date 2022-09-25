@@ -89,7 +89,6 @@ export const getStaticProps: GetStaticProps = async (context) => {
   })
 
   const props: Props = { _vehicles, _selects, _resultsCount }
-  console.log({ _selects });
 
   return {
     props, // will be passed to the page component as props

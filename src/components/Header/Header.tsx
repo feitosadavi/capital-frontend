@@ -7,6 +7,7 @@ import { MobileNav } from '../MobileNav';
 import { DesktopNav } from '../DesktopNav';
 
 import * as S from './Header.styles'
+import Image from 'next/image';
 
 const pages: Page[] = [{
   label: 'Home',
@@ -24,7 +25,9 @@ export const Navbar = () => {
     <header>
       <S.Container>
         <S.Wrapper>
-          <S.Logo>capital veículos</S.Logo>
+          <S.Logo>
+            <Image src="/capital-logo.svg" alt="me" width="200" height="150" />
+          </S.Logo>
           {
             isMobile
               ? <MobileNav path={router.asPath} pages={pages} />

@@ -24,8 +24,8 @@ export const theme = {
     }
   },
   colors: {
-    primary: '#302F32',
-    secondary: '#1C1B1E',
+    primary: '#201f22',
+    secondary: '#100f11',
     // secondary: '#151412',
     yellow: '#F1AD1C',
     fontPrimary: '#969696',

@@ -19,7 +19,6 @@ export const Container = styled.div`
 export const Wrapper = styled.div`
   ${xyCenter}
   position: relative;
-  flex-direction: column;
   justify-content: space-between;
 
   margin:2rem auto;
@@ -35,8 +34,8 @@ export const Section = styled.section`
   ${xyCenter}
   flex-direction: column;
   align-self: flex-start;
-  max-width: 50rem;
-
+  max-width: 48rem;
+  width: 50vw;
 
   @media screen and (max-width: ${({ theme }) => theme.breakpoints.md}) {
     width: 100%;
@@ -101,10 +100,10 @@ export const Info = styled.span`
 `
 
 export const Aside = styled.section`
-  /* ${xyCenter} */
-  position: fixed;
-  right: calc((100vw - 90rem) / 2);
-  top: 7rem;
+  position: relative;
+  align-self: flex-start;
+  /* right: calc((100vw - 90rem) / 2); */
+  /* top: 7rem; */
 
   @media screen and (max-width: ${({ theme }) => theme.breakpoints.md}) {
     display: none;

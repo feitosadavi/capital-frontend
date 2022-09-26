@@ -1,5 +1,6 @@
-import { GetStaticProps } from 'next'
 import React from 'react'
+import { GetStaticProps } from 'next'
+import Head from 'next/head'
 import { request } from '../../services/request'
 import { ComprarPageVehicle, Vehicle as VehicleType } from '../../types'
 import InstagramIcon from '@mui/icons-material/Instagram'
@@ -7,10 +8,6 @@ import FacebookIcon from '@mui/icons-material/Facebook'
 import TwitterIcon from '@mui/icons-material/Twitter'
 import * as S from '../../styles/[id].styled'
 
-type VehicleProps = {
-  _vehicle: VehicleType
-  host: string
-}
 import * as Yup from 'yup'
 import { useFormik } from 'formik'
 import { Input } from '../../components/Input'
@@ -18,9 +15,7 @@ import { Textarea } from '../../components/Textarea'
 import { Button } from '../../components/Button'
 import { Carousel } from '../../components'
 import { Drawer, useMediaQuery } from '@mui/material'
-import Head from 'next/head'
-import { useRouter } from 'next/router'
-import absoluteUrl from 'next-absolute-url'
+
 const REQUIRED_FIELD_MSG = 'Campo obrigatório'
 
 const MessageSchema = Yup.object().shape({
@@ -29,6 +24,10 @@ const MessageSchema = Yup.object().shape({
   telefone: Yup.string(),
   mensagem: Yup.string().required(REQUIRED_FIELD_MSG),
 })
+
+type VehicleProps = {
+  _vehicle: VehicleType
+}
 
 const Vehicle: React.FC<VehicleProps> = ({ _vehicle }) => {
   const [pageUrl, setPageUrl] = React.useState<string>('')
@@ -249,7 +248,7 @@ export const getStaticPaths = async () => {
 export const getStaticProps: GetStaticProps<VehicleProps> = async ({ params }) => {
   const { data } = await request<{ data: VehicleType }>(`http://seashell-app-6ylyu.ondigitalocean.app/api/veiculos/${params?.id}?populate=*`)
 
-  const props: VehicleProps = { _vehicle: data, host: process.env.HOST ?? '' }
+  const props: VehicleProps = { _vehicle: data }
 
   return { props }
 }

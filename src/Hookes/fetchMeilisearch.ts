@@ -36,7 +36,7 @@ export const fetchMeilisearch = async <DataType = any> (index: string, search: s
   const ITENS_PER_PAGE = 2
 
   const searchClient = new MeiliSearch({
-    host: 'http://localhost:7700'
+    host: 'http://157.230.49.254'
   })
 
   const veiculoIndex = searchClient.index(index)

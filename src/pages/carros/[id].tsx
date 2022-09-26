@@ -30,7 +30,9 @@ const MessageSchema = Yup.object().shape({
   mensagem: Yup.string().required(REQUIRED_FIELD_MSG),
 })
 
-const Vehicle: React.FC<VehicleProps> = ({ _vehicle, host }) => {
+const Vehicle: React.FC<VehicleProps> = ({ _vehicle }) => {
+  const [pageUrl, setPageUrl] = React.useState<string>('')
+
   const onSubmit = async (values: any) => {
     console.log({ values })
   }
@@ -119,20 +121,17 @@ const Vehicle: React.FC<VehicleProps> = ({ _vehicle, host }) => {
   }, {
     label: 'Cor',
     value: _vehicle.cor
-  }]
-  const router = useRouter()
+    }]
 
   const currencyFormatter = new Intl.NumberFormat('pt-BR', {
     style: 'currency',
     currency: 'BRL',
   });
 
-  // const { origin } = absoluteUrl()
-
   const social = [{
     element: <FacebookIcon />,
     label: 'Facebook',
-    href: 'https://www.facebook.com/sharer/sharer.php?u=example.org'
+    href: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(pageUrl)}`
   }, {
     element: <InstagramIcon />,
     label: 'Instagram',
@@ -140,13 +139,18 @@ const Vehicle: React.FC<VehicleProps> = ({ _vehicle, host }) => {
   }, {
     element: <TwitterIcon />,
     label: 'Twitter',
-    href: `http://twitter.com/share?url=https://brave-donkey-12.loca.lt/carros/${_vehicle.id}`
-  }]
+      href: `https://twitter.com/share?url=${encodeURIComponent(pageUrl)}`
+    }]
+
+  React.useEffect(() => {
+    setPageUrl(window.location.href)
+  }, [])
+
 
 
   return (<>
     <Head>
-      <meta property="og:url" content={`https://brave-donkey-12.loca.lt/carros/${_vehicle.id}`} />
+      <meta property="og:url" content={pageUrl} />
       <meta property="og:type" content="website" />
       <meta property="og:title" content={`${_vehicle.marca} ${_vehicle.modelo}`} />
       <meta property="og:description" content={_vehicle.descricao} />
@@ -245,7 +249,7 @@ export const getStaticPaths = async () => {
 export const getStaticProps: GetStaticProps<VehicleProps> = async ({ params }) => {
   const { data } = await request<{ data: VehicleType }>(`http://seashell-app-6ylyu.ondigitalocean.app/api/veiculos/${params?.id}?populate=*`)
 
-  const props: VehicleProps = { _vehicle: data, host: process.env.HOST }
+  const props: VehicleProps = { _vehicle: data, host: process.env.HOST ?? '' }
 
   return { props }
 }

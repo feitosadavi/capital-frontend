@@ -39,7 +39,10 @@ export const fetchMeilisearch = async <DataType = any> (index: string, search: s
     host: 'http://157.230.49.254'
   })
 
+
   const veiculoIndex = searchClient.index(index)
+  veiculoIndex.updateFilterableAttributes(['anos', 'cambio', 'categoria', 'combustivel', 'cor', 'marca', 'modelo'])
+  veiculoIndex.updateSortableAttributes(['price', 'createdAt'])
 
   const res = await veiculoIndex.search<DataType>(search, { ...params, limit: params.limit ?? ITENS_PER_PAGE })
 

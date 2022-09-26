@@ -41,8 +41,8 @@ export const fetchMeilisearch = async <DataType = any> (index: string, search: s
 
 
   const veiculoIndex = searchClient.index(index)
-  veiculoIndex.updateFilterableAttributes(['anos', 'cambio', 'categoria', 'combustivel', 'cor', 'marca', 'modelo'])
-  veiculoIndex.updateSortableAttributes(['price', 'createdAt'])
+  await veiculoIndex.updateFilterableAttributes(['anos', 'cambio', 'categoria', 'combustivel', 'cor', 'marca', 'modelo'])
+  await veiculoIndex.updateSortableAttributes(['price', 'createdAt'])
 
   const res = await veiculoIndex.search<DataType>(search, { ...params, limit: params.limit ?? ITENS_PER_PAGE })
 

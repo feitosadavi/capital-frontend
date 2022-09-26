@@ -67,7 +67,7 @@ export const Carousel: React.FC<CarouselProps> = ({ photos }) => {
 
   return (
     <S.Container>
-      <div ref={sliderRef} className="keen-slider">
+      <div ref={sliderRef} className="keen-slider slides-container">
         {listImgs()}
       </div>
 

@@ -24,7 +24,7 @@ export const GlobalStyles = createGlobalStyle`
     list-style: none;
   }
   &::selection {
-    color: ${theme.colors.primary};
-    background:  ${theme.colors.primary};
+    color: ${theme.colors.yellow};
+    background:  ${theme.colors.secondary};
   }
 `

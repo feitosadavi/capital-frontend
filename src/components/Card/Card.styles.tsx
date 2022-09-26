@@ -17,6 +17,7 @@ export const Header = styled.div`
 
 export const Thumb = styled.div`
   width: 100%;
+  cursor: pointer;
 
   .img {
     border-radius: 0 .6rem 0 0;
@@ -28,7 +29,15 @@ export const Body = styled.div`
   flex-direction: column;
   align-items: flex-start;
   height: 85%;
-  
+  /* margin-top: .3rem; */
+  padding-top: .3rem;
+  padding-left: .6rem;
+  row-gap: .3rem;
+
+  .price {
+    font-weight: 600;
+    color: ${({ theme }) => theme.colors.secondary};
+  }
 `
 
 export const Footer = styled.div`

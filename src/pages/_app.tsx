@@ -5,14 +5,13 @@ import { ThemeProvider } from 'styled-components'
 
 import { GlobalStyles, theme } from '../styles'
 import { AppContextProvider } from '../context/app.context'
+import { Footer } from '../components'
 
 export default function App ({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
         <title>Capital Veículos</title>
-        <link rel="shortcut icon" href="/capital-logo.svg" style={{ width: '360px', height: '360px' }} />
-
 
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
@@ -34,6 +33,7 @@ export default function App ({ Component, pageProps }: AppProps) {
           <GlobalStyles />
           <Navbar />
           <Component {...pageProps} />
+          <Footer />
         </ThemeProvider>
       </AppContextProvider>
     </>

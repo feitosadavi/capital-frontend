@@ -10,29 +10,30 @@ export const Select = styled.div`
     text-align: start;
     color: ${({ theme }) => theme.colors.yellow};
     font-family: 'Roboto';
-    font-weight: 500;
+    font-weight: 400;
     letter-spacing: .05rem;
   }
 
   select {
     cursor: pointer;
     padding: .5rem;
-
+    height: 3rem;
+    
     text-align: center;
     font-size: 10pt;
     color: ${({ theme }) => theme.colors.white};
     font-weight: bold;
     text-transform: uppercase;
 
-    background-color: ${({ theme }) => theme.colors.secondary};
+    background-color: ${({ theme }) => theme.colors.primary};
 
     border-radius: .4rem;
     border: none;
 
     :disabled {
       cursor: default;
-      background-color: #383838;
-      color: #727272;
+      background-color: #161616;
+      color: #525050;
     }
   }
 `

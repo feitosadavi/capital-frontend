@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   width: 100%;
-  
+
 .number-slide {
   background: grey;
   display: flex;
@@ -11,8 +11,16 @@ export const Container = styled.div`
   font-size: 50px;
   color: #fff;
   font-weight: 500;
-  height: 25rem;
-  max-height: 100vh;
+}
+
+.slides-container {
+  border-radius: .5rem;
+  height: 27rem;
+
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    height: 25rem;
+  }
+}
 
   @media screen and (max-width: ${({ theme }) => theme.breakpoints.sm}) {
     height: 15rem;
@@ -23,6 +31,7 @@ export const Container = styled.div`
   font-size: 30px;
   margin-top: 10px;
   height: 100px;
+  border-radius: .5rem;
 
   @media screen and (max-width: ${({ theme }) => theme.breakpoints.sm}) {
     height: 60px;

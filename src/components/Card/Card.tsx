@@ -20,14 +20,14 @@ export const Card: React.FC<CardProps> = ({ vehicle }) => {
   }
 
   return (
-    <S.Container onClick={handleClick}>
-      <S.Body>
-        <S.Thumb>
-          <Image src={vehicle.photos[0].src} alt={vehicle.photos[0].alt} width='500px' height='350px' className="img" />
-        </S.Thumb>
+    <S.Container>
+      <S.Thumb onClick={handleClick}>
+        <Image src={vehicle.photos[0].src} alt={vehicle.photos[0].alt} width='500px' height='350px' className="img" />
+      </S.Thumb>
 
+      <S.Body>
         <span>{`${vehicle.marca} ${vehicle.modelo}`}</span>
-        <span>{currencyFormatter.format(vehicle.preco)}</span>
+        <span className='price'>{currencyFormatter.format(vehicle.preco)}</span>
       </S.Body>
 
       <S.Footer>
@@ -37,6 +37,7 @@ export const Card: React.FC<CardProps> = ({ vehicle }) => {
         <b>|</b>
         <span>{vehicle.cor}</span>
       </S.Footer>
+
     </S.Container>
   )
 }

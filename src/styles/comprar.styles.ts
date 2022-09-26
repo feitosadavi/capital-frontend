@@ -21,7 +21,7 @@ export const Filters = styled.div`
   flex: 1;
   padding: 1.5rem .8rem .8rem .8rem;
   border-radius: .3rem;
-  background-color: ${({ theme }) => theme.colors.primary};
+  /* background-color: ${({ theme }) => theme.colors.primary}; */
   display: flex;
   height: 70%;
   flex-direction: column;

@@ -1,6 +1,7 @@
 export * from './Card'
 export * from './Carousel'
 export * from './DesktopNav'
+export * from './Footer'
 export * from './Filters'
 export * from './Header'
 export * from './MobileFilters'
@@ -10,4 +11,5 @@ export * from './Pagination'
 export * from './SearchBar'
 export * from './Select'
 export * from './SwipeableDrawer'
+export * from './Logo'
 

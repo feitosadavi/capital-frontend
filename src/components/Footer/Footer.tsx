@@ -54,6 +54,7 @@ export const Footer = () => {
                   key={label}
                   className="info"
                   onClick={() => window.open(href, '__blank__')}
+                  data-href={href}
                 >
                   <span className='icon'>{element}</span>
                   <span>{label}</span>

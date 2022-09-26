@@ -5,6 +5,9 @@ const nextConfig = {
   images: {
     domains: ['res.cloudinary.com'],
   },
+  env: {
+    HOST: 'http://seashell-app-6ylyu.ondigitalocean.app'
+  }
 }
 
 module.exports = nextConfig

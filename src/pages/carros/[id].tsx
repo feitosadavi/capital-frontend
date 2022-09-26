@@ -2,19 +2,25 @@ import { GetStaticProps } from 'next'
 import React from 'react'
 import { request } from '../../services/request'
 import { ComprarPageVehicle, Vehicle as VehicleType } from '../../types'
-
+import InstagramIcon from '@mui/icons-material/Instagram'
+import FacebookIcon from '@mui/icons-material/Facebook'
+import TwitterIcon from '@mui/icons-material/Twitter'
 import * as S from '../../styles/[id].styled'
 
 type VehicleProps = {
   _vehicle: VehicleType
+  host: string
 }
 import * as Yup from 'yup'
 import { useFormik } from 'formik'
 import { Input } from '../../components/Input'
 import { Textarea } from '../../components/Textarea'
 import { Button } from '../../components/Button'
-import { Carousel, SwipeableDrawer } from '../../components'
+import { Carousel } from '../../components'
 import { Drawer, useMediaQuery } from '@mui/material'
+import Head from 'next/head'
+import { useRouter } from 'next/router'
+import absoluteUrl from 'next-absolute-url'
 const REQUIRED_FIELD_MSG = 'Campo obrigatório'
 
 const MessageSchema = Yup.object().shape({
@@ -24,7 +30,7 @@ const MessageSchema = Yup.object().shape({
   mensagem: Yup.string().required(REQUIRED_FIELD_MSG),
 })
 
-const Vehicle: React.FC<VehicleProps> = ({ _vehicle }) => {
+const Vehicle: React.FC<VehicleProps> = ({ _vehicle, host }) => {
   const onSubmit = async (values: any) => {
     console.log({ values })
   }
@@ -114,13 +120,44 @@ const Vehicle: React.FC<VehicleProps> = ({ _vehicle }) => {
     label: 'Cor',
     value: _vehicle.cor
   }]
+  const router = useRouter()
 
   const currencyFormatter = new Intl.NumberFormat('pt-BR', {
     style: 'currency',
     currency: 'BRL',
   });
 
-  return (
+  // const { origin } = absoluteUrl()
+
+  const social = [{
+    element: <FacebookIcon />,
+    label: 'Facebook',
+    href: 'https://www.facebook.com/sharer/sharer.php?u=example.org'
+  }, {
+    element: <InstagramIcon />,
+    label: 'Instagram',
+    href: 'instagram://user?username=untitled.tiff'
+  }, {
+    element: <TwitterIcon />,
+    label: 'Twitter',
+    href: `http://twitter.com/share?url=https://brave-donkey-12.loca.lt/carros/${_vehicle.id}`
+  }]
+
+
+  return (<>
+    <Head>
+      <meta property="og:url" content={`https://brave-donkey-12.loca.lt/carros/${_vehicle.id}`} />
+      <meta property="og:type" content="website" />
+      <meta property="og:title" content={`${_vehicle.marca} ${_vehicle.modelo}`} />
+      <meta property="og:description" content={_vehicle.descricao} />
+      <meta property="og:image" content={_vehicle.photos[0].src} />
+
+      <meta name="twitter:card" content="summary_large_image" />
+      {/* <meta name="twitter:image" content={_vehicle.photos[0].src} /> */}
+      <meta name="twitter:title" content={`${_vehicle.marca} ${_vehicle.modelo}`} />
+      <meta name="twitter:description" content='skadjfksjfkjds' />
+      {/* <meta name="twitter:domain" content="brave-donkey-12.loca.lt" /> */}
+    </Head>
     <S.Container>
       <S.Wrapper>
 
@@ -146,6 +183,22 @@ const Vehicle: React.FC<VehicleProps> = ({ _vehicle }) => {
         </S.Section>
 
         <S.Aside>
+          <S.Share>
+            <span>Compartilhe</span>
+            <div className="icons">
+              {
+                social.map(({ element, label, href }) => (
+                  <div
+                    style={{ cursor: 'pointer' }}
+                    key={label}
+                    onClick={() => window.open(href, '__blank__')}
+                  >
+                    <span className='icon'>{element}</span>
+                  </div>
+                ))
+              }
+            </div>
+          </S.Share>
           <ContactForm />
         </S.Aside>
         {
@@ -173,12 +226,12 @@ const Vehicle: React.FC<VehicleProps> = ({ _vehicle }) => {
       </S.Wrapper>
 
     </S.Container>
-  )
+  </>)
 }
 
 // This function gets called at build time
 export const getStaticPaths = async () => {
-  const { data } = await request<{ data: ComprarPageVehicle[] }>('http://localhost:1337/api/veiculos?populate=*')
+  const { data } = await request<{ data: ComprarPageVehicle[] }>('http://seashell-app-6ylyu.ondigitalocean.app/api/veiculos?populate=*')
 
   const paths = data.map(({ id }) => ({
     params: { id: String(id) },
@@ -190,9 +243,9 @@ export const getStaticPaths = async () => {
 }
 
 export const getStaticProps: GetStaticProps<VehicleProps> = async ({ params }) => {
-  const { data } = await request<{ data: VehicleType }>(`http://localhost:1337/api/veiculos/${params?.id}?populate=*`)
+  const { data } = await request<{ data: VehicleType }>(`http://seashell-app-6ylyu.ondigitalocean.app/api/veiculos/${params?.id}?populate=*`)
 
-  const props: VehicleProps = { _vehicle: data }
+  const props: VehicleProps = { _vehicle: data, host: process.env.HOST }
 
   return { props }
 }

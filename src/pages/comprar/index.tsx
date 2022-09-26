@@ -30,7 +30,7 @@ const Home: NextPage<Props> = ({
   const isFirstMount = React.useRef<boolean>(true)
   React.useEffect(() => {
     if (!isFirstMount.current) {
-      request<Select[]>(`http://localhost:1337/api/filters?marca=${context.filters.marca}`)
+      request<Select[]>(`http://seashell-app-6ylyu.ondigitalocean.app/api/filters?marca=${context.filters.marca}`)
         .then(_selects => setSelects(_selects))
         .catch(console.log)
     } else {
@@ -81,7 +81,7 @@ const Home: NextPage<Props> = ({
 }
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  const _selects = await request<Select[]>('http://localhost:1337/api/filters')
+  const _selects = await request<Select[]>('http://seashell-app-6ylyu.ondigitalocean.app/api/filters')
 
   const { data: _vehicles, resultsCount: _resultsCount } = await fetchMeilisearch<ComprarPageVehicle>('veiculo', '', {
     sort: ['createdAt:desc'],

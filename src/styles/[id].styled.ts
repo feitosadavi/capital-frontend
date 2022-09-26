@@ -110,6 +110,26 @@ export const Aside = styled.section`
   }
 `
 
+export const Share = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid ${({ theme }) => theme.colors.primary};
+  border-radius: .5rem;
+  padding: 1rem;
+  margin-bottom: 1rem;
+
+  .icons {
+    display: flex;
+    gap: .6rem;
+    width: 30%;
+  }
+  .icon {
+    color: ${({ theme }) => theme.colors.yellow};
+  }
+`
+
 
 export const ContactWrapper = styled.div`
   width: 100%;

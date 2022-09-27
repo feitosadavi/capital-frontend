@@ -1,6 +1,7 @@
 import { MeiliSearchParams } from '@meilisearch/instant-meilisearch'
 import MeiliSearch from 'meilisearch'
 import { MEILI } from '../host'
+import { searchClient } from '../services/searchClient'
 import { Photo } from '../types'
 
 type Result<DataType = any> = {
@@ -33,18 +34,16 @@ const getLabelFromField = (data: any) => {
   return fields
 }
 
-export const fetchMeilisearch = async <DataType = any> (index: string, search: string, params: MeiliSearchParams): Promise<Result<DataType[]>> => {
-  const ITENS_PER_PAGE = 2
-
-  const searchClient = new MeiliSearch({
-    host: MEILI,
-    // apiKey: 'OTBiMTM1MWQyNDQ0ZTA3ZGY3MmNlMDNj'
-  })
-
-
+export const setupMeiliAttrs = async (index: string) => {
   const veiculoIndex = searchClient.index(index)
+
   await veiculoIndex.updateFilterableAttributes(['anos', 'ano', 'cambio', 'categoria', 'combustivel', 'cor', 'marca', 'modelo'])
   await veiculoIndex.updateSortableAttributes(['preco', 'createdAt'])
+}
+
+export const fetchMeilisearch = async <DataType = any> (index: string, search: string, params: MeiliSearchParams): Promise<Result<DataType[]>> => {
+  const ITENS_PER_PAGE = 2
+  const veiculoIndex = searchClient.index(index)
 
   const res = await veiculoIndex.search<DataType>(search, { ...params, limit: params.limit ?? ITENS_PER_PAGE })
 

@@ -9,7 +9,7 @@ import { ComprarPageVehicle, Select } from '../../types'
 import * as S from '../../styles/comprar.styles'
 import { AppContext } from '../../context/app.context'
 import { useMediaQuery } from '@mui/material'
-import { fetchMeilisearch } from '../../Hookes'
+import { fetchMeilisearch, setupMeiliAttrs } from '../../Hookes'
 import { CMS } from '../../host'
 
 
@@ -98,9 +98,10 @@ const Home: NextPage<Props> = ({
 }
 
 export const getStaticProps: GetStaticProps = async (context) => {
+  await setupMeiliAttrs('veiculos')
+
   const _selects = await fetchSelects()
   const { data: _vehicles, resultsCount: _resultsCount } = await fetchMeilisearch<ComprarPageVehicle>('veiculo', '', {
-    sort: ['createdAt:desc'],
     offset: 0
   })
 

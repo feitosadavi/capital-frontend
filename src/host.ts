@@ -1,5 +1,5 @@
 export const MEILI = process.env.NODE_ENV === 'development'
-  ? 'http://localhost:7700'
+  ? 'https://meilisearch.capitalveiculosdf.com'
   : 'http://157.230.49.254'
 
 export const CMS = process.env.NODE_ENV === 'development'

@@ -258,9 +258,13 @@ const Vehicle: React.FC<VehicleProps> = ({ _vehicle }) => {
 
 // This function gets called at build time
 export const getStaticPaths = async () => {
-  const { data } = await request<{ data: ComprarPageVehicle[] }>(`${CMS}/api/veiculos?populate=*`)
+  console.log({ CMS });
 
-  const paths = data.map(({ id }) => ({
+  const res = await request<{ data: ComprarPageVehicle[] }>(`${CMS}/api/veiculos?populate=*`)
+  console.log({ res });
+  console.log({ data: res.data });
+
+  const paths = res.data.map(({ id }) => ({
     params: { id: String(id) },
   }))
 

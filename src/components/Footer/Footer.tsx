@@ -20,7 +20,7 @@ export const Footer = () => {
     label: 'comercial@capitalveiculosdf.com'
   }, {
     element: <PhoneIcon />,
-    label: '+55 (61) 33366520'
+    label: '+55 (61) 33745656'
   }]
 
   const social = [{

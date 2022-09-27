@@ -63,3 +63,20 @@ export const Grid = styled.div`
     width: 100%;
   }
 `
+
+export const ClearFiltersBtn = styled.button`
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  width: 100%;
+  background-color: transparent;
+  font-size: 10pt;
+  font-weight: 500;
+  font-family: 'Roboto';
+  color: ${({ theme }) => theme.colors.yellow};
+  opacity: .7;
+
+  :hover {
+    opacity: 1;
+  }
+`

@@ -36,13 +36,13 @@ export const fetchMeilisearch = async <DataType = any> (index: string, search: s
   const ITENS_PER_PAGE = 2
 
   const searchClient = new MeiliSearch({
-    host: 'http://157.230.49.254'
+    host: 'http://localhost:7700'
   })
 
 
   const veiculoIndex = searchClient.index(index)
-  await veiculoIndex.updateFilterableAttributes(['anos', 'cambio', 'categoria', 'combustivel', 'cor', 'marca', 'modelo'])
-  await veiculoIndex.updateSortableAttributes(['price', 'createdAt'])
+  await veiculoIndex.updateFilterableAttributes(['anos', 'ano', 'cambio', 'categoria', 'combustivel', 'cor', 'marca', 'modelo'])
+  await veiculoIndex.updateSortableAttributes(['preco', 'createdAt'])
 
   const res = await veiculoIndex.search<DataType>(search, { ...params, limit: params.limit ?? ITENS_PER_PAGE })
 

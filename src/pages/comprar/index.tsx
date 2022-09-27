@@ -12,6 +12,22 @@ import { useMediaQuery } from '@mui/material'
 import { fetchMeilisearch } from '../../Hookes'
 
 
+const fetchSelects = async (params?: string): Promise<Select[]> => {
+  try {
+    const _selects = await request<Select[]>(`http://localhost:1337/api/filters?${params}`)
+
+    const ano = _selects.filter(_select => _select.key === 'ano')[0]
+    const anos = { ...ano, key: 'anos' }
+
+    _selects.splice(_selects.indexOf(ano), 1)
+    _selects.push(anos)
+    return _selects
+  } catch (error) {
+    console.log(error);
+    return []
+  }
+}
+
 interface Props {
   _vehicles: ComprarPageVehicle[]
   _selects: Select[]
@@ -19,34 +35,34 @@ interface Props {
 }
 
 const Home: NextPage<Props> = ({
-  _vehicles,
   _selects,
   _resultsCount
 }) => {
   const context = React.useContext(AppContext)
   const [selects, setSelects] = React.useState<Select[]>(_selects)
-  const [vehicles, setVehicles] = React.useState<ComprarPageVehicle[]>(_vehicles)
+  const [vehicles, setVehicles] = React.useState<ComprarPageVehicle[]>([])
 
   const isFirstMount = React.useRef<boolean>(true)
   React.useEffect(() => {
     if (!isFirstMount.current) {
-      request<Select[]>(`http://seashell-app-6ylyu.ondigitalocean.app/api/filters?marca=${context.filters.marca}`)
-        .then(_selects => setSelects(_selects))
-        .catch(console.log)
+      fetchSelects(`marca=${context.filters?.marca}`)
+        .then(res => setSelects(res))
     } else {
       context.setResultsCount(_resultsCount)
       isFirstMount.current = false
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [context.filters.marca])
+  }, [context.filters?.marca])
 
   const isMobile = useMediaQuery('(max-width:800px)')
 
-  const renderSelects = () =>
-    selects.map(select => (
-      <Filters key={select.label} select={select} />
-    ))
+  const clearFilters = () => context.setFilters(null)
+
+  const renderSelects = () => <>
+    <S.ClearFiltersBtn onClick={clearFilters}><span>X</span>LIMPAR FILTROS</S.ClearFiltersBtn>
+    {selects.map(select => <Filters key={select.label} select={select} />)}
+  </>
 
   return (
     <>
@@ -81,12 +97,13 @@ const Home: NextPage<Props> = ({
 }
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  const _selects = await request<Select[]>('http://seashell-app-6ylyu.ondigitalocean.app/api/filters')
-
+  const _selects = await fetchSelects()
   const { data: _vehicles, resultsCount: _resultsCount } = await fetchMeilisearch<ComprarPageVehicle>('veiculo', '', {
     sort: ['createdAt:desc'],
     offset: 0
   })
+
+
 
   const props: Props = { _vehicles, _selects, _resultsCount }
 

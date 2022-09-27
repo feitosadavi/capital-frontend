@@ -6,6 +6,7 @@ import { ComprarPageVehicle, Vehicle as VehicleType } from '../../types'
 import InstagramIcon from '@mui/icons-material/Instagram'
 import FacebookIcon from '@mui/icons-material/Facebook'
 import TwitterIcon from '@mui/icons-material/Twitter'
+import WhatsappIcon from '@mui/icons-material/WhatsApp'
 import * as S from '../../styles/[id].styled'
 
 import * as Yup from 'yup'
@@ -138,7 +139,12 @@ const Vehicle: React.FC<VehicleProps> = ({ _vehicle }) => {
   }, {
     element: <TwitterIcon />,
     label: 'Twitter',
-      href: `https://twitter.com/share?url=${encodeURIComponent(pageUrl)}`
+      href: `https://twitter.com/share?text=&url=Veja só este anúncio da Capital Veículos! ->${encodeURIComponent(pageUrl)}`
+    }, {
+      label: 'Whatsapp',
+      href: `whatsapp://send?text=${'Veja só este anúncio da Capital Veículos! ->' + encodeURIComponent(pageUrl)}&phone=+556133745656`,
+      element: <WhatsappIcon />,
+
     }]
 
   React.useEffect(() => {
@@ -245,14 +251,13 @@ const Vehicle: React.FC<VehicleProps> = ({ _vehicle }) => {
           </>
         }
       </S.Wrapper>
-
     </S.Container>
   </>)
 }
 
 // This function gets called at build time
 export const getStaticPaths = async () => {
-  const { data } = await request<{ data: ComprarPageVehicle[] }>('http://seashell-app-6ylyu.ondigitalocean.app/api/veiculos?populate=*')
+  const { data } = await request<{ data: ComprarPageVehicle[] }>('http://localhost:1337/api/veiculos?populate=*')
 
   const paths = data.map(({ id }) => ({
     params: { id: String(id) },
@@ -264,7 +269,7 @@ export const getStaticPaths = async () => {
 }
 
 export const getStaticProps: GetStaticProps<VehicleProps> = async ({ params }) => {
-  const { data } = await request<{ data: VehicleType }>(`http://seashell-app-6ylyu.ondigitalocean.app/api/veiculos/${params?.id}?populate=*`)
+  const { data } = await request<{ data: VehicleType }>(`http://localhost:1337/api/veiculos/${params?.id}?populate=*`)
 
   const props: VehicleProps = { _vehicle: data }
 

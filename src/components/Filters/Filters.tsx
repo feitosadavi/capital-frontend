@@ -8,7 +8,9 @@ export const Filters: React.FC<{ select: Select }> = ({ select: { label, options
   const context = React.useContext(AppContext)
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     event.preventDefault()
-    context.setFilters(prevState => ({ ...prevState, [key]: event.target.value }))
+    const value = event.target.value
+    const newFilterValue = { [key]: value === 'Todos' ? '*' : value }
+    context.setFilters(prevState => prevState ? ({ ...prevState, ...newFilterValue }) : ({ ...newFilterValue }) as any)
   }
 
   // use um event listner dentro do select para realizar as mudanças
@@ -18,9 +20,9 @@ export const Filters: React.FC<{ select: Select }> = ({ select: { label, options
       child: 'modelo'
     })
 
-    context.setFilters(prevState => ({ ...prevState, modelo: '*' }))
+    context.setFilters(prevState => prevState ? ({ ...prevState, modelo: '*' }) : ({ modelo: '*' }) as any)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [context.filters.marca])
+  }, [context.filters?.marca])
 
 
   return (
@@ -29,6 +31,7 @@ export const Filters: React.FC<{ select: Select }> = ({ select: { label, options
         id={key}
         label={label}
         options={options}
+        value={context.filters ? (context.filters as any)[key] : '*'}
         onChange={handleChange}
       />
     </>

@@ -6,19 +6,20 @@ type Props = {
   id: string
   options: any[]
   onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void
+  value: string
 }
 
-export const Select: React.FC<Props> = ({ id, label, options, onChange }) => {
+export const Select: React.FC<Props> = ({ id, label, options, onChange, value }) => {
   // if (label === 'Marcas') console.log('Options: ', { [label]: options });
   // if (label === 'Modelos') console.log('Options: ', { [label]: options });
 
   return (
     <S.Select>
       <label htmlFor={id}>{label}</label>
-      <select onChange={onChange} name={id} id={id}>
-        <option value='*'>Todos</option>
+      <select defaultValue={value} onChange={onChange} name={id} id={id}>
+        <option selected={value === '*'}>Todos</option>
         {options.map(option => (
-          <option key={option} value={option}>{option}</option>
+          <option selected={option === value} key={option} value={option}>{option}</option>
         ))}
       </select>
     </S.Select>

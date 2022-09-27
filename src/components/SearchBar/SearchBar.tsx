@@ -18,17 +18,20 @@ interface Props {
   vehicles: ComprarPageVehicle[]
 }
 
-const setupFilter = (filters: Filters) => {
-  let query = ''
-  const keys = Object.keys(filters)
-  for (const key of keys) {
-    const currentFilter = (filters as any)[key]
-    if (currentFilter !== '*') {
-      const isQueryEmpty = query.length === 0;
-      query += ` ${isQueryEmpty ? '' : 'AND'} ${key}.label='${currentFilter}'`
+const setupFilter = (filters: Filters | null) => {
+  if (filters) {
+    let query = ''
+    const keys = Object.keys(filters)
+    for (const key of keys) {
+      const currentFilter = (filters as any)[key]
+      if (currentFilter !== '*') {
+        const isQueryEmpty = query.length === 0;
+        query += ` ${isQueryEmpty ? '' : 'AND'} ${key}.label='${currentFilter}'`
+      }
     }
+    return query
   }
-  return query
+  return ''
 }
 
 export const SearchBar: React.FC<Props> = ({ setVehicles, vehicles }) => {
@@ -52,23 +55,24 @@ export const SearchBar: React.FC<Props> = ({ setVehicles, vehicles }) => {
     context.setNumberOfPages(numberOfPages)
   }
 
-  const isFirstMount = React.useRef<boolean>(true)
+  const isFirstMount1 = React.useRef<boolean>(true)
   React.useEffect(() => {
-    if (!isFirstMount.current) {
+    if (!isFirstMount1.current) {
       fetchVehicles(0).then(() => {
         context.setPage(1)
       })
     } else {
-      isFirstMount.current = false
+      isFirstMount1.current = false
     }
   }, [search, context.filters, orderFilter])
 
+  const isFirstMount2 = React.useRef<boolean>(true)
   React.useEffect(() => {
-    if (!isFirstMount.current) {
+    if (!isFirstMount2.current) {
       const offset = (2 * (context.page ?? 0)) - 1
       fetchVehicles(offset)
     } else {
-      isFirstMount.current = false
+      isFirstMount2.current = false
     }
   }, [context.page])
 

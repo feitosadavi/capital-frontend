@@ -11,8 +11,8 @@ export type Filters = {
 }
 
 type ContextProps = {
-  filters: Filters
-  setFilters: React.Dispatch<React.SetStateAction<Filters>>
+  filters: Filters | null
+  setFilters: React.Dispatch<React.SetStateAction<Filters | null>>
   page: number
   setPage: React.Dispatch<React.SetStateAction<number>>
   numberOfPages: number,
@@ -26,13 +26,18 @@ type ContextProps = {
 export const AppContext = React.createContext<ContextProps>({} as ContextProps)
 
 export const AppContextProvider: React.FC<any> = ({ children }) => {
-  const [filters, setFilters] = React.useState<Filters>({} as Filters)
+  const [filters, setFilters] = React.useState<Filters | null>({} as Filters)
   const [page, setPage] = React.useState<number>(1)
   const [numberOfPages, setNumberOfPages] = React.useState<number>(1)
   const [resultsCount, setResultsCount] = React.useState<number>(0)
 
   const [isMobileFilterOpen, setIsMobileFilterOpen] = React.useState<boolean>(false);
   const toogleMobileFilter = () => setIsMobileFilterOpen(prevState => !prevState);
+
+  React.useEffect(() => {
+    console.log(filters);
+
+  }, [filters])
 
   return (
     <AppContext.Provider value={{

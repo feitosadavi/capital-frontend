@@ -29,6 +29,16 @@ const StyledTextarea = styled.div`
   width: 100%;
   margin: .8rem auto .8rem auto;
   
+  label {
+    width: 100%;
+    text-align: center;
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: .3rem;
+    color: #8b8b8b;
+    font-weight: 500;
+  }
+  
   textarea {
     width: 100%;
     background-color: ${({ theme }) => theme.colors.secondary};

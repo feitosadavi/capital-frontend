@@ -35,7 +35,10 @@ const Vehicle: React.FC<VehicleProps> = ({ _vehicle }) => {
   const [pageUrl, setPageUrl] = React.useState<string>('')
 
   const onSubmit = async (values: any) => {
-    console.log({ values })
+    console.log({ values });
+
+    const message = `Olá! Meu nome é ${values.nome}! Tenho interesse neste veículo -> ${pageUrl}`
+    window.open(`https://api.whatsapp.com/send?text=${message}&phone=556133745656`, '__target__')
   }
 
   const { errors, handleSubmit, handleChange, values } = useFormik({
@@ -51,7 +54,7 @@ const Vehicle: React.FC<VehicleProps> = ({ _vehicle }) => {
 
   const ContactForm = () => (
     <S.ContactWrapper>
-      <div>Envie a sua proposta e marcaremos uma visita! :)</div>
+      <div className='chamada'>Envie a sua proposta e marcaremos uma visita! :)</div>
 
       <form onSubmit={handleSubmit} action="">
         <S.ContactForm>
@@ -133,10 +136,6 @@ const Vehicle: React.FC<VehicleProps> = ({ _vehicle }) => {
     element: <FacebookIcon />,
     label: 'Facebook',
     href: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(pageUrl)}`
-  }, {
-    element: <InstagramIcon />,
-    label: 'Instagram',
-    href: 'instagram://user?username=untitled.tiff'
   }, {
     element: <TwitterIcon />,
     label: 'Twitter',
@@ -258,12 +257,7 @@ const Vehicle: React.FC<VehicleProps> = ({ _vehicle }) => {
 
 // This function gets called at build time
 export const getStaticPaths = async () => {
-  console.log({ CMS });
-
   const res = await request<{ data: ComprarPageVehicle[] }>(`${CMS}/api/veiculos?populate=*`)
-  console.log({ res });
-  console.log({ data: res.data });
-
   const paths = res.data.map(({ id }) => ({
     params: { id: String(id) },
   }))

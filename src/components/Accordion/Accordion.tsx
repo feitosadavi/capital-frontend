@@ -19,10 +19,13 @@ export const Accordion: React.FC<AccordionProps> = ({ questions }) => {
             expandIcon={<ExpandMoreIcon className='expand-icon' />}
             aria-controls="panel1a-content"
             id="panel1a-header"
+            className='summary'
           >
             <Typography>{title}</Typography>
           </AccordionSummary>
-          <AccordionDetails>
+          <AccordionDetails
+            className='summary'
+          >
             <Typography>{description}</Typography>
           </AccordionDetails>
         </S.Accordion>

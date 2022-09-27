@@ -138,6 +138,11 @@ export const ContactWrapper = styled.div`
   border-radius: .5rem ;
   background-color: ${({ theme }) => theme.colors.primary};
 
+  .chamada {
+    color: ${({ theme }) => theme.colors.white};
+    font-weight: 500;
+  }
+
   @media screen and (max-width: ${({ theme }) => theme.breakpoints.md}) {
     height: 100%;
     border-radius: 0;

@@ -11,6 +11,11 @@ export const Accordion = styled(MUIAccordion)`
   background-color: ${({ theme }) => theme.colors.primary};
   color: ${({ theme }) => theme.colors.white};
 
+  .summary {
+    background-color: ${({ theme }) => theme.colors.primary};
+    color: ${({ theme }) => theme.colors.white};
+  }
+
   .expand-icon {
     color: ${({ theme }) => theme.colors.yellow};
   }

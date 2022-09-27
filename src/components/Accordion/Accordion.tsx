@@ -14,17 +14,17 @@ export const Accordion: React.FC<AccordionProps> = ({ questions }) => {
   return (
     <S.Container>
       {questions.map(({ title, description }) => (
-        <S.Accordion key={title}>
+        <S.Accordion
+
+          key={title}>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon className='expand-icon' />}
             aria-controls="panel1a-content"
             id="panel1a-header"
-            className='summary'
           >
             <Typography>{title}</Typography>
           </AccordionSummary>
           <AccordionDetails
-            className='summary'
           >
             <Typography>{description}</Typography>
           </AccordionDetails>

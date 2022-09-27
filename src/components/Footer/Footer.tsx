@@ -20,7 +20,8 @@ export const Footer = () => {
     label: 'comercial@capitalveiculosdf.com'
   }, {
     element: <PhoneIcon />,
-    label: '+55 (61) 33745656'
+    label: '+55 (61) 37745656',
+    onClick: () => window.open('https://api.whatsapp.com/send?phone=556137745656', '__target__')
   }]
 
   const social = [{
@@ -39,8 +40,8 @@ export const Footer = () => {
         <S.Wrapper>
           <div>
             {
-              icons.map(({ element, label }) => (
-                <div key={label} className="info">
+              icons.map(({ element, label, onClick }) => (
+                <div onClick={onClick} key={label} className="info">
                   <span className='icon'>{element}</span>
                   <span>{label}</span>
                 </div>

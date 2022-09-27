@@ -6,6 +6,12 @@ import { ThemeProvider } from 'styled-components'
 import { GlobalStyles, theme } from '../styles'
 import { AppContextProvider } from '../context/app.context'
 import { Footer } from '../components'
+import { ThemeProvider as MUIThemeProvider, createTheme } from '@mui/material/styles';
+const darkTheme = createTheme({
+  palette: {
+    mode: 'dark',
+  },
+});
 
 export default function App ({ Component, pageProps }: AppProps) {
   return (
@@ -29,12 +35,14 @@ export default function App ({ Component, pageProps }: AppProps) {
       </Head>
 
       <AppContextProvider>
-        <ThemeProvider theme={theme}>
-          <GlobalStyles />
-          <Navbar />
-          <Component {...pageProps} />
-          <Footer />
-        </ThemeProvider>
+        <MUIThemeProvider theme={darkTheme}>
+          <ThemeProvider theme={theme}>
+            <GlobalStyles />
+            <Navbar />
+            <Component {...pageProps} />
+            <Footer />
+          </ThemeProvider>
+        </MUIThemeProvider>
       </AppContextProvider>
     </>
   )

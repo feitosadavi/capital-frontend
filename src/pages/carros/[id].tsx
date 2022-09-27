@@ -35,10 +35,8 @@ const Vehicle: React.FC<VehicleProps> = ({ _vehicle }) => {
   const [pageUrl, setPageUrl] = React.useState<string>('')
 
   const onSubmit = async (values: any) => {
-    console.log({ values });
-
     const message = `Olá! Meu nome é ${values.nome}! Tenho interesse neste veículo -> ${pageUrl}`
-    window.open(`https://api.whatsapp.com/send?text=${message}&phone=556133745656`, '__target__')
+    window.open(`https://api.whatsapp.com/send?text=${message}&phone=556137745656`, '__target__')
   }
 
   const { errors, handleSubmit, handleChange, values } = useFormik({
@@ -52,7 +50,7 @@ const Vehicle: React.FC<VehicleProps> = ({ _vehicle }) => {
     onSubmit: onSubmit
   });
 
-  const ContactForm = () => (
+  const ContactForm = (
     <S.ContactWrapper>
       <div className='chamada'>Envie a sua proposta e marcaremos uma visita! :)</div>
 
@@ -226,7 +224,7 @@ const Vehicle: React.FC<VehicleProps> = ({ _vehicle }) => {
               }
             </div>
           </S.Share>
-          <ContactForm />
+          {ContactForm}
         </S.Aside>
         {
           isMobile &&
@@ -236,7 +234,7 @@ const Vehicle: React.FC<VehicleProps> = ({ _vehicle }) => {
               open={isContactDrawerOpen}
               onClose={toggleContactDrawer}
             >
-              <ContactForm />
+              {ContactForm}
             </Drawer>
             <div style={{
               position: 'fixed',

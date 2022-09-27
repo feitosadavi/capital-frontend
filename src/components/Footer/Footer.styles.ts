@@ -12,6 +12,11 @@ export const Footer = styled.div`
     display: flex;
     align-items: center;
     gap: 1rem;
+
+    :hover {
+      cursor: pointer;
+      color: ${({ theme }) => theme.colors.yellow};
+    }
   }
 
   .icon {

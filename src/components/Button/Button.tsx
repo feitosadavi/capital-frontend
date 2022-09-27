@@ -3,10 +3,11 @@ import styled from 'styled-components'
 type ButtonProps = {
   label: string
   type?: "button" | "reset" | "submit"
+  onClick?: (e?: any) => void
 }
 
-export const Button: React.FC<ButtonProps> = ({ label, type = 'button' }) => {
-  return <StyledButton type={type}>{label}</StyledButton>
+export const Button: React.FC<ButtonProps> = ({ label, type = 'button', onClick }) => {
+  return <StyledButton onClick={onClick} type={type}>{label}</StyledButton>
 }
 
 const StyledButton = styled.button`

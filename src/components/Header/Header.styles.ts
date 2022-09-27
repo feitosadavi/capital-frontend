@@ -23,12 +23,6 @@ export const Wrapper = styled.div`
   max-width: 90rem;
   height: 100%;
 `
-export const NavLinks = styled.a`
-  display: flex;
-  justify-content: space-between;
-  width: 9rem;
-  
-`
 
 export const NavLink = styled.a<{ active: boolean }>`
   font-family: ${({ theme }) => theme.font.primary.family};

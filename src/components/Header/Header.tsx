@@ -10,11 +10,11 @@ import * as S from './Header.styles'
 import { Logo } from '../index';
 
 const pages: Page[] = [{
-  label: 'Home',
-  href: '/'
-}, {
   label: 'Comprar',
   href: '/comprar'
+}, {
+    label: 'Duvidas',
+    href: '/duvidas'
 }]
 
 export const Navbar = () => {

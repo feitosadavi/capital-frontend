@@ -38,7 +38,7 @@ export const fetchMeilisearch = async <DataType = any> (index: string, search: s
 
   const searchClient = new MeiliSearch({
     host: MEILI,
-    apiKey: 'OTBiMTM1MWQyNDQ0ZTA3ZGY3MmNlMDNj'
+    // apiKey: 'OTBiMTM1MWQyNDQ0ZTA3ZGY3MmNlMDNj'
   })
 
 

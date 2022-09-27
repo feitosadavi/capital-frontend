@@ -16,6 +16,7 @@ import { Textarea } from '../../components/Textarea'
 import { Button } from '../../components/Button'
 import { Carousel } from '../../components'
 import { Drawer, useMediaQuery } from '@mui/material'
+import { CMS } from '../../host'
 
 const REQUIRED_FIELD_MSG = 'Campo obrigatório'
 
@@ -257,7 +258,7 @@ const Vehicle: React.FC<VehicleProps> = ({ _vehicle }) => {
 
 // This function gets called at build time
 export const getStaticPaths = async () => {
-  const { data } = await request<{ data: ComprarPageVehicle[] }>('http://localhost:1337/api/veiculos?populate=*')
+  const { data } = await request<{ data: ComprarPageVehicle[] }>(`${CMS}/api/veiculos?populate=*`)
 
   const paths = data.map(({ id }) => ({
     params: { id: String(id) },
@@ -269,7 +270,7 @@ export const getStaticPaths = async () => {
 }
 
 export const getStaticProps: GetStaticProps<VehicleProps> = async ({ params }) => {
-  const { data } = await request<{ data: VehicleType }>(`http://localhost:1337/api/veiculos/${params?.id}?populate=*`)
+  const { data } = await request<{ data: VehicleType }>(`${CMS}/api/veiculos/${params?.id}?populate=*`)
 
   const props: VehicleProps = { _vehicle: data }
 

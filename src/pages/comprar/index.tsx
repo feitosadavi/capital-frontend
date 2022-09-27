@@ -10,11 +10,12 @@ import * as S from '../../styles/comprar.styles'
 import { AppContext } from '../../context/app.context'
 import { useMediaQuery } from '@mui/material'
 import { fetchMeilisearch } from '../../Hookes'
+import { CMS } from '../../host'
 
 
 const fetchSelects = async (params?: string): Promise<Select[]> => {
   try {
-    const _selects = await request<Select[]>(`http://localhost:1337/api/filters?${params}`)
+    const _selects = await request<Select[]>(`${CMS}/api/filters?${params}`)
 
     const ano = _selects.filter(_select => _select.key === 'ano')[0]
     const anos = { ...ano, key: 'anos' }

@@ -1,5 +1,6 @@
 import { MeiliSearchParams } from '@meilisearch/instant-meilisearch'
 import MeiliSearch from 'meilisearch'
+import { MEILI } from '../host'
 import { Photo } from '../types'
 
 type Result<DataType = any> = {
@@ -36,7 +37,7 @@ export const fetchMeilisearch = async <DataType = any> (index: string, search: s
   const ITENS_PER_PAGE = 2
 
   const searchClient = new MeiliSearch({
-    host: 'http://localhost:7700'
+    host: MEILI
   })
 
 

@@ -20,7 +20,7 @@ export const Wrapper = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 85%;
-  max-width: 85rem;
+  max-width: 90rem;
   height: 100%;
 `
 

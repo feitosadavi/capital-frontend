@@ -13,7 +13,7 @@ export const Container = styled.div`
   margin-left: auto;
   margin-right: auto;
   width: 85%;
-  max-width: 85rem;
+  max-width: 90rem;
 `
 
 export const Wrapper = styled.div`
@@ -80,6 +80,7 @@ export const Details = styled.div`
   ${customBackground}
   grid-template-columns: auto auto auto;
   justify-items: center;
+  margin-bottom: 3rem;
 
   @media screen and (max-width: ${({ theme }) => theme.breakpoints.md}) {
     grid-template-columns: auto auto;

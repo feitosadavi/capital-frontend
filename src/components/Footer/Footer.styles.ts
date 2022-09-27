@@ -27,34 +27,13 @@ export const Footer = styled.div`
 
 `
 
-export const Left = styled.div`
-  display: flex;
-  justify-content: space-between;
-  flex-direction: column;
-  gap: .7rem;
-  width: 100%;
-  height: 70%;
-`
-
-export const Right = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: .7rem;
-  width: 100%;
-  height: 70%;
-
-  @media screen and (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    align-items: flex-start;
-  }
-`
 
 export const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 80%;
-  max-width: 85rem;
+  max-width: 90rem;
   height: 100%;
   row-gap: 2rem;
   margin-top: 1rem;
@@ -74,6 +53,11 @@ export const Wrapper = styled.div`
     justify-content: space-between;
     width: 30%;
     height: 100%;
+
+    @media screen and (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    /* flex-direction: column; */
+      width: 100%;
+    }
   }
 
   .social-networks__title {

@@ -7,7 +7,7 @@ export const Main = styled.main`
   margin-right: auto;
 
   width: 85%;
-  max-width: 85rem;
+  max-width: 90rem;
   height: 100vh;
   
   display: flex;

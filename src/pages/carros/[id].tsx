@@ -184,6 +184,23 @@ const Vehicle: React.FC<VehicleProps> = ({ _vehicle }) => {
               </S.Info>
             ))}
           </S.Details>
+
+          <S.Share>
+            <span>Compartilhe</span>
+            <div className="icons">
+              {
+                social.map(({ element, label, href }) => (
+                  <div
+                    style={{ cursor: 'pointer' }}
+                    key={label}
+                    onClick={() => window.open(href, '__blank__')}
+                  >
+                    <span className='icon'>{element}</span>
+                  </div>
+                ))
+              }
+            </div>
+          </S.Share>
         </S.Section>
 
         <S.Aside>

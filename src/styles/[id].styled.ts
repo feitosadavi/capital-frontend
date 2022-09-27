@@ -124,7 +124,6 @@ export const Share = styled.div`
   .icons {
     display: flex;
     gap: .6rem;
-    width: 30%;
   }
   .icon {
     color: ${({ theme }) => theme.colors.yellow};

@@ -143,7 +143,7 @@ const Vehicle: React.FC<VehicleProps> = ({ _vehicle }) => {
       href: `https://twitter.com/share?text=&url=Veja só este anúncio da Capital Veículos! ->${encodeURIComponent(pageUrl)}`
     }, {
       label: 'Whatsapp',
-      href: `whatsapp://send?text=${'Veja só este anúncio da Capital Veículos! ->' + encodeURIComponent(pageUrl)}&phone=+556133745656`,
+    href: `https://api.whatsapp.com/send?text=${'Veja só este anúncio da Capital Veículos! -> ' + encodeURIComponent(pageUrl)}`,
       element: <WhatsappIcon />,
 
     }]

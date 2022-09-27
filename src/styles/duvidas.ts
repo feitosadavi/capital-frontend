@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Container = styled.main`
-  height: 100vh;
+  height: 70vh;
   width: 85%;
 
   display: block;
@@ -35,5 +35,6 @@ export const ButtonGroup = styled.div`
 `
 export const Duvidas = styled.div`
   display: flex;
+  width: 100%;
   flex-direction: column;
 `

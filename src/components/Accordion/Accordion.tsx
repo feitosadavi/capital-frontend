@@ -1,10 +1,10 @@
 import * as React from 'react';
-import MUIAccordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Question } from '../../types';
+import * as S from './Accordion.styles';
 
 type AccordionProps = {
   questions: Question[]
@@ -12,11 +12,11 @@ type AccordionProps = {
 
 export const Accordion: React.FC<AccordionProps> = ({ questions }) => {
   return (
-    <div>
+    <S.Container>
       {questions.map(({ title, description }) => (
-        <MUIAccordion key={title}>
+        <S.Accordion key={title}>
           <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
+            expandIcon={<ExpandMoreIcon sx={{ color: 'yellow' }} />}
             aria-controls="panel1a-content"
             id="panel1a-header"
           >
@@ -25,8 +25,8 @@ export const Accordion: React.FC<AccordionProps> = ({ questions }) => {
           <AccordionDetails>
             <Typography>{description}</Typography>
           </AccordionDetails>
-        </MUIAccordion>
+        </S.Accordion>
       ))}
-    </div>
+    </S.Container>
   );
 }

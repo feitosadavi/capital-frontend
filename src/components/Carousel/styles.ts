@@ -20,8 +20,6 @@ export const Container = styled.div`
   @media screen and (max-width: ${({ theme }) => theme.breakpoints.md}) {
     height: 25rem;
   }
-}
-
   @media screen and (max-width: ${({ theme }) => theme.breakpoints.sm}) {
     height: 15rem;
   }

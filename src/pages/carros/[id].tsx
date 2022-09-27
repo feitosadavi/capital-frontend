@@ -156,16 +156,17 @@ const Vehicle: React.FC<VehicleProps> = ({ _vehicle }) => {
       <meta property="og:image" content={_vehicle.photos[0].src} />
 
       <meta name="twitter:card" content="summary_large_image" />
-      {/* <meta name="twitter:image" content={_vehicle.photos[0].src} /> */}
+      <meta name="twitter:image" content={_vehicle.photos[0].src} />
       <meta name="twitter:title" content={`${_vehicle.marca} ${_vehicle.modelo}`} />
-      <meta name="twitter:description" content='skadjfksjfkjds' />
-      {/* <meta name="twitter:domain" content="brave-donkey-12.loca.lt" /> */}
+      <meta name="twitter:description" content={_vehicle.descricao} />
+      <meta name="twitter:domain" content={pageUrl} />
     </Head>
     <S.Container>
       <S.Wrapper>
 
         <S.Section >
           <Carousel photos={_vehicle.photos} />
+
           <S.Description>
             <div className='main_info'>
               <div className='main_info-left'>{_vehicle.marca} {_vehicle.modelo}</div>

@@ -5,13 +5,19 @@ import { Button } from '../components/Button'
 import * as S from '../styles/duvidas'
 import { Question } from '../types'
 
-const saleQuestions: Question[] = [{
-  title: 'Como eu faço para vender meu carro através da Capital Veículos?',
-  description: 'É simples: Basta você agendar um dia e horário, pelo site ou demais canais de atendimento, \
+type Content = {
+  type: 'sale' | 'buy'
+  questions: Question[]
+}
+
+const saleQuestions: Content = {
+  type: 'sale', questions: [{
+    title: 'Como eu faço para vender meu carro através da Capital Veículos?',
+    description: 'É simples: Basta você agendar um dia e horário, pelo site ou demais canais de atendimento, \
   para levar o seu veículo até nossa loja. Feito isso, nós realizaremos uma avaliação, \
   produziremos fotos e vídeos profissionais em nosso estúdio e, posteriormente, colocaremos o \
   anúncio no ar.'
-}, {
+  }, {
     title: 'Meu carro vai ficar com Capital Veículos até o momento da venda?',
     description: 'Não. Seu carro continuará com você, que poderá usá-lo normalmente até o desenrolar do \
   processo de venda.'
@@ -33,14 +39,16 @@ const saleQuestions: Question[] = [{
   }, {
     title: 'Meu carro pode ser vendido mesmo estando financiado?',
     description: 'A resposta é sim! Entre em contato com a nossa equipe e saiba mais sobre o processo.'
-}]
+    }]
+}
 
-const buyingQuestions: Question[] = [{
-  title: 'Como adquirir um carro através da Capital Veículos?',
-  description: 'Converse com um de nossos consultores via canais de atendimento (whatsapp, instagram ou \
+const buyingQuestions: Content = {
+  type: 'buy', questions: [{
+    title: 'Como adquirir um carro através da Capital Veículos?',
+    description: 'Converse com um de nossos consultores via canais de atendimento (whatsapp, instagram ou \
       telefone) e informe qual carro você está interessado. Feito isso, guiaremos toda a negociação\
       junto ao proprietário do veículo.'
-}, {
+  }, {
     title: 'Qual a procedência dos carros anunciados?',
     description: 'Todos os carros anunciados, são devidamente inspecionados por nossos profissionais antes da \
     produção das fotos para inserção nas plataformas. '
@@ -68,27 +76,28 @@ const buyingQuestions: Question[] = [{
     title: 'Onde faço o pagamento?',
     description: 'O pagamento deverá ser realizado na conta da Capital Veículos e repassado ao vendedor \
     somente após a entrega do carro e, quitação e baixa de eventuais dívidas existentes.'
-}]
+    }]
+}
 
 const Duvidas = () => {
-  const [questions, setQuestions] = React.useState<Question[]>(saleQuestions)
+  const [content, setContent] = React.useState<Content>(saleQuestions)
 
-  const switchQuestions = (_questions: Question[]) => setQuestions(_questions)
+  const switchQuestions = (_questions: Content) => setContent(_questions)
 
   return (
     <S.Container>
       <S.Wrapper>
         <S.Title>
-          SUAS DÚVIDAS SÃO
+          DÚVIDAS FREQUENTES
         </S.Title>
 
         <S.ButtonGroup>
-          <Button onClick={() => switchQuestions(saleQuestions)} label='Sobre Vendas' />
-          <Button onClick={() => switchQuestions(buyingQuestions)} label='Sobre Compras' />
+          <Button background={content.type !== 'sale' ? 'outline' : undefined} onClick={() => switchQuestions(saleQuestions)} label='Sobre Vendas' />
+          <Button background={content.type !== 'buy' ? 'outline' : undefined} onClick={() => switchQuestions(buyingQuestions)} label='Sobre Compras' />
         </S.ButtonGroup>
 
         <S.Duvidas>
-          <Accordion questions={questions} />
+          <Accordion questions={content.questions} />
         </S.Duvidas>
       </S.Wrapper>
     </S.Container>

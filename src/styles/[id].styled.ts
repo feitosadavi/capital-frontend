@@ -13,7 +13,7 @@ export const Container = styled.div`
   margin-left: auto;
   margin-right: auto;
   width: 85%;
-  max-width: 90rem;
+  max-width: 85rem;
 `
 
 export const Wrapper = styled.div`

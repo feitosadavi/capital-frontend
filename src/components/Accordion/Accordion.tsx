@@ -16,7 +16,7 @@ export const Accordion: React.FC<AccordionProps> = ({ questions }) => {
       {questions.map(({ title, description }) => (
         <S.Accordion key={title}>
           <AccordionSummary
-            expandIcon={<ExpandMoreIcon sx={{ color: 'yellow' }} />}
+            expandIcon={<ExpandMoreIcon className='expand-icon' />}
             aria-controls="panel1a-content"
             id="panel1a-header"
           >

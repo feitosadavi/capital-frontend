@@ -8,6 +8,7 @@ import InstagramIcon from '@mui/icons-material/Instagram'
 import FacebookIcon from '@mui/icons-material/Facebook'
 
 import * as S from './Footer.styles'
+import { Divider } from '@mui/material'
 
 export const Footer = () => {
 
@@ -36,7 +37,7 @@ export const Footer = () => {
     <footer>
       <S.Footer>
         <S.Wrapper>
-          <S.Left>
+          <div>
             {
               icons.map(({ element, label }) => (
                 <div key={label} className="info">
@@ -45,25 +46,29 @@ export const Footer = () => {
                 </div>
               ))
             }
-          </S.Left>
-          <S.Right>
-            {
-              social.map(({ element, label, href }) => (
-                <div
-                  style={{ cursor: 'pointer' }}
-                  key={label}
-                  className="info"
-                  onClick={() => window.open(href, '__blank__')}
-                  data-href={href}
-                >
-                  <span className='icon'>{element}</span>
-                  <span>{label}</span>
-                </div>
-              ))
-            }
-          </S.Right>
+          </div>
+          <div className='social-networks'>
+            <span className='social-networks__title'>Nossas redes</span>
+            <span className='social-networks__divider'></span>
+            <div>
+              {
+                social.map(({ element, label, href }) => (
+                  <div
+                    style={{ cursor: 'pointer' }}
+                    key={label}
+                    className="info"
+                    onClick={() => window.open(href, '__blank__')}
+                    data-href={href}
+                  >
+                    <span className='icon'>{element}</span>
+                    <span>{label}</span>
+                  </div>
+                ))
+              }
+            </div>
+          </div>
         </S.Wrapper>
-        <span style={{ padding: '.5rem' }}>
+        <span style={{ padding: '.5rem', textAlign: 'center' }}>
           Todos os direitos reservados Capital Veiculos®
           | Feito por <a target='__blank__' href="https://github.com/feitosadavi">Davi Feitosa</a>
         </span>

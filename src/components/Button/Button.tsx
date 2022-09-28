@@ -4,7 +4,7 @@ type ButtonProps = {
   label: string
   type?: "button" | "reset" | "submit"
   onClick?: (e?: any) => void
-  background?: 'outline'
+  background?: 'outline' | 'active'
 }
 
 export const Button: React.FC<ButtonProps> = ({ label, type = 'button', onClick, background }) => {
@@ -22,25 +22,37 @@ const StyledWrapper = styled.div`
     border: 1px solid ${({ theme }) => theme.colors.yellow};
     color: ${({ theme }) => theme.colors.white};
     background-color: ${({ theme }) => theme.colors.secondary};
+    box-shadow: 5px 5px ${({ theme }) => theme.colors.primary};
+  }
+
+  .active {
+    box-shadow: 5px 5px ${({ theme }) => theme.colors.white};
   }
 `
 
 const StyledButton = styled.button`
   margin: 1rem auto 1rem auto;
-  padding: 2rem;
+  padding: 2rem .5rem 2rem .5rem;
   background-color: ${({ theme }) => theme.colors.yellow};
   color: ${({ theme }) => theme.colors.secondary};
   font-weight: bold;
-  font-size: 12pt;
+  transition: .1s;
+  font-size: 3vw; // dont remove
+
   border-radius: .5rem;
   width: 100%;
 
-  .outline {
-    color: pink;
-    background-color: ${({ theme }) => theme.colors.secondary};
+  @media screen and (min-width: 730px) {
+    font-size: 13pt;
   }
 
-  :focus {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    font-size: 4.5vw;
+  }
+
+  :hover {
+    transition: .1s;
     color: white;
+    box-shadow: 5px 5px ${({ theme }) => theme.colors.white};
   }
 `

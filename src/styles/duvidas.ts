@@ -26,6 +26,7 @@ export const Wrapper = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
+  margin-bottom: 3rem;
 `
 
 export const ButtonGroup = styled.div`

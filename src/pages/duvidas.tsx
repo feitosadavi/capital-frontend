@@ -92,8 +92,8 @@ const Duvidas = () => {
         </S.Title>
 
         <S.ButtonGroup>
-          <Button background={content.type !== 'sale' ? 'outline' : undefined} onClick={() => switchQuestions(saleQuestions)} label='Sobre Vendas' />
-          <Button background={content.type !== 'buy' ? 'outline' : undefined} onClick={() => switchQuestions(buyingQuestions)} label='Sobre Compras' />
+          <Button background={content.type !== 'sale' ? 'outline' : 'active'} onClick={() => switchQuestions(saleQuestions)} label='Sobre Vendas&nbsp;' />
+          <Button background={content.type !== 'buy' ? 'outline' : 'active'} onClick={() => switchQuestions(buyingQuestions)} label='Sobre Compras' />
         </S.ButtonGroup>
 
         <S.Duvidas>

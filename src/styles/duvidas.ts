@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Container = styled.main`
-  height: 100vh;
+  min-height: 100vh;
   width: 85%;
   max-width: 90rem;
 

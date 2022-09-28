@@ -13,4 +13,5 @@ export * from './SearchBar'
 export * from './Select'
 export * from './SwipeableDrawer'
 export * from './Logo'
+export * from './WhatsappLink'
 

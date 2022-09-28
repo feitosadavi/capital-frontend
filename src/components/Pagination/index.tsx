@@ -21,6 +21,7 @@ export const Pagination: React.FC = () => {
 }
 
 const StyledPaginaton = styled(MUIPagination)`
+  margin-bottom: 2rem;
   button {
     color: ${({ theme }) => theme.colors.white};
     border: 1px solid ${({ theme }) => theme.colors.yellow};

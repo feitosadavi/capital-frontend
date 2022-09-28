@@ -35,7 +35,7 @@ interface Props {
   _resultsCount: number
 }
 
-const Home: NextPage<Props> = ({
+const Comprar: NextPage<Props> = ({
   _selects,
   _resultsCount
 }) => {
@@ -114,4 +114,4 @@ export const getStaticProps: GetStaticProps = async (context) => {
   }
 }
 
-export default Home
+export default Comprar

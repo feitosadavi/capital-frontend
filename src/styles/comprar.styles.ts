@@ -8,7 +8,7 @@ export const Main = styled.main`
 
   width: 85%;
   max-width: 90rem;
-  height: 100vh;
+  min-height: 100vh;
   
   display: flex;
   justify-content: center;

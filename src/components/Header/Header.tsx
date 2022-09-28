@@ -13,9 +13,12 @@ const pages: Page[] = [{
   label: 'Comprar',
   href: '/comprar'
 }, {
+    label: 'Vender',
+    href: '/vender'
+  }, {
     label: 'Duvidas',
     href: '/duvidas'
-}]
+  }]
 
 export const Navbar = () => {
   const router = useRouter()

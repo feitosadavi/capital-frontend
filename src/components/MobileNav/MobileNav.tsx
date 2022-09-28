@@ -9,6 +9,7 @@ import { NavProps } from '../types';
 import { NavLink } from '../styles';
 
 import * as S from './MobileNav.styles'
+import { WhatsappLink } from '../WhatsappLink';
 
 export const MobileNav: React.FC<NavProps> = ({ path, pages }) => {
   const [state, setState] = React.useState(false);
@@ -27,6 +28,9 @@ export const MobileNav: React.FC<NavProps> = ({ path, pages }) => {
           <NavLink active={path === href}>{label}</NavLink>
         </Link>
       ))}
+      <span className='divider'></span>
+
+      <WhatsappLink />
     </S.MobileNavLinks>
   );
 

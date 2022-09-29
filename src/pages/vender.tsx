@@ -1,81 +1,112 @@
 
+import * as React from 'react'
+import { toast } from 'react-toastify';
+
 import { useFormik } from 'formik'
 import type { NextPage } from 'next'
 import * as Yup from 'yup'
 import { Button } from '../components/Button'
 import { Input } from '../components/Input'
+import { CMS } from '../host'
+import { request } from '../services/request'
 
 import * as S from '../styles/vender.styles'
+import { Alert } from '../components'
+
+const REQUIRED_FIELD_MSG = 'Campo obrigatório'
+
+const InfoSchema = Yup.object().shape({
+  nome: Yup.string().required(REQUIRED_FIELD_MSG),
+  email: Yup.string().required(REQUIRED_FIELD_MSG),
+  telefone: Yup.string().required(REQUIRED_FIELD_MSG),
+
+  marca: Yup.string().required(REQUIRED_FIELD_MSG),
+  modelo: Yup.string().required(REQUIRED_FIELD_MSG),
+  preco: Yup.string().required(REQUIRED_FIELD_MSG),
+
+})
 
 const Vender: NextPage = () => {
 
-  const REQUIRED_FIELD_MSG = 'Campo obrigatório'
+  const sendEmail = async (value: any) => {
+    try {
+      const {
+        nome,
+        email,
+        telefone,
+        mensagem,
 
-  const InfoSchema = Yup.object().shape({
-    dadosPessoais: Yup.object({
-      nome: Yup.string().required(REQUIRED_FIELD_MSG),
-      email: Yup.string().required(REQUIRED_FIELD_MSG),
-      telefone: Yup.string().required(REQUIRED_FIELD_MSG),
-      mensagem: Yup.string().required(REQUIRED_FIELD_MSG),
-    }),
-    dadosCarro: Yup.object({
-      placa: Yup.string().required(REQUIRED_FIELD_MSG),
-      marca: Yup.string().required(REQUIRED_FIELD_MSG),
-      modelo: Yup.string(),
-      cor: Yup.string().required(REQUIRED_FIELD_MSG),
+        marca,
+        modelo,
+        preco,
+      } = value
+
+      const dadosPessoais = { nome, email, telefone, mensagem }
+      const dadosCarro = { marca, modelo, preco }
+
+      const body = JSON.stringify({ dadosPessoais, dadosCarro })
+
+      await request(`${CMS}/api/vender`, 'POST', body)
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const onSubmit = async (value: any) => {
+    toast.promise(sendEmail(value), {
+      pending: 'Enviando proposta',
+      success: 'Tudo certo! Verifique o seu email',
+      error: 'Houve um erro. Tente novamente'
     })
-  })
-
-  const onSubmit = (value: any) => {
-    console.log({ value });
-
   }
 
   const { errors, handleSubmit, handleChange, values } = useFormik({
     initialValues: {
-      dadosPessoais: {
-        nome: '',
-        email: '',
-        telefone: ''
-      },
-      dadosCarro: {
-        placa: '',
-        marca: '',
-        modelo: '',
-        cor: '',
-      }
+      nome: '',
+      email: '',
+      telefone: '',
+
+      marca: '',
+      modelo: '',
+      preco: '',
     },
     validationSchema: InfoSchema,
     onSubmit: onSubmit
   });
 
+  React.useEffect(() => {
+    console.log(errors);
+
+  }, [errors])
+
   return (
     <S.Main>
-      <form onSubmit={handleSubmit}>
+      <Alert />
+      <form onSubmit={handleSubmit} action="">
         <S.Title className="title">Seus Dados</S.Title>
         <S.Form>
           <Input
             id='nome'
             label='Nome'
             placeholder='Seu nome'
-            value={values.dadosPessoais.nome}
-            error={errors.dadosPessoais ? errors.dadosPessoais['nome'] : ''}
+            value={values.nome}
+            error={errors['nome']}
             onChange={handleChange}
           />
           <Input
             id='email'
             label='Email'
             placeholder='Seu email'
-            value={values.dadosPessoais.email}
-            error={errors.dadosPessoais ? errors.dadosPessoais['email'] : ''}
+            value={values.email}
+            error={errors['email']}
             onChange={handleChange}
           />
           <Input
             id='telefone'
             label='Telefone'
             placeholder='Seu telefone'
-            value={values.dadosPessoais.telefone}
-            error={errors.dadosPessoais ? errors.dadosPessoais['telefone'] : ''}
+            value={values.telefone}
+            error={errors['telefone']}
             onChange={handleChange}
           />
         </S.Form>
@@ -83,40 +114,32 @@ const Vender: NextPage = () => {
         <S.Title className="title">Seu Carro</S.Title>
         <S.Form>
           <Input
-            id='placa'
-            label='Placa'
-            placeholder='Placa do seu carro'
-            value={values.dadosCarro.placa}
-            error={errors.dadosCarro ? errors.dadosCarro['placa'] : ''}
-            onChange={handleChange}
-          />
-          <Input
             id='marca'
             label='Marca'
             placeholder='Marca do seu carro'
-            value={values.dadosCarro.marca}
-            error={errors.dadosCarro ? errors.dadosCarro['marca'] : ''}
+            value={values.marca}
+            error={errors['marca']}
             onChange={handleChange}
           />
           <Input
             id='modelo'
             label='Modelo'
             placeholder='Modelo do seu carro'
-            value={values.dadosCarro.modelo}
-            error={errors.dadosCarro ? errors.dadosCarro['modelo'] : ''}
+            value={values.modelo}
+            error={errors['modelo']}
             onChange={handleChange}
           />
           <Input
-            id='cor'
-            label='Cor'
-            placeholder='Cor do seu carro'
-            value={values.dadosCarro.cor}
-            error={errors.dadosCarro ? errors.dadosCarro['cor'] : ''}
+            id='preco'
+            label='Preco desejado'
+            placeholder='Preço desejado para o seu carro'
+            value={values.preco}
+            error={errors['preco']}
             onChange={handleChange}
           />
-        </S.Form>
 
-        <Button label='Enviar' />
+          <Button label='Enviar' type='submit' />
+        </S.Form>
       </form>
     </S.Main>
   )

@@ -1,4 +1,5 @@
 export * from './Accordion'
+export * from './Alert'
 export * from './Card'
 export * from './Carousel'
 export * from './DesktopNav'

@@ -60,7 +60,8 @@ const StyledInput = styled.div`
     }
   
     ::selection {
-      color: ${({ theme }) => theme.colors.white}
+      color: ${({ theme }) => theme.colors.secondary};
+      background-color: ${({ theme }) => theme.colors.white}
     }
   }
 

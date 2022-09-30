@@ -15,7 +15,8 @@ import { CMS } from '../../host'
 
 const fetchSelects = async (params?: string): Promise<Select[]> => {
   try {
-    const _selects = await request<Select[]>(`${CMS}/api/filters?${params}`)
+    const query = params ? `?${params}` : ''
+    const _selects = await request<Select[]>(`${CMS}/api/filters${query}`)
 
     const ano = _selects.filter(_select => _select.key === 'ano')[0]
     const anos = { ...ano, key: 'anos' }
@@ -46,7 +47,8 @@ const Comprar: NextPage<Props> = ({
   const isFirstMount = React.useRef<boolean>(true)
   React.useEffect(() => {
     if (!isFirstMount.current) {
-      fetchSelects(`marca=${context.filters?.marca}`)
+      const query = context.filters?.marca ? `marca=${context.filters.marca}` : ''
+      fetchSelects(query)
         .then(res => setSelects(res))
     } else {
       context.setResultsCount(_resultsCount)

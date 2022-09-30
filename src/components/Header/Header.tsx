@@ -8,6 +8,8 @@ import { DesktopNav } from '../DesktopNav';
 
 import * as S from './Header.styles'
 import { Logo } from '../index';
+import { CompraProgramada, ConsignacaoVirtual, Consorcio } from '../../sections';
+import { Modal } from '../Modal';
 
 const pages: Page[] = [{
   label: 'Comprar',
@@ -20,13 +22,29 @@ const pages: Page[] = [{
     href: '/duvidas'
   }]
 
+const navModals = [{
+  label: 'COMPRA PROGRAMADA',
+  content: <CompraProgramada />
+}, {
+  label: 'CONSÓRCIO',
+  content: <Consorcio />
+}, {
+  label: 'CONSIGNAÇÃO VIRTUAL',
+  content: <ConsignacaoVirtual />
+}]
+
 export const Navbar = () => {
   const router = useRouter()
   const isMobile = useMediaQuery(800)
 
   return (
     <header>
+      {/* <S.SocialLinks>
+        kdfjkj
+      </S.SocialLinks> */}
       <S.Container>
+
+
         <S.Wrapper>
           <Logo />
           {
@@ -36,6 +54,13 @@ export const Navbar = () => {
           }
         </S.Wrapper>
       </S.Container>
+
+      <S.DesktopNavModals>
+        {navModals.map(({ label, content }) => (
+          <Modal key={label} label={label} content={content} />
+          // <span key={label} className='modal-label'>{label}</span>
+        ))}
+      </S.DesktopNavModals>
     </header>
   );
 };

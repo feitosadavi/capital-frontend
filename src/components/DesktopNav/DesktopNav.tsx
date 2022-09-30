@@ -11,18 +11,20 @@ import { WhatsappLink } from '../WhatsappLink';
 export const DesktopNav: React.FC<NavProps> = ({ path, pages }) => {
   return (
     <nav>
-      <S.DesktopNavLinks>
+      <S.Container>
+        <S.DesktopNavLinks>
 
-        {pages.map(({ label, href }) => (
-          <Link key={label} href={href}>
-            <NavLink active={path === href}>{label}</NavLink>
-          </Link>
-        ))}
+          {pages.map(({ label, href }) => (
+            <Link key={label} href={href}>
+              <NavLink active={path === href}>{label}</NavLink>
+            </Link>
+          ))}
 
-        <span className='divider'></span>
+          <span className='divider'></span>
 
-        <WhatsappLink />
-      </S.DesktopNavLinks>
+          <WhatsappLink />
+        </S.DesktopNavLinks>
+      </S.Container>
     </nav>
   )
 }

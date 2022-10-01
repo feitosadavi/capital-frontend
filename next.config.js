@@ -8,15 +8,6 @@ const nextConfig = {
   env: {
     HOST: 'http://seashell-app-6ylyu.ondigitalocean.app'
   },
-  async redirects () {
-    return [
-      {
-        source: '/',
-        destination: '/comprar',
-        permanent: true,
-      },
-    ]
-  },
 }
 
 module.exports = nextConfig

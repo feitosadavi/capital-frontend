@@ -12,6 +12,9 @@ import { CompraProgramada, ConsignacaoVirtual, Consorcio } from '../../sections'
 import { Modal } from '../Modal';
 
 const pages: Page[] = [{
+  label: 'Início',
+  href: '/'
+}, {
   label: 'Comprar',
   href: '/comprar'
 }, {

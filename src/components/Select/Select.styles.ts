@@ -25,7 +25,7 @@ export const Select = styled.div`
     font-weight: bold;
     text-transform: uppercase;
 
-    background-color: ${({ theme }) => theme.colors.primary};
+    background-color: ${({ theme }) => theme.colors.secondary};
 
     border-radius: .4rem;
     border: none;

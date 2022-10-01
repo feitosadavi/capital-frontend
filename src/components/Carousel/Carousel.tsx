@@ -40,10 +40,11 @@ function ThumbnailPlugin (mainRef: any) {
 }
 
 interface CarouselProps {
-  photos: Photo[]
+  photos?: Photo[]
+  slides?: any[]
 }
 
-export const Carousel: React.FC<CarouselProps> = ({ photos }) => {
+export const Carousel: React.FC<CarouselProps> = ({ photos, slides }) => {
   const [sliderRef, instanceRef] = useKeenSlider({
     initial: 0,
   })
@@ -59,20 +60,29 @@ export const Carousel: React.FC<CarouselProps> = ({ photos }) => {
   )
 
   const listImgs = () =>
-    photos.map(({ src, alt }) =>
+    photos?.map(({ src, alt }) =>
       <div key={src} className='keen-slider__slide number-slide'>
         <Image src={src} alt={alt} layout='fill' />
       </div>
     )
 
+  const listSlides = () =>
+    slides?.map((slide, i) =>
+      <div key={i} className='keen-slider__slide number-slide'>
+        {slide}
+      </div>
+    )
+
+  const listContent = () => photos ? listImgs() : listSlides()
+
   return (
     <S.Container>
       <div ref={sliderRef} className="keen-slider slides-container">
-        {listImgs()}
+        {listContent()}
       </div>
 
       <div ref={thumbnailRef} className="keen-slider thumbnail">
-        {listImgs()}
+        {listContent()}
       </div>
     </S.Container>
   )

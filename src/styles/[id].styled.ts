@@ -87,6 +87,18 @@ export const Details = styled.div`
   }
 `
 
+export const Opcionais = styled.div`
+  background-color: ${({ theme }) => theme.colors.primary};
+  padding: 1rem;
+  width: 100%;
+  border-radius: .5rem;
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+`
+
 export const Info = styled.span`
   display: flex;
   flex-direction: column;

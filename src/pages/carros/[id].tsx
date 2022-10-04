@@ -3,7 +3,6 @@ import { GetStaticProps } from 'next'
 import Head from 'next/head'
 import { request } from '../../services/request'
 import { ComprarPageVehicle, Vehicle as VehicleType } from '../../types'
-import InstagramIcon from '@mui/icons-material/Instagram'
 import FacebookIcon from '@mui/icons-material/Facebook'
 import TwitterIcon from '@mui/icons-material/Twitter'
 import WhatsappIcon from '@mui/icons-material/WhatsApp'
@@ -15,8 +14,7 @@ import { Input } from '../../components/Input'
 import { Textarea } from '../../components/Textarea'
 import { Button } from '../../components/Button'
 import { Carousel } from '../../components'
-import { Drawer, useMediaQuery } from '@mui/material'
-import { CMS } from '../../host'
+import { Chip, Drawer, useMediaQuery } from '@mui/material'
 
 const REQUIRED_FIELD_MSG = 'Campo obrigatório'
 
@@ -189,6 +187,12 @@ const Vehicle: React.FC<VehicleProps> = ({ _vehicle }) => {
             ))}
           </S.Details>
 
+          <S.Opcionais>
+            {_vehicle.opcionais.map(opcional => (
+              <Chip key={opcional} label={opcional} variant="outlined" />
+            ))}
+          </S.Opcionais>
+
           <S.Share>
             <span>Compartilhe</span>
             <div className="icons">
@@ -266,9 +270,12 @@ export const getStaticPaths = async () => {
 }
 
 export const getStaticProps: GetStaticProps<VehicleProps> = async ({ params }) => {
-  const { data } = await request<{ data: VehicleType }>(`/api/veiculos/${params?.id}?populate[0]=marca.photo,modelo,anos,cor,combustivel,cambio,categoria,photos`)
+  const { data } = await request<{ data: VehicleType }>(`/api/veiculos/${params?.id}?populate[0]=marca.photo,modelo,anos,cor,combustivel,cambio,categoria,photos,opcionais`)
+  // console.log(data.d);
+  const _vehicle = { ...data, opcionais: (data.opcionais as any).data.map((el: any) => el.attributes.label) }
+  console.log({ _vehicle });
 
-  const props: VehicleProps = { _vehicle: data }
+  const props: VehicleProps = { _vehicle }
 
   return { props }
 }

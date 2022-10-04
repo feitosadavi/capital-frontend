@@ -20,6 +20,7 @@ export type Vehicle = {
   descricao: string
   photos: Photo[]
   categoria: string
+  opcionais: string[]
 }
 
 type FieldsToOmit = 'combustivel' | 'descricao' | 'categoria'

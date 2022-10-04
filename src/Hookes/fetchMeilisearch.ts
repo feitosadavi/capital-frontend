@@ -22,14 +22,29 @@ const setupFields = <T = any> (elements: any[], index: string): T[] => elements.
   return { ...labels, id }
 })
 
-const sanitizeId = (id: string, index: string) => id.replace(`${index}-`, '')
+const sanitizeId = (id: string, index: string) => id?.replace(`${index}-`, '')
 
 const getPhotosInfo = (photos: any[]): Photo[] => photos.map(({ url, alternativeText }) => ({ src: url, alt: alternativeText }))
 
 const getLabelFromField = (data: any) => {
   const fields: any = {}
   for (const key of Object.keys(data)) {
-    fields[key] = data[key]?.label ?? data[key]
+    console.log({ [key]: fields[key] });
+
+    if (key === 'marca') {
+      fields[key] = {
+        label: data[key]?.label,
+        photo: ''
+        // '{
+        //   src: data[key]?.photo.url ?? \
+        //   alt: data[key]?.photo.alternativeText \
+        // }'
+      }
+      console.log({ [key]: fields[key] });
+
+    } else {
+      fields[key] = data[key]?.label ?? data[key]
+    }
   }
   return fields
 }
@@ -39,15 +54,25 @@ export const setupMeiliAttrs = async (index: string) => {
 
   await veiculoIndex.updateFilterableAttributes(['anos', 'ano', 'cambio', 'categoria', 'combustivel', 'cor', 'marca', 'modelo'])
   await veiculoIndex.updateSortableAttributes(['preco', 'createdAt'])
+  // await veiculoIndex.attr
 }
 
 export const fetchMeilisearch = async <DataType = any> (index: string, search: string, params: MeiliSearchParams): Promise<Result<DataType[]>> => {
   const ITENS_PER_PAGE = 2
   const veiculoIndex = searchClient.index(index)
 
-  const res = await veiculoIndex.search<DataType>(search, { ...params, limit: params.limit ?? ITENS_PER_PAGE })
+  const res = await veiculoIndex.search<DataType>(search, {
+    ...params,
+    limit: params.limit ?? ITENS_PER_PAGE,
+  })
 
-  const data = setupFields<DataType>(res.hits, index)
+  console.log(res);
+
+  console.log({ hits: res.hits });
+  console.log({ hitsLenght: res.hits.length });
+
+  const data = res.hits.length >= 1 ? setupFields<DataType>(res.hits, index) : []
+  console.log({ data });
 
 
   return {

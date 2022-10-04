@@ -18,6 +18,7 @@ interface Props {
   vehicles: ComprarPageVehicle[]
 }
 
+
 const setupFilter = (filters: Filters | null) => {
   if (filters) {
     let query = ''
@@ -36,7 +37,7 @@ const setupFilter = (filters: Filters | null) => {
 
 export const SearchBar: React.FC<Props> = ({ setVehicles, vehicles }) => {
   const context = React.useContext(AppContext)
-  const [search, setSearch] = React.useState<string>('')
+  const [search, setSearch] = React.useState<string>(' ')
   const [orderFilter, setOrderFilter] = React.useState<string[]>(['createdAt:desc'])
 
   const fetchVehicles = async (offset: number) => {
@@ -53,17 +54,12 @@ export const SearchBar: React.FC<Props> = ({ setVehicles, vehicles }) => {
     // pagination
     context.setResultsCount(resultsCount)
     context.setNumberOfPages(numberOfPages)
+    context.setPage(1)
   }
 
   const isFirstMount1 = React.useRef<boolean>(true)
   React.useEffect(() => {
-    if (!isFirstMount1.current) {
-      fetchVehicles(0).then(() => {
-        context.setPage(1)
-      })
-    } else {
-      isFirstMount1.current = false
-    }
+    fetchVehicles(0)
   }, [search, context.filters, orderFilter])
 
   const isFirstMount2 = React.useRef<boolean>(true)
@@ -86,10 +82,10 @@ export const SearchBar: React.FC<Props> = ({ setVehicles, vehicles }) => {
         component="form"
         sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: '100%' }}
       >
-        <IconButton sx={{ p: '10px' }} aria-label="menu">
+        {/* <IconButton sx={{ p: '10px' }} aria-label="menu">
           <FavoriteIcon />
         </IconButton>
-        <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
+        <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" /> */}
         <InputBase
           onChange={handleChange}
           sx={{ ml: 1, flex: 1 }}

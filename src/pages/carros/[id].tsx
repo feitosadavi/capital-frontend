@@ -255,7 +255,7 @@ const Vehicle: React.FC<VehicleProps> = ({ _vehicle }) => {
 
 // This function gets called at build time
 export const getStaticPaths = async () => {
-  const res = await request<{ data: ComprarPageVehicle[] }>(`${CMS}/api/veiculos?populate[0]=marca.photo,modelo,anos,cor,combustivel,cambio,categoria,photos`)
+  const res = await request<{ data: ComprarPageVehicle[] }>(`/api/veiculos?populate[0]=marca.photo,modelo,anos,cor,combustivel,cambio,categoria,photos`)
   const paths = res.data.map(({ id }) => ({
     params: { id: String(id) },
   }))
@@ -266,7 +266,7 @@ export const getStaticPaths = async () => {
 }
 
 export const getStaticProps: GetStaticProps<VehicleProps> = async ({ params }) => {
-  const { data } = await request<{ data: VehicleType }>(`${CMS}/api/veiculos/${params?.id}?populate[0]=marca.photo,modelo,anos,cor,combustivel,cambio,categoria,photos`)
+  const { data } = await request<{ data: VehicleType }>(`/api/veiculos/${params?.id}?populate[0]=marca.photo,modelo,anos,cor,combustivel,cambio,categoria,photos`)
 
   const props: VehicleProps = { _vehicle: data }
 

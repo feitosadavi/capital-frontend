@@ -29,10 +29,15 @@ export const Body = styled.div`
   flex-direction: column;
   align-items: flex-start;
   height: 85%;
-  /* margin-top: .3rem; */
-  padding-top: .3rem;
-  padding-left: .6rem;
+  padding: .3rem .6rem 0 .6rem;
   row-gap: .3rem;
+
+  .body__top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
 
   .price {
     font-weight: 600;

@@ -165,9 +165,9 @@ const Inicio: NextPage<Props> = ({ _selects, vehicles, marcas }) => {
 export const getStaticProps: GetStaticProps = async (context) => {
   await setupMeiliAttrs('veiculo')
 
-  const { data: vehicles } = await request<{ data: ComprarPageVehicle[] }>(`${CMS}/api/veiculos?populate[0]=marca.photo,modelo,anos,cor,combustivel,cambio,categoria,photos`)
-  const res = await request<Select[]>(`${CMS}/api/filters`)
-  const { data: marcas } = await request<{ data: Marca[] }>(`${CMS}/api/marcas?populate=*`)
+  const { data: vehicles } = await request<{ data: ComprarPageVehicle[] }>(`/api/veiculos?populate[0]=marca.photo,modelo,anos,cor,combustivel,cambio,categoria,photos`)
+  const res = await request<Select[]>(`/api/filters`)
+  const { data: marcas } = await request<{ data: Marca[] }>(`/api/marcas?populate=*`)
 
   const _selects = res.filter(el => el.key === 'marca' || el.key === 'modelo')
 

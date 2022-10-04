@@ -26,7 +26,12 @@ export const Card: React.FC<CardProps> = ({ vehicle }) => {
       </S.Thumb>
 
       <S.Body>
-        <span>{`${vehicle.marca} ${vehicle.modelo}`}</span>
+        <span className='body__top'>
+          <span>
+            {`${vehicle.marca.label} ${vehicle.modelo}`}
+          </span>
+          <Image src={vehicle.marca.photo.src} alt={vehicle.marca.photo.alt} width='28' height='28' />
+        </span>
         <span className='price'>{currencyFormatter.format(vehicle.preco)}</span>
       </S.Body>
 

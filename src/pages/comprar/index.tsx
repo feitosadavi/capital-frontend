@@ -1,30 +1,52 @@
 import * as React from 'react'
-import type { GetStaticProps, NextPage } from 'next'
+import type { GetServerSideProps, GetStaticProps, NextPage } from 'next'
 import Head from 'next/head'
+import useSWR from 'swr'
+import { toast } from 'react-toastify'
 
 import { Card, Filters, MobileFilters, Pagination, SearchBar } from '../../components'
-import { request } from '../../services/request'
-import { ComprarPageVehicle, Select } from '../../types'
+import { ComprarPageVehicle, Select, Vehicle } from '../../types'
 
 import * as S from '../../styles/comprar.styles'
 import { AppContext } from '../../context/app.context'
 import { useMediaQuery } from '@mui/material'
 import { fetchMeilisearch, setupMeiliAttrs } from '../../Hookes'
 import { fetchSelects } from '../../services/fetchSelects'
+import { request } from '../../services/request'
 
 interface Props {
-  _vehicles: ComprarPageVehicle[]
   _selects: Select[]
-  _resultsCount: number
+  // _vehicles: ComprarPageVehicle[]
 }
 
 const Comprar: NextPage<Props> = ({
   _selects,
-  _resultsCount
 }) => {
   const context = React.useContext(AppContext)
   const [selects, setSelects] = React.useState<Select[]>(_selects)
   const [vehicles, setVehicles] = React.useState<ComprarPageVehicle[]>([])
+
+
+  // const fetchVehicles = async () => {
+  //   const { data, meta } = await request('/api/veiculos?populate[0]=marca.photo,modelo,anos,cor,categoria,photos')
+  //   console.log({ data });
+
+  //   setVehicles(data ?? [])
+  //   return { ok: true }
+  // }
+
+  // const { data: res, error } = useSWR<boolean>('', fetchVehicles)
+
+  // if (error) {
+  //   toast.error('Houve um erro durante a pesquisa, tente novamente!')
+  // }
+
+  // console.log(res);
+
+
+  // React.useEffect(() => {
+  //   setFiltersHasBeenFired(true)
+  // }, [context.filters])
 
   const isFirstMount = React.useRef<boolean>(true)
   React.useEffect(() => {
@@ -33,19 +55,20 @@ const Comprar: NextPage<Props> = ({
       fetchSelects(query)
         .then(res => setSelects(res))
     } else {
-      context.setResultsCount(_resultsCount)
       isFirstMount.current = false
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [context.filters?.marca])
 
+
+
   const isMobile = useMediaQuery('(max-width:800px)')
 
   const clearFilters = () => context.setFilters(null)
 
   const renderSelects = () => <>
-    <S.ClearFiltersBtn onClick={clearFilters}><span>X</span>LIMPAR FILTROS</S.ClearFiltersBtn>
+    <S.ClearFiltersBtn onClick={clearFilters}>LIMPAR FILTROS<span>X</span></S.ClearFiltersBtn>
     {selects.map(select => <Filters key={select.label} select={select} />)}
   </>
 
@@ -68,9 +91,14 @@ const Comprar: NextPage<Props> = ({
           <SearchBar setVehicles={setVehicles} vehicles={vehicles} />
           <S.GridContainer>
             <S.Grid>
-              {vehicles.map((vehicle) => (
-                <Card key={vehicle.cor} vehicle={vehicle} />
-              ))}
+              {
+                vehicles.length >= 1
+                  ?
+                  vehicles.map((vehicle) => (
+                    <Card key={vehicle.cor} vehicle={vehicle} />
+                  ))
+                  : 'Não foram encontrados resultados.'
+              }
             </S.Grid>
 
             <Pagination />
@@ -81,17 +109,15 @@ const Comprar: NextPage<Props> = ({
   )
 }
 
-export const getStaticProps: GetStaticProps = async (context) => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
   await setupMeiliAttrs('veiculos')
 
   const _selects = await fetchSelects()
-  const { data: _vehicles, resultsCount: _resultsCount } = await fetchMeilisearch<ComprarPageVehicle>('veiculo', '', {
-    offset: 0
-  })
+  // const { data: _vehicles, resultsCount: _resultsCount } = 
 
 
 
-  const props: Props = { _vehicles, _selects, _resultsCount }
+  const props: Props = { _selects }
 
   return {
     props, // will be passed to the page component as props

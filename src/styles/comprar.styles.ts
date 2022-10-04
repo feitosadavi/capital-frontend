@@ -20,8 +20,8 @@ export const Main = styled.main`
 export const Filters = styled.div`
   flex: 1;
   padding: 1.5rem .8rem .8rem .8rem;
-  border-radius: .3rem;
-  /* background-color: ${({ theme }) => theme.colors.primary}; */
+  border-radius: .5rem;
+  background-color: ${({ theme }) => theme.colors.primary};
   display: flex;
   height: 70%;
   flex-direction: column;
@@ -66,16 +66,17 @@ export const Grid = styled.div`
 
 export const ClearFiltersBtn = styled.button`
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
   gap: 1rem;
   width: 100%;
   background-color: transparent;
-  font-size: 10pt;
+  font-size: 11pt;
   font-weight: 500;
   font-family: 'Roboto';
   color: ${({ theme }) => theme.colors.yellow};
   opacity: .7;
-
+  transition: .3s;
   :hover {
     opacity: 1;
   }

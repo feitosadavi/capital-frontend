@@ -1,9 +1,10 @@
 import Image from 'next/image'
 import React from 'react'
+import { WhatsappBtn } from '../components'
 
 export const ConsignacaoVirtual = () => {
   return (
-    <div>
+    <div style={{ overflowY: 'auto' }}>
       <h1 className='titulo'>Consignação Virtual</h1>
 
       <p className='chamada-principal'>
@@ -37,7 +38,7 @@ export const ConsignacaoVirtual = () => {
         </p>
       </div>
 
-      <div className="subtopico topico">
+      <div className="topico ">
         <h3 className='enfase'>Benefícios</h3>
         <p>
           Você não precisa deixar o veículo na empresa durante o processo de venda. O
@@ -46,6 +47,7 @@ export const ConsignacaoVirtual = () => {
         </p>
       </div>
 
+      <WhatsappBtn />
 
     </div>
   )

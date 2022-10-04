@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import React from 'react'
 import styled from 'styled-components'
+import { WhatsappBtn } from '../components'
 
 export const Consorcio = () => {
   return (
@@ -37,6 +38,7 @@ export const Consorcio = () => {
 
         Se resgatado no final do plano pegará o crédito totalmente reajustado e livre de IR.
       </p>
+      <WhatsappBtn />
     </Container>
   )
 }

@@ -16,4 +16,5 @@ export * from './Select'
 export * from './SwipeableDrawer'
 export * from './Logo'
 export * from './WhatsappLink'
+export * from './WhatsappBtn'
 

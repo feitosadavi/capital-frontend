@@ -1,31 +1,42 @@
 import * as React from 'react'
-import type { GetServerSideProps, GetStaticProps, NextPage } from 'next'
+import type { GetServerSideProps, NextPage } from 'next'
 import Head from 'next/head'
-import useSWR from 'swr'
-import { toast } from 'react-toastify'
+
 
 import { Card, Filters, MobileFilters, Pagination, SearchBar } from '../../components'
-import { ComprarPageVehicle, Select, Vehicle } from '../../types'
+import { ComprarPageVehicle, Select } from '../../types'
 
 import * as S from '../../styles/comprar.styles'
 import { AppContext } from '../../context/app.context'
 import { useMediaQuery } from '@mui/material'
 import { fetchMeilisearch, setupMeiliAttrs } from '../../Hookes'
 import { fetchSelects } from '../../services/fetchSelects'
-import { request } from '../../services/request'
 
 interface Props {
   _selects: Select[]
+  _vehicles: ComprarPageVehicle[]
+  resultsCount: number
+  numberOfPages: number
   // _vehicles: ComprarPageVehicle[]
 }
 
 const Comprar: NextPage<Props> = ({
   _selects,
+  _vehicles,
+  resultsCount,
+  numberOfPages
 }) => {
   const context = React.useContext(AppContext)
   const [selects, setSelects] = React.useState<Select[]>(_selects)
-  const [vehicles, setVehicles] = React.useState<ComprarPageVehicle[]>([])
+  const [vehicles, setVehicles] = React.useState<ComprarPageVehicle[]>(_vehicles)
 
+
+  React.useEffect(() => {
+    context.setResultsCount(resultsCount)
+    context.setNumberOfPages(numberOfPages)
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   // const fetchVehicles = async () => {
   //   const { data, meta } = await request('/api/veiculos?populate[0]=marca.photo,modelo,anos,cor,categoria,photos')
@@ -111,13 +122,14 @@ const Comprar: NextPage<Props> = ({
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   await setupMeiliAttrs('veiculos')
-
+  const { data: _vehicles, resultsCount, numberOfPages } = await fetchMeilisearch<ComprarPageVehicle>('veiculo', '', {})
   const _selects = await fetchSelects()
   // const { data: _vehicles, resultsCount: _resultsCount } = 
 
+  console.log({ _vehicles });
 
 
-  const props: Props = { _selects }
+  const props: Props = { _selects, _vehicles, resultsCount, numberOfPages }
 
   return {
     props, // will be passed to the page component as props

@@ -8,7 +8,7 @@ import InstagramIcon from '@mui/icons-material/Instagram'
 import FacebookIcon from '@mui/icons-material/Facebook'
 
 import * as S from './Footer.styles'
-import { Divider } from '@mui/material'
+import { useMediaQuery } from '@mui/material'
 
 export const Footer = () => {
 
@@ -32,11 +32,26 @@ export const Footer = () => {
     element: <InstagramIcon />,
     label: 'Instagram',
     href: 'https://instagram.com/capitalveiculosdf'
-  }]
+    }]
 
+  const Funcionamento = () => (
+    <S.Funcionamento>
+      <span>{isMobile ? 'Atendimento' : 'Horário de Funcionamento'}</span>
+      <span>Seg - Sex</span>
+      <span>08:00 - 17:00</span>
+    </S.Funcionamento>
+  )
+
+  const isMobile = useMediaQuery('(max-width: 500px)')
   return (
     <footer>
       <S.Footer>
+        {isMobile &&
+          <div style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            <Logo />
+            <Funcionamento />
+          </div>
+        }
         <S.Wrapper>
           <div>
             {
@@ -48,9 +63,12 @@ export const Footer = () => {
               ))
             }
           </div>
+          {!isMobile && <>
+            <Logo />
+            <Funcionamento />
+          </>}
           <div className='social-networks'>
             <span className='social-networks__title'>Nossas redes</span>
-            <span className='social-networks__divider'></span>
             <div>
               {
                 social.map(({ element, label, href }) => (
@@ -69,9 +87,9 @@ export const Footer = () => {
             </div>
           </div>
         </S.Wrapper>
-        <span style={{ padding: '.5rem', textAlign: 'center' }}>
-          Todos os direitos reservados Capital Veiculos®
-          | Feito por <a target='__blank__' href="https://github.com/feitosadavi">Davi Feitosa</a>
+        <span style={{ padding: '.5rem', textAlign: 'center', fontSize: '12pt' }}>
+          Todos os direitos reservados Capital Veiculos <br />
+          Feito por <a target='__blank__' href="https://github.com/feitosadavi">Davi Feitosa</a>
         </span>
       </S.Footer>
     </footer>

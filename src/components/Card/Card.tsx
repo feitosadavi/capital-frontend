@@ -30,7 +30,7 @@ export const Card: React.FC<CardProps> = ({ vehicle }) => {
           <span>
             {`${vehicle.marca.label} ${vehicle.modelo}`}
           </span>
-          <Image src={vehicle.marca.photo.src} alt={vehicle.marca.photo.alt} width='28' height='28' />
+          {/* <Image src={vehicle.marca.photo.src} alt={vehicle.marca.photo.alt} width='28' height='28' /> */}
         </span>
         <span className='price'>{currencyFormatter.format(vehicle.preco)}</span>
       </S.Body>

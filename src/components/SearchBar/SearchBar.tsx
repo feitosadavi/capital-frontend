@@ -37,7 +37,7 @@ const setupFilter = (filters: Filters | null) => {
 
 export const SearchBar: React.FC<Props> = ({ setVehicles, vehicles }) => {
   const context = React.useContext(AppContext)
-  const [search, setSearch] = React.useState<string>(' ')
+  const [search, setSearch] = React.useState<string>('')
   const [orderFilter, setOrderFilter] = React.useState<string[]>(['createdAt:desc'])
 
   const fetchVehicles = async (offset: number) => {
@@ -59,7 +59,11 @@ export const SearchBar: React.FC<Props> = ({ setVehicles, vehicles }) => {
 
   const isFirstMount1 = React.useRef<boolean>(true)
   React.useEffect(() => {
-    fetchVehicles(0)
+    if (!isFirstMount2.current) {
+      fetchVehicles(0)
+    } else {
+      isFirstMount1.current = false
+    }
   }, [search, context.filters, orderFilter])
 
   const isFirstMount2 = React.useRef<boolean>(true)

@@ -6,4 +6,5 @@ export const Logo = styled.div`
   font-size: 19pt;
   margin-top: .5rem;
   margin-left: -3rem;
+  cursor: pointer;
 `

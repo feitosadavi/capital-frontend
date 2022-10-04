@@ -9,7 +9,13 @@ export const ModalButton = styled(Button)`
   }
 
   @media screen and (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    font-size: 9pt;
+    font-size: 10pt;
+    padding: .6rem;
+  }
+
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    font-size: 7pt;
+    padding: .1rem;
   }
 `
 

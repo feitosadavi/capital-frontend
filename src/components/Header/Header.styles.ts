@@ -47,7 +47,7 @@ export const DesktopNavModals = styled.div`
   ${xCenter}
   gap: 3rem;
   width: 100%;
-  height: 2rem;
+  height: 3rem;
   background-color: #292727;
 
   .modal-label {

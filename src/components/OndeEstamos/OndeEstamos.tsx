@@ -3,7 +3,7 @@ import * as React from 'react'
 
 function OndeEstamos () {
   return (
-    <S.Container>
+    <>
       f
       {/* <S.Titulo>Onde Estamos</S.Titulo>
       <MapContainer center={[40.8054, -74.0241]} zoom={14} scrollWheelZoom={false} style={{ height: "100%", width: "100%" }}>
@@ -17,7 +17,7 @@ function OndeEstamos () {
           </Popup>
         </Marker>
       </MapContainer> */}
-    </S.Container>
+    </>
   )
 }
 

@@ -9,6 +9,7 @@ export const WhatsappLink = styled(NavLink)`
   flex-direction: column;
   row-gap: .3rem;
   font-size: 13pt;
+  font-weight: 700;
 
   :hover {
     .label {

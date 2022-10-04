@@ -1,9 +1,10 @@
-import { Button } from '@mui/material';
 import styled from 'styled-components';
 
-export const ModalButton = styled(Button)`
+export const ModalButton = styled.button`
+  background-color: transparent;
+  font-weight: ${({ theme }) => theme.font.secondary.weigths.bold};
   color: ${({ theme }) => theme.colors.white};
-
+  font-size: 12pt;
   :hover {
     color: ${({ theme }) => theme.colors.yellow};
   }
@@ -14,8 +15,12 @@ export const ModalButton = styled(Button)`
   }
 
   @media screen and (max-width: ${({ theme }) => theme.breakpoints.sm}) {
-    font-size: 7pt;
-    padding: .1rem;
+    font-size: 9pt;
+  }
+
+  @media screen and (max-width: 390px) {
+    font-size: 8.5pt;
+    padding: .3rem;
   }
 `
 

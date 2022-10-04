@@ -32,10 +32,10 @@ const saleQuestions: Content = {
     até a finalização da venda.'
   }, {
     title: 'Por quem o pagamento será executado?',
-    description: 'A Capital Veículos se encarregará de: \
-    - Repassar o pagamento ao vendedor do carro, sempre à vista, de forma prudente e segura.\
-    - Garantir que o veículo só será entregue após o fechamento dos trâmites legais e\
-    burocráticos.'
+    description: " \
+      A Capital Veículos se encarregará de: Repassar o pagamento ao vendedor do carro, sempre à vista, de forma prudente e segura. \
+      Garantir que o veículo só será entregue após o fechamento dos trâmites legais e burocráticos. \
+      "
   }, {
     title: 'Meu carro pode ser vendido mesmo estando financiado?',
     description: 'A resposta é sim! Entre em contato com a nossa equipe e saiba mais sobre o processo.'

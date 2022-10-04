@@ -32,7 +32,7 @@ const StyledWrapper = styled.div`
 
 const StyledButton = styled.button`
   margin: 1rem auto 1rem auto;
-  padding: 2rem .5rem 2rem .5rem;
+  padding: 1.5rem .3rem 1.5rem .3rem;
   background-color: ${({ theme }) => theme.colors.yellow};
   color: ${({ theme }) => theme.colors.secondary};
   font-weight: bold;
@@ -47,7 +47,7 @@ const StyledButton = styled.button`
   }
 
   @media screen and (max-width: ${({ theme }) => theme.breakpoints.sm}) {
-    font-size: 4.5vw;
+    font-size: 3.2vw;
   }
 
   :hover {

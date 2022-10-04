@@ -57,6 +57,7 @@ const ContainerStyled = styled.div`
   height: 10rem;
   margin: auto 1rem auto .2rem;
   gap: 1rem;
+  cursor: pointer;
 `
 
 const ThumbStyled = styled.div`

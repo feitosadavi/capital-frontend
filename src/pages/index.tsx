@@ -2,7 +2,7 @@
 import * as React from 'react'
 import type { GetStaticProps, NextPage } from 'next'
 import Head from 'next/head'
-import { DotCarousel, Filters } from '../components'
+import { DotCarousel, Filters, OndeEstamos, Testemonial } from '../components'
 import { fetchMeilisearch, setupMeiliAttrs } from '../Hookes'
 import { fetchSelects } from '../services/fetchSelects'
 
@@ -17,15 +17,17 @@ import { HorizontalCard } from '../components/Card/HorizontalCard'
 import { request } from '../services/request'
 import { CMS } from '../host'
 import { useRouter } from 'next/router'
+import { Testemonial as TestemonialType } from '../types/Testemonial'
 
 
 interface Props {
   _selects: Select[]
   vehicles: ComprarPageVehicle[]
   marcas: Marca[]
+  testemonials: TestemonialType[]
 }
 
-const Inicio: NextPage<Props> = ({ _selects, vehicles, marcas }) => {
+const Inicio: NextPage<Props> = ({ _selects, vehicles, marcas, testemonials }) => {
   const context = React.useContext(AppContext)
   const [selects, setSelects] = React.useState<Select[]>(_selects)
 
@@ -66,6 +68,10 @@ const Inicio: NextPage<Props> = ({ _selects, vehicles, marcas }) => {
 
   const renderCards = Array(11).fill(0).map(() => (
     <HorizontalCard key={vehicles[0].id} vehicle={vehicles[0]} />
+  ))
+
+  const renderTestemonials = Array(11).fill(0).map(() => (
+    <Testemonial key={testemonials[0].id} testemonial={testemonials[0]} />
   ))
 
   // const renderMarcas = marcas.map(marca => (
@@ -134,28 +140,30 @@ const Inicio: NextPage<Props> = ({ _selects, vehicles, marcas }) => {
 
         <S.Topicos>
           <div className="topico">
-            <div className="topico__titulo">Missão</div>
+            <div className="topico__titulo">MISSÃO</div>
             <div className="topico__texto">
               Garantir transparência, ética e excelência em 100% das negociações.
             </div>
           </div>
 
           <div className="topico">
-            <div className="topico__titulo">Visão</div>
+            <div className="topico__titulo">VISÃO</div>
             <div className="topico__texto">
               Atuar com comprometimento e versatilidade para se consolidar cada vez mais no mercado automobilístico.
             </div>
           </div>
 
           <div className="topico">
-            <div className="topico__titulo">Valores</div>
+            <div className="topico__titulo">VALORES</div>
             <div className="topico__texto">
               Transparência, honestidade e excelência.
             </div>
           </div>
         </S.Topicos>
 
-        {/* <CardRoulette title='O que dizem nossos clientes' cards={renderCards} /> */}
+        {/* <OndeEstamos /> */}
+
+        <CardRoulette title='O que dizem nossos clientes' cards={renderTestemonials} />
 
       </S.Container>
     </div>
@@ -168,10 +176,11 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const { data: vehicles } = await request<{ data: ComprarPageVehicle[] }>(`/api/veiculos?populate[0]=marca.photo,modelo,anos,cor,combustivel,cambio,categoria,photos`)
   const res = await request<Select[]>(`/api/filters`)
   const { data: marcas } = await request<{ data: Marca[] }>(`/api/marcas?populate=*`)
+  const { data: testemonials } = await request<{ data: TestemonialType[] }>(`/api/testemunhos?populate=*`)
 
   const _selects = res.filter(el => el.key === 'marca' || el.key === 'modelo')
 
-  const props: Props = { _selects, vehicles, marcas }
+  const props: Props = { _selects, vehicles, marcas, testemonials }
 
   return {
     props, // will be passed to the page component as props

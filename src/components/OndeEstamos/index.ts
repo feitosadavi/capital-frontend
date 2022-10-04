@@ -1,0 +1,1 @@
+export { default as OndeEstamos } from './OndeEstamos'

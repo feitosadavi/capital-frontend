@@ -9,8 +9,8 @@ export const Select = styled.div`
   label {
     text-align: start;
     color: ${({ theme }) => theme.colors.yellow};
-    font-family: 'Roboto';
-    font-weight: 400;
+    font-family: ${({ theme }) => theme.font.secondary};
+    font-weight: ${({ theme }) => theme.font.secondary.weigths.bold};
     letter-spacing: .05rem;
   }
 
@@ -18,11 +18,11 @@ export const Select = styled.div`
     cursor: pointer;
     padding: .5rem;
     height: 3rem;
-    
+
     text-align: center;
     font-size: 10pt;
     color: ${({ theme }) => theme.colors.white};
-    font-weight: bold;
+    font-weight: bolder;
     text-transform: uppercase;
 
     background-color: ${({ theme }) => theme.colors.secondary};

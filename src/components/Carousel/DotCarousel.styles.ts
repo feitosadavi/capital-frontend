@@ -57,4 +57,8 @@ export const Arrow = styled.svg<{ left?: boolean, disabled?: boolean }>`
   
   fill: ${({ disabled }) => disabled && 'gray'};
 
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    display: none;
+  }
+
 `

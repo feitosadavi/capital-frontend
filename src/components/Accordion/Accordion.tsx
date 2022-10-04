@@ -26,7 +26,7 @@ export const Accordion: React.FC<AccordionProps> = ({ questions }) => {
           </AccordionSummary>
           <AccordionDetails
           >
-            <Typography>{description}</Typography>
+            {description}
           </AccordionDetails>
         </S.Accordion>
       ))}

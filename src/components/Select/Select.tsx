@@ -15,7 +15,7 @@ export const Select: React.FC<Props> = ({ id, label, options, onChange, value })
 
   return (
     <S.Select>
-      <label htmlFor={id}>{label}</label>
+      <label htmlFor={id}>{label.toUpperCase()}</label>
       <select defaultValue={value} onChange={onChange} name={id} id={id}>
         <option selected={value === '*'}>Todos</option>
         {options.map(option => (

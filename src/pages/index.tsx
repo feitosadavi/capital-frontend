@@ -3,23 +3,31 @@ import * as React from 'react'
 import type { GetStaticProps, NextPage } from 'next'
 import Head from 'next/head'
 import { DotCarousel, Filters } from '../components'
-import { setupMeiliAttrs } from '../Hookes'
+import { fetchMeilisearch, setupMeiliAttrs } from '../Hookes'
 import { fetchSelects } from '../services/fetchSelects'
 
 import * as S from '../styles/inicio.styles'
-import { Select } from '../types'
+import { ComprarPageVehicle, Marca, Select } from '../types'
 import { AppContext } from '../context/app.context'
 import { Button } from '../components/Button'
 import Image from 'next/image'
+import ImageFuture from 'next/future/image'
+import { CardRoulette } from '../components/CardRoulette'
+import { HorizontalCard } from '../components/Card/HorizontalCard'
+import { request } from '../services/request'
+import { CMS } from '../host'
+import { useRouter } from 'next/router'
 
 
 interface Props {
-  selects: Select[]
+  _selects: Select[]
+  vehicles: ComprarPageVehicle[]
+  marcas: Marca[]
 }
 
-const Inicio: NextPage<Props> = ({ selects }) => {
+const Inicio: NextPage<Props> = ({ _selects, vehicles, marcas }) => {
   const context = React.useContext(AppContext)
-  const [modeloSelect, setModeloSelect] = React.useState<Select>()
+  const [selects, setSelects] = React.useState<Select[]>(_selects)
 
   const isFirstMount = React.useRef<boolean>(true)
   React.useEffect(() => {
@@ -27,9 +35,8 @@ const Inicio: NextPage<Props> = ({ selects }) => {
       const query = context.filters?.marca ? `marca=${context.filters.marca}` : ''
       fetchSelects(query)
         .then(res => {
-          const _modeloSelect = res.filter(el => el.key === 'modelo')[0]
-
-          setModeloSelect(_modeloSelect)
+          const marcaAndModelo = res.filter(el => el.key === 'modelo' || el.key === 'marca')
+          setSelects(marcaAndModelo)
         })
     } else {
       isFirstMount.current = false
@@ -57,6 +64,37 @@ const Inicio: NextPage<Props> = ({ selects }) => {
     </S.Slide>
   ))
 
+  const renderCards = Array(11).fill(0).map(() => (
+    <HorizontalCard key={vehicles[0].id} vehicle={vehicles[0]} />
+  ))
+
+  // const renderMarcas = marcas.map(marca => (
+  //   <S.Marca key={marca.label}>
+  //     <ImageFuture
+  //       width={128}
+  //       height={128}
+  //       alt={marca.photo.alt}
+  //       src={marca.photo.src}
+  //     />
+  //   </S.Marca>
+  // ))
+
+  const handleMarcaClick = (marca: string) => {
+    context.setFilters(prevState => prevState ? ({ ...prevState, marca }) : ({ marca }) as any)
+    router.push(`/comprar`)
+  }
+  const renderMarcas = Array(11).fill(0).map(() => (
+    <S.Marca key={marcas[0].label} onClick={() => handleMarcaClick(marcas[0].label)}>
+      <ImageFuture
+        width={128}
+        height={128}
+        alt={marcas[0].photo.alt}
+        src={marcas[0].photo.src}
+      />
+    </S.Marca>
+  ))
+
+  const router = useRouter()
   return (
     <div>
       <Head>
@@ -76,12 +114,15 @@ const Inicio: NextPage<Props> = ({ selects }) => {
             <S.SearcherFooter>
               <span>O que você deseja?</span>
               <S.BtnGroup>
-                <Button label='Comprar' />
-                <Button label='Vender' background='outline' />
+                <Button onClick={() => router.push('/comprar')} label='Comprar' />
+                <Button onClick={() => router.push('/vender')} label='Vender' background='outline' />
               </S.BtnGroup>
             </S.SearcherFooter>
           </S.Searcher>
         </S.Head>
+
+        <CardRoulette title='Nossos destaques' cards={renderCards} />
+        <CardRoulette title='Conheça nossas marcas' cards={renderMarcas} />
 
         <S.QuemSomos>
           <Image className='foto-loja' src='/capital-foto.jpg' alt='Foto da fachada da Capital Veículos' width='500px' height='360px' />
@@ -113,19 +154,24 @@ const Inicio: NextPage<Props> = ({ selects }) => {
             </div>
           </div>
         </S.Topicos>
+
+        {/* <CardRoulette title='O que dizem nossos clientes' cards={renderCards} /> */}
+
       </S.Container>
     </div>
   )
 }
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  await setupMeiliAttrs('veiculos')
+  await setupMeiliAttrs('veiculo')
 
-  const res = await fetchSelects()
+  const { data: vehicles } = await request<{ data: ComprarPageVehicle[] }>(`${CMS}/api/veiculos?populate[0]=marca.photo,modelo,anos,cor,combustivel,cambio,categoria,photos`)
+  const res = await request<Select[]>(`${CMS}/api/filters`)
+  const { data: marcas } = await request<{ data: Marca[] }>(`${CMS}/api/marcas?populate=*`)
 
-  const selects = res.filter(el => el.key === 'marca' || el.key === 'modelo')
+  const _selects = res.filter(el => el.key === 'marca' || el.key === 'modelo')
 
-  const props: Props = { selects }
+  const props: Props = { _selects, vehicles, marcas }
 
   return {
     props, // will be passed to the page component as props

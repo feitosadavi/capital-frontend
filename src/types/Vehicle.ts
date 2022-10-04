@@ -3,11 +3,16 @@ export type Photo = {
   alt: string
 }
 
+export type Marca = {
+  label: string
+  photo: Photo
+}
+
 export type Vehicle = {
   id: string
   preco: number
   anos: number
-  marca: string
+  marca: Marca
   modelo: string
   combustivel: string
   km: string

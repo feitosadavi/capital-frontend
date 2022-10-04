@@ -147,3 +147,14 @@ export const Topicos = styled.div`
   }
 
 `
+export const Marca = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: ${({ theme }) => theme.colors.primary};
+  border-radius: .5rem;
+  max-width: 23rem;
+  height: 10rem;
+  margin: auto 1rem auto .2rem;
+  gap: 1rem;
+`

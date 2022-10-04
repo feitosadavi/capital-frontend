@@ -8,6 +8,11 @@ const nextConfig = {
   env: {
     HOST: 'http://seashell-app-6ylyu.ondigitalocean.app'
   },
+  experimental: {
+    images: {
+      allowFutureImage: true
+    }
+  }
 }
 
 module.exports = nextConfig

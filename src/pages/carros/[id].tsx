@@ -173,7 +173,7 @@ const Vehicle: React.FC<VehicleProps> = ({ _vehicle }) => {
 
           <S.Description>
             <div className='main_info'>
-              <div className='main_info-left'>{_vehicle.marca} {_vehicle.modelo}</div>
+              <div className='main_info-left'>{_vehicle.marca.label} {_vehicle.modelo}</div>
               <div className='main_info-right'>{currencyFormatter.format(_vehicle.preco)}</div>
             </div>
 
@@ -255,7 +255,7 @@ const Vehicle: React.FC<VehicleProps> = ({ _vehicle }) => {
 
 // This function gets called at build time
 export const getStaticPaths = async () => {
-  const res = await request<{ data: ComprarPageVehicle[] }>(`${CMS}/api/veiculos?populate=*`)
+  const res = await request<{ data: ComprarPageVehicle[] }>(`${CMS}/api/veiculos?populate[0]=marca.photo,modelo,anos,cor,combustivel,cambio,categoria,photos`)
   const paths = res.data.map(({ id }) => ({
     params: { id: String(id) },
   }))
@@ -266,7 +266,7 @@ export const getStaticPaths = async () => {
 }
 
 export const getStaticProps: GetStaticProps<VehicleProps> = async ({ params }) => {
-  const { data } = await request<{ data: VehicleType }>(`${CMS}/api/veiculos/${params?.id}?populate=*`)
+  const { data } = await request<{ data: VehicleType }>(`${CMS}/api/veiculos/${params?.id}?populate[0]=marca.photo,modelo,anos,cor,combustivel,cambio,categoria,photos`)
 
   const props: VehicleProps = { _vehicle: data }
 

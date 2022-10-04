@@ -74,11 +74,6 @@ const Vender: NextPage = () => {
     onSubmit: onSubmit
   });
 
-  React.useEffect(() => {
-    console.log(errors);
-
-  }, [errors])
-
   return (
     <S.Main>
       <Alert />

@@ -70,7 +70,7 @@ const Inicio: NextPage<Props> = ({ _selects, vehicles, marcas, testemonials }) =
     <HorizontalCard key={vehicles[0].id} vehicle={vehicles[0]} />
   ))
 
-  const renderTestemonials = Array(11).fill(0).map(() => (
+  const renderTestemonials = () => Array(11).fill(0).map(() => (
     <Testemonial key={testemonials[0].id} testemonial={testemonials[0]} />
   ))
 
@@ -163,7 +163,9 @@ const Inicio: NextPage<Props> = ({ _selects, vehicles, marcas, testemonials }) =
 
         {/* <OndeEstamos /> */}
 
-        <CardRoulette title='O que dizem nossos clientes' cards={renderTestemonials} />
+        {testemonials?.length > 0 &&
+          <CardRoulette title='O que dizem nossos clientes' cards={renderTestemonials()} />
+        }
 
       </S.Container>
     </div>

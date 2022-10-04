@@ -11,6 +11,10 @@ export const Main = styled.main`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  .enfase {
+    color: ${({ theme }) => theme.colors.yellow};
+  }
 `
 
 export const Form = styled.main`
@@ -34,6 +38,9 @@ export const Form = styled.main`
 
 
 export const Title = styled.h2`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
   font-size: 20pt;
   font-weight: bolder;
   font-family: 'Roboto';

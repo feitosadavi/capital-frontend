@@ -13,6 +13,9 @@ import { request } from '../services/request'
 import * as S from '../styles/vender.styles'
 import { Alert } from '../components'
 
+import CarIcon from '@mui/icons-material/DirectionsCar';
+import PersonIcon from '@mui/icons-material/Person';
+
 const REQUIRED_FIELD_MSG = 'Campo obrigatório'
 
 const InfoSchema = Yup.object().shape({
@@ -78,7 +81,12 @@ const Vender: NextPage = () => {
     <S.Main>
       <Alert />
       <form onSubmit={handleSubmit} action="">
-        <S.Title className="title">Seus Dados</S.Title>
+        <S.Title className="title">
+          <span>
+            Seus <span className='enfase'>Dados</span>
+          </span>
+          <PersonIcon sx={{ width: '36px', height: '36px' }} />
+        </S.Title>
         <S.Form>
           <Input
             id='nome'
@@ -106,7 +114,12 @@ const Vender: NextPage = () => {
           />
         </S.Form>
 
-        <S.Title className="title">Seu Carro</S.Title>
+        <S.Title className="title">
+          <span>
+            Seu <span className='enfase'>Carro</span>
+          </span>
+          <CarIcon sx={{ width: '36px', height: '36px' }} />
+        </S.Title>
         <S.Form>
           <Input
             id='marca'

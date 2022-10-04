@@ -15,9 +15,14 @@ export const ModalButton = styled(Button)`
 
 export const ModalContainer = styled.div`
   position: absolute;
-  top: 10vh;
-  left: 30vw;
-  width: 40rem;
+  top: 0px;
+  left: 0px;
+
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+
   background-color: ${({ theme }) => theme.colors.primary};
   border-radius: .5rem;
   box-shadow: 24;
@@ -63,14 +68,14 @@ export const ModalContainer = styled.div`
     color: ${({ theme }) => theme.colors.white};
   }
 
-  @media screen and (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    top: 0px;
-    left: 0px;
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.md}) {
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 40rem;
+    height: auto;
 
-    display: flex;
-    flex-direction: column;
-    width: 100vw;
-    height: 100vh;
+
     /* flex: 3; */
   }
 `

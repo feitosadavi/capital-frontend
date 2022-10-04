@@ -42,30 +42,32 @@ export const Funcionamento = styled.div`
   height: 7rem;
   padding: 1rem;
   color: ${({ theme }) => theme.colors.white};
-  background-color: ${({ theme }) => theme.colors.secondary};
+  background-color: #1e1d1f;
   border-radius: .5rem;
   font-weight: 600;
   font-family: 'Roboto';
 
-  @media screen and (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.md}) {
     width: 10rem;
   }
 `
 
 
 export const Wrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 25% 25% 25% 25%;
+  justify-items: center;
   align-items: center;
-  width: 80%;
+
+
   max-width: 90rem;
   height: 100%;
-  row-gap: 2rem;
+  width: 85%;
   margin-top: 1rem;
 
-  @media screen and (max-width: ${({ theme }) => theme.breakpoints.sm}) {
-    flex-direction: column;
-    align-items: flex-start;
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    width: auto;
+    grid-template-columns: 100%;
   }
 
   div {
@@ -75,16 +77,17 @@ export const Wrapper = styled.div`
   .social-networks {
     display: flex;
     flex-direction: column;
-    align-self: flex-end;
-    align-items: center;
     justify-content: center;
+    align-items: flex-end;
     gap: 1rem;
     height: 100%;
+    width: 100%;
 
-    @media screen and (max-width: ${({ theme }) => theme.breakpoints.sm}) {
-    /* flex-direction: column; */
-      align-self: flex-start;
+    @media screen and (max-width: ${({ theme }) => theme.breakpoints.md}) {
+      align-items: flex-start;
+      margin-top: 1rem;
     }
+
   }
 
   .social-networks__title {

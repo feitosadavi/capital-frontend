@@ -13,9 +13,6 @@ import { useMediaQuery } from '@mui/material'
 export const Footer = () => {
 
   const icons = [{
-    element: <LocationOnIcon />,
-    label: 'Taguantinga Norte, Brasília - DF'
-  }, {
     element: <EmailIcon />,
     label: 'comercial@capitalveiculosdf.com'
   }, {
@@ -42,7 +39,7 @@ export const Footer = () => {
     </S.Funcionamento>
   )
 
-  const isMobile = useMediaQuery('(max-width: 500px)')
+  const isMobile = useMediaQuery('(max-width: 1000px)')
   return (
     <footer>
       <S.Footer>
@@ -54,6 +51,11 @@ export const Footer = () => {
         }
         <S.Wrapper>
           <div>
+            <div className="info">
+
+              <span className='icon'><LocationOnIcon /></span>
+              <span>QNE 01 LOJA 13 LOJA 1 <br /> Taguantinga, Brasília - DF</span>
+            </div>
             {
               icons.map(({ element, label, onClick }) => (
                 <div onClick={onClick} key={label} className="info">
@@ -63,10 +65,11 @@ export const Footer = () => {
               ))
             }
           </div>
-          {!isMobile && <>
-            <Logo />
-            <Funcionamento />
-          </>}
+
+          {!isMobile && <Logo />}
+          {!isMobile && <Funcionamento />}
+
+
           <div className='social-networks'>
             <span className='social-networks__title'>Nossas redes</span>
             <div>
@@ -86,9 +89,11 @@ export const Footer = () => {
               }
             </div>
           </div>
+
         </S.Wrapper>
         <span style={{ padding: '.5rem', textAlign: 'center', fontSize: '12pt' }}>
-          Todos os direitos reservados Capital Veiculos <br />
+          Todos os direitos reservados Capital Veiculos | 47.342.318/0001-14
+          <br />
           Feito por <a target='__blank__' href="https://github.com/feitosadavi">Davi Feitosa</a>
         </span>
       </S.Footer>

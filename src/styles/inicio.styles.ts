@@ -53,6 +53,7 @@ export const Slide = styled.div<{ img: string }>`
   justify-content: center;
   align-items: center;
   width: 100%;
+  min-height: 25rem;
   height: 100%;
   background-image: ${props => `url(${props.img})`};
   background-repeat: no-repeat;
@@ -64,14 +65,16 @@ export const Slide = styled.div<{ img: string }>`
 
   .slide__title {
     font-size: 54pt;
-    font-weight: 800;
-    color: ${({ theme }) => theme.colors.yellow};
+    font-weight: 900;
+    /* color: ${({ theme }) => theme.colors.yellow}; */
+    color: #ff8800;
   }
 
   .slide__subtitle {
-    font-size: 14pt;
-    font-weight: 600;
-    color: ${({ theme }) => theme.colors.white};
+    font-size: 16pt;
+    font-weight: 800;
+    /* color: ${({ theme }) => theme.colors.white}; */
+    color: #14110e;
   }
 
   @media screen and (max-width: ${({ theme }) => theme.breakpoints.md}) {

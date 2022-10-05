@@ -74,7 +74,7 @@ export const Slide = styled.div<{ img: string }>`
     font-size: 16pt;
     font-weight: 800;
     /* color: ${({ theme }) => theme.colors.white}; */
-    color: #14110e;
+    color: #030303;
   }
 
   @media screen and (max-width: ${({ theme }) => theme.breakpoints.md}) {

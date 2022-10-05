@@ -1,12 +1,13 @@
 import { AppProps } from 'next/app'
 import Head from 'next/head'
 import { Navbar } from '../components/Header/Header'
-import { ThemeProvider } from 'styled-components'
+import styled, { ThemeProvider } from 'styled-components'
 
 import { GlobalStyles, theme } from '../styles'
 import { AppContextProvider } from '../context/app.context'
 import { Footer } from '../components'
 import { ThemeProvider as MUIThemeProvider, createTheme } from '@mui/material/styles';
+import React from 'react'
 const darkTheme = createTheme({
   palette: {
     mode: 'dark',
@@ -14,6 +15,13 @@ const darkTheme = createTheme({
 });
 
 export default function App ({ Component, pageProps }: AppProps) {
+
+  // const dispatchAnimation = React.useRef<boolean>(false)
+
+  // React.useEffect(() => {
+  //   dispatchAnimation.current = true
+  // }, [])
+
   return (
     <>
       <Head>
@@ -37,6 +45,10 @@ export default function App ({ Component, pageProps }: AppProps) {
       <AppContextProvider>
         <MUIThemeProvider theme={darkTheme}>
           <ThemeProvider theme={theme}>
+            {/* <SAnimacao dispatchAnimation={dispatchAnimation.current}> */}
+            {/* <div className='abertura_esquerda'></div>
+              <div className='abertura_direita'></div>
+            </SAnimacao> */}
             <GlobalStyles />
             <Navbar />
             <Component {...pageProps} />
@@ -47,3 +59,41 @@ export default function App ({ Component, pageProps }: AppProps) {
     </>
   )
 }
+
+const SAnimacao = styled.div<{ dispatchAnimation: boolean }>`
+  div {
+    position: absolute;
+    height: 100vh;
+    background-color: black;
+    z-index: 9999999;
+    width: 0;
+  }
+
+  .abertura_esquerda {
+    animation: leftAbertura 3.5s;
+    animation-delay: 2s;
+    /* animation-duration: 2s; */
+    /* animation-timing-function: ease-in-out */
+  }
+
+  .abertura_direita {
+    right: 0;
+    animation: rightAbertura 3.5s;
+    animation-delay: 2s;
+    
+  }
+
+  @keyframes rightAbertura {
+    from {
+      width: 50vw;
+    }
+    to {
+      width: 0vw;
+    }
+  }
+  @keyframes leftAbertura {
+    to {
+      display: none;
+    }
+  }
+`

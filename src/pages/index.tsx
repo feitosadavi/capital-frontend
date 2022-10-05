@@ -50,15 +50,15 @@ const Inicio: NextPage<Props> = ({ _selects, vehicles, marcas, testemonials }) =
   const slides = [{
     title: 'AQUI VOCÊ ENCONTRA O SEU CARRO',
     subtitle: 'COM AS MELHORES CONDIÇÕES',
-    img: ''
+    img: '/carousel-img-1.jpeg'
   }, {
     title: 'JUROS A PARTIR DE 0,98%',
     subtitle: 'PARCELAMENTO EM ATÉ 60x',
-    img: ''
+    img: '/carousel-img-2.jpeg'
   }]
 
-  const slidesEl = () => slides.map(({ title, subtitle }) => (
-    <S.Slide key={title}>
+  const slidesEl = () => slides.map(({ title, subtitle, img }) => (
+    <S.Slide key={title} img={img}>
       <div className='slide__wrapper'>
         <p className='slide__title'>{title}</p>
         <p className="slide__subtitle">{subtitle}</p>

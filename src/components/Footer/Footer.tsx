@@ -34,8 +34,16 @@ export const Footer = () => {
   const Funcionamento = () => (
     <S.Funcionamento>
       <span>{isMobile ? 'Atendimento' : 'Horário de Funcionamento'}</span>
-      <span>Seg - Sex</span>
-      <span>08:00 - 17:00</span>
+      <div className='horarios'>
+        <div className="funcionamento_info">
+          <span className='funcionamento_periodo'>Seg - Sex</span>
+          <span>08:00 - 18:00</span>
+        </div>
+        <div className="funcionamento_info">
+          <span className='funcionamento_periodo'>Sábados</span>
+          <span>08:00 - 17:00</span>
+        </div>
+      </div>
     </S.Funcionamento>
   )
 

@@ -38,8 +38,8 @@ export const Funcionamento = styled.div`
   align-items: center;
   justify-content: center;
   gap: 1rem;
-  width: 15rem;
-  height: 7rem;
+  min-width: 15rem;
+  min-height: 7rem;
   padding: 1rem;
   color: ${({ theme }) => theme.colors.white};
   background-color: #1e1d1f;
@@ -47,6 +47,23 @@ export const Funcionamento = styled.div`
   font-weight: 600;
   font-family: 'Roboto';
 
+  .horarios {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .funcionamento_info {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: .1rem;
+  }
+
+  .funcionamento_periodo {
+    color: ${({ theme }) => theme.colors.yellow};
+  }
   @media screen and (max-width: ${({ theme }) => theme.breakpoints.md}) {
     width: 10rem;
   }

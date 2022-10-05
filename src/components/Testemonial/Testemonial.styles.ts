@@ -10,6 +10,7 @@ export const Container = styled.div`
   width: 17rem;
   height: 20rem;
   padding: 1rem;
+  vertical-align: middle;
 `
 
 export const Header = styled.div`

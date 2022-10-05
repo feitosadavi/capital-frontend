@@ -48,12 +48,15 @@ export const BtnGroup = styled.div`
   gap: 1rem;
 `
 
-export const Slide = styled.div`
+export const Slide = styled.div<{ img: string }>`
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
   height: 100%;
+  background-image: ${props => `url(${props.img})`};
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
 
   .slide__wrapper {
     width: 80%;

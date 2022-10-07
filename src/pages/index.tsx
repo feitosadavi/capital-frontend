@@ -66,8 +66,8 @@ const Inicio: NextPage<Props> = ({ _selects, vehicles, marcas, testemonials }) =
     </S.Slide>
   ))
 
-  const renderCards = Array(11).fill(0).map(() => (
-    <HorizontalCard key={vehicles[0].id} vehicle={vehicles[0]} />
+  const renderCards = vehicles.map(vehicle => (
+    <HorizontalCard key={vehicle.id} vehicle={vehicle} />
   ))
 
   const renderTestemonials = () => Array(11).fill(0).map(() => (

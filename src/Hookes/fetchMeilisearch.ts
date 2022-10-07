@@ -52,7 +52,7 @@ export const setupMeiliAttrs = async (index: string) => {
 }
 
 export const fetchMeilisearch = async <DataType = any> (index: string, search: string, params: MeiliSearchParams): Promise<Result<DataType[]>> => {
-  const ITENS_PER_PAGE = 2
+  const ITENS_PER_PAGE = 15
   const veiculoIndex = searchClient.index(index)
 
   const res = await veiculoIndex.search<DataType>(search, {
@@ -60,12 +60,7 @@ export const fetchMeilisearch = async <DataType = any> (index: string, search: s
     limit: params.limit ?? ITENS_PER_PAGE,
   })
 
-  console.log(res);
-
-
-
   const data = res.hits.length >= 1 ? setupFields<DataType>(res.hits, index) : []
-  console.log({ data });
 
   return {
     resultsCount: res.estimatedTotalHits,

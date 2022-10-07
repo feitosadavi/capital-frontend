@@ -89,13 +89,13 @@ const Inicio: NextPage<Props> = ({ _selects, vehicles, marcas, testemonials }) =
     context.setFilters(prevState => prevState ? ({ ...prevState, marca }) : ({ marca }) as any)
     router.push(`/comprar`)
   }
-  const renderMarcas = Array(11).fill(0).map(() => (
-    <S.Marca key={marcas[0].label} onClick={() => handleMarcaClick(marcas[0].label)}>
+  const renderMarcas = marcas.map(marca => (
+    <S.Marca key={marca.label} onClick={() => handleMarcaClick(marca.label)}>
       <ImageFuture
         width={128}
         height={128}
-        alt={marcas[0].photo.alt}
-        src={marcas[0].photo.src}
+        alt={marca.photo.alt}
+        src={marca.photo.src}
       />
     </S.Marca>
   ))
@@ -182,10 +182,23 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
   const _selects = res.filter(el => el.key === 'marca' || el.key === 'modelo')
 
-  const props: Props = { _selects, vehicles, marcas, testemonials }
+
+  // if (marcas.length < 4) {
+  //   const marcasArr = [...marcas, ...marcas]
+  //   const multiplyCount = 4 - marcas.length
+  //   marcasArr.push
+  // }
+  // const _vehicles = [...vehicles]
+  // for (const vehicle of vehicles) {
+  //   _vehicles.push({ ...vehicle, id: String(Math.random()) })
+  // }
+  // console.log({ _vehicles });
+
+  const props: Props = { _selects, vehicles: [...vehicles, ...vehicles, ...vehicles], marcas: [...marcas, ...marcas, ...marcas], testemonials }
 
   return {
     props, // will be passed to the page component as props
+    revalidate: 30
   }
 }
 

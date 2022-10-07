@@ -63,6 +63,8 @@ const Comprar: NextPage<Props> = ({
   React.useEffect(() => {
     if (!isFirstMount.current) {
       const query = context.filters?.marca ? `marca=${context.filters.marca}` : ''
+      console.log({ query });
+
       fetchSelects(query)
         .then(res => setSelects(res))
     } else {
@@ -125,9 +127,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const { data: _vehicles, resultsCount, numberOfPages } = await fetchMeilisearch<ComprarPageVehicle>('veiculo', '', {})
   const _selects = await fetchSelects()
   // const { data: _vehicles, resultsCount: _resultsCount } = 
-
-  console.log({ _vehicles });
-
 
   const props: Props = { _selects, _vehicles, resultsCount, numberOfPages }
 

@@ -113,7 +113,7 @@ const Vehicle: React.FC<VehicleProps> = ({ _vehicle }) => {
     label: 'Km',
     value: _vehicle.km
   }, {
-    label: 'Anos',
+    label: 'Ano',
     value: _vehicle.anos
   }, {
     label: 'Combustível',
@@ -266,18 +266,17 @@ export const getStaticPaths = async () => {
 
   // We'll pre-render only these paths at build time.
   // { fallback: false } means other routes should 404.
-  return { paths, fallback: false }
+  return { paths, fallback: 'blocking' }
 }
 
 export const getStaticProps: GetStaticProps<VehicleProps> = async ({ params }) => {
   const { data } = await request<{ data: VehicleType }>(`/api/veiculos/${params?.id}?populate[0]=marca.photo,modelo,anos,cor,combustivel,cambio,categoria,photos,opcionais`)
   // console.log(data.d);
   const _vehicle = { ...data, opcionais: (data.opcionais as any).data.map((el: any) => el.attributes.label) }
-  console.log({ _vehicle });
 
   const props: VehicleProps = { _vehicle }
 
-  return { props }
+  return { props, revalidate: 30 }
 }
 
 export default Vehicle

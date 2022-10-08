@@ -3,7 +3,7 @@ import { Logo } from '../Logo'
 
 import LocationOnIcon from '@mui/icons-material/LocationOn'
 import EmailIcon from '@mui/icons-material/Email'
-import PhoneIcon from '@mui/icons-material/Phone'
+import WhatsappIcon from '@mui/icons-material/WhatsApp'
 import InstagramIcon from '@mui/icons-material/Instagram'
 import FacebookIcon from '@mui/icons-material/Facebook'
 
@@ -17,8 +17,8 @@ export const Footer = () => {
     element: <EmailIcon />,
     label: EMAIL
   }, {
-    element: <PhoneIcon />,
-    label: `+${PHONE}`,
+    element: <WhatsappIcon />,
+    label: PHONE,
     onClick: () => window.open('https://api.whatsapp.com/send?phone=556137745656', '__target__')
   }]
 

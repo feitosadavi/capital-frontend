@@ -2,6 +2,9 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   width: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
 
 .number-slide {
   background: grey;
@@ -36,6 +39,16 @@ export const Container = styled.div`
   }
 }
 
+.thumbnail {
+  width: 90%;
+  align-self: center;
+
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    width: 85%;
+  }
+}
+
+
 .thumbnail .keen-slider__slide {
   cursor: pointer;
 }
@@ -43,4 +56,33 @@ export const Container = styled.div`
 .thumbnail .keen-slider__slide.active {
   border: 2px solid ${({ theme }) => theme.colors.yellow};
 }
+`
+
+export const ArrowContainer = styled.div`
+  position: absolute;
+  z-index: 100;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  bottom: 1rem;
+
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    bottom: 0.3rem;
+
+  }
+`
+
+export const Arrow = styled.svg<{ left?: boolean, disabled?: boolean }>`
+  width: 30px;
+  height: 30px;
+  transform: translateY(-50%);
+  -webkit-transform: translateY(-50%);
+  fill: #fff;
+  cursor: pointer;
+
+  left: ${({ left }) => left ? '5px' : 'auto'};
+  right: ${({ left }) => left ? 'auto' : '5px'};
+  
+  fill: ${({ disabled }) => disabled && 'gray'};
+
 `

@@ -14,6 +14,7 @@ export const Main = styled.main`
   justify-content: center;
   text-align: center;
   column-gap: 1rem;
+  gap: 4rem;
 
 `
 
@@ -26,14 +27,16 @@ export const Filters = styled.div`
   height: 70%;
   flex-direction: column;
   gap: 1rem;
-
+  /* box-shadow: rgba(48, 46, 39, 0.267) 0px 7px 29px 0px; */
+  background-image: linear-gradient(to bottom, #131214, #161618, #1a191b, #1d1c1e, #201f22);
+  
   @media screen and (max-width: 800px) {
     display: none;
   }
 `
 
 export const Content = styled.div`
-  flex: 3;
+  flex: 3;  
 
   @media screen and (max-width: 800px) {
     padding-left: 0;
@@ -44,7 +47,7 @@ export const GridContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   row-gap: 2.5rem;
   margin-top: 1rem;
   width: 100%;
@@ -53,7 +56,9 @@ export const GridContainer = styled.div`
 export const Grid = styled.div`
   display: flex;
   justify-content: flex-start;
-  gap: 1rem;
+  column-gap: 1rem;
+  row-gap: 2rem;
+
   flex-wrap: wrap;
   width: 47rem;
 

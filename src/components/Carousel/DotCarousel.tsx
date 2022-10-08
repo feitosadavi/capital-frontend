@@ -6,13 +6,40 @@ import * as S from './DotCarousel.styles'
 import { Photo } from '../../types'
 import Image from 'next/image'
 
-
 interface DotCarouselProps {
   photos?: Photo[]
   slides?: any[]
 }
 
-const animation = { duration: 5000, easing: (t: number) => t }
+
+const arrowsHandler = (slider: any) => {
+  let timeout: ReturnType<typeof setTimeout>
+  let mouseOver = false
+  function clearNextTimeout () {
+    clearTimeout(timeout)
+  }
+  function nextTimeout () {
+    clearTimeout(timeout)
+    if (mouseOver) return
+    timeout = setTimeout(() => {
+      slider.next()
+    }, 3000)
+  }
+  slider.on("created", () => {
+    slider.container.addEventListener("mouseover", () => {
+      mouseOver = true
+      clearNextTimeout()
+    })
+    slider.container.addEventListener("mouseout", () => {
+      mouseOver = false
+      nextTimeout()
+    })
+    nextTimeout()
+  })
+  slider.on("dragStarted", clearNextTimeout)
+  slider.on("animationEnded", nextTimeout)
+  slider.on("updated", nextTimeout)
+}
 
 export const DotCarousel: React.FC<DotCarouselProps> = ({ photos, slides }) => {
   const [currentSlide, setCurrentSlide] = React.useState(0)
@@ -26,36 +53,7 @@ export const DotCarousel: React.FC<DotCarouselProps> = ({ photos, slides }) => {
     created () {
       setLoaded(true)
     },
-  }, [
-    (slider) => {
-      let timeout: ReturnType<typeof setTimeout>
-      let mouseOver = false
-      function clearNextTimeout () {
-        clearTimeout(timeout)
-      }
-      function nextTimeout () {
-        clearTimeout(timeout)
-        if (mouseOver) return
-        timeout = setTimeout(() => {
-          slider.next()
-        }, 3000)
-      }
-      slider.on("created", () => {
-        slider.container.addEventListener("mouseover", () => {
-          mouseOver = true
-          clearNextTimeout()
-        })
-        slider.container.addEventListener("mouseout", () => {
-          mouseOver = false
-          nextTimeout()
-        })
-        nextTimeout()
-      })
-      slider.on("dragStarted", clearNextTimeout)
-      slider.on("animationEnded", nextTimeout)
-      slider.on("updated", nextTimeout)
-    },
-  ])
+  }, [arrowsHandler])
 
   const listImgs = () =>
     photos?.map(({ src, alt }) =>

@@ -1,6 +1,7 @@
 import React from 'react'
 import * as S from './WhatsappLink.styles'
 import WhatsappIcon from '@mui/icons-material/WhatsApp';
+import { PHONE } from '../../const';
 
 export const WhatsappLink = () => {
   return (
@@ -8,7 +9,7 @@ export const WhatsappLink = () => {
       <span className='label'>
         <WhatsappIcon /> Whatsapp
       </span>
-      55 (61) 37745656
+      {PHONE}
     </S.WhatsappLink>
   )
 }

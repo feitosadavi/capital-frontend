@@ -44,6 +44,35 @@ interface CarouselProps {
   slides?: any[]
 }
 
+const arrowsHandler = (slider: any) => {
+  let timeout: ReturnType<typeof setTimeout>
+  let mouseOver = false
+  function clearNextTimeout () {
+    clearTimeout(timeout)
+  }
+  function nextTimeout () {
+    clearTimeout(timeout)
+    if (mouseOver) return
+    timeout = setTimeout(() => {
+      slider.next()
+    }, 3000)
+  }
+  slider.on("created", () => {
+    slider.container.addEventListener("mouseover", () => {
+      mouseOver = true
+      clearNextTimeout()
+    })
+    slider.container.addEventListener("mouseout", () => {
+      mouseOver = false
+      nextTimeout()
+    })
+    nextTimeout()
+  })
+  slider.on("dragStarted", clearNextTimeout)
+  slider.on("animationEnded", nextTimeout)
+  slider.on("updated", nextTimeout)
+}
+
 const autoplay = (slider: any, interval: number) => {
   let timeout: ReturnType<typeof setTimeout>
   let mouseOver = false
@@ -76,7 +105,14 @@ const autoplay = (slider: any, interval: number) => {
 export const Carousel: React.FC<CarouselProps> = ({ photos, slides }) => {
   const [sliderRef, instanceRef] = useKeenSlider({
     initial: 0,
-  }, [(slider) => autoplay(slider, 2000)])
+    slideChanged (slider) {
+      setCurrentSlide(slider.track.details.rel)
+    },
+    created () {
+      setLoaded(true)
+    },
+  }, [(slider) => autoplay(slider, 4000)])
+
   const [thumbnailRef] = useKeenSlider(
     {
       initial: 0,
@@ -85,8 +121,12 @@ export const Carousel: React.FC<CarouselProps> = ({ photos, slides }) => {
         spacing: 10,
       },
     },
-    [ThumbnailPlugin(instanceRef)]
+    [ThumbnailPlugin(instanceRef), arrowsHandler]
   )
+
+  const [currentSlide, setCurrentSlide] = React.useState(0)
+  const [loaded, setLoaded] = React.useState(false)
+
 
   const listImgs = () =>
     photos?.map(({ src, alt }) =>
@@ -110,9 +150,55 @@ export const Carousel: React.FC<CarouselProps> = ({ photos, slides }) => {
         {listContent()}
       </div>
 
+
       <div ref={thumbnailRef} className="keen-slider thumbnail">
         {listContent()}
       </div>
+      {loaded && instanceRef.current && (
+        <S.ArrowContainer>
+          <Arrow
+            left
+            onClick={(e: any) =>
+              e.stopPropagation() || instanceRef.current?.prev()
+            }
+            disabled={currentSlide === 0}
+          />
+
+
+          <Arrow
+            onClick={(e: any) =>
+              e.stopPropagation() || instanceRef.current?.next()
+            }
+            disabled={
+              currentSlide ===
+              instanceRef.current.track.details.slides.length - 1
+            }
+          />
+        </S.ArrowContainer>
+      )}
     </S.Container>
+  )
+}
+
+function Arrow (props: {
+  disabled: boolean
+  left?: boolean
+  onClick: (e: any) => void
+}) {
+
+  return (
+    <S.Arrow
+      onClick={props.onClick}
+      left={props.left}
+      disabled={props.disabled}
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+    >
+      {props.left
+        ? <path d="M16.67 0l2.83 2.829-9.339 9.175 9.339 9.167-2.83 2.829-12.17-11.996z" />
+        : <path d="M5 3l3.057-3 11.943 12-11.943 12-3.057-3 9-9z" />
+      }
+
+    </S.Arrow>
   )
 }

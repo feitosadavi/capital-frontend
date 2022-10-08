@@ -9,15 +9,16 @@ import FacebookIcon from '@mui/icons-material/Facebook'
 
 import * as S from './Footer.styles'
 import { useMediaQuery } from '@mui/material'
+import { EMAIL, PHONE } from '../../const'
 
 export const Footer = () => {
 
   const icons = [{
     element: <EmailIcon />,
-    label: 'comercial@capitalveiculosdf.com'
+    label: EMAIL
   }, {
     element: <PhoneIcon />,
-    label: '+55 (61) 37745656',
+    label: `+${PHONE}`,
     onClick: () => window.open('https://api.whatsapp.com/send?phone=556137745656', '__target__')
   }]
 

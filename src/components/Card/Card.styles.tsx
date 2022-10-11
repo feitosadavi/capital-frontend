@@ -20,6 +20,7 @@ export const Thumb = styled.div`
   cursor: pointer;
 
   .img {
+    width: auto;
     border-radius: 0 .6rem 0 0;
   }
 `

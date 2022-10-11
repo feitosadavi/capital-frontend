@@ -66,9 +66,9 @@ const Inicio: NextPage<Props> = ({ _selects, vehicles, marcas, testemonials }) =
     </S.Slide>
   ))
 
-  // const renderCards = vehicles.map(vehicle => (
-  //   <HorizontalCard key={vehicle.id} vehicle={vehicle} />
-  // ))
+  const renderCards = vehicles.map(vehicle => (
+    <HorizontalCard key={vehicle.id} vehicle={vehicle} />
+  ))
 
   const renderTestemonials = () => Array(11).fill(0).map(() => (
     <Testemonial key={testemonials[0].id} testemonial={testemonials[0]} />
@@ -127,7 +127,7 @@ const Inicio: NextPage<Props> = ({ _selects, vehicles, marcas, testemonials }) =
           </S.Searcher>
         </S.Head>
 
-        {/* <CardRoulette title='Nossos destaques' cards={renderCards} /> */}
+        <CardRoulette title='Nossos destaques' cards={renderCards} />
         <CardRoulette title='Conheça nossas marcas' cards={renderMarcas} />
 
         <S.QuemSomos>
@@ -175,7 +175,7 @@ const Inicio: NextPage<Props> = ({ _selects, vehicles, marcas, testemonials }) =
 export const getStaticProps: GetStaticProps = async (context) => {
   await setupMeiliAttrs('veiculo')
 
-  const { data: vehicles } = await request<{ data: ComprarPageVehicle[] }>(`/api/veiculos?populate[0]=marca.photo,modelo,anos,cor,combustivel,cambio,categoria,photos`)
+  const { data: vehicles } = await request<{ data: ComprarPageVehicle[] }>(`/api/veiculos?populate[0]=marca.photo,modelo,anos,cor,combustivel,cambio,categoria,photos&filters[destaque][$eq]=true`)
   const res = await request<Select[]>(`/api/filters`)
   const { data: marcas } = await request<{ data: Marca[] }>(`/api/marcas?populate=*`)
   const { data: testemonials } = await request<{ data: TestemonialType[] }>(`/api/testemunhos?populate=*`)
@@ -194,7 +194,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
   // }
   // console.log({ _vehicles });
 
-  const props: Props = { _selects, vehicles: [...vehicles, ...vehicles, ...vehicles], marcas: [...marcas, ...marcas, ...marcas], testemonials }
+  const props: Props = { _selects, vehicles: [...vehicles, ...vehicles, ...vehicles, ...vehicles, ...vehicles], marcas: [...marcas, ...marcas, ...marcas], testemonials }
 
   return {
     props, // will be passed to the page component as props

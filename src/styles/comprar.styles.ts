@@ -47,7 +47,7 @@ export const GridContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
   row-gap: 2.5rem;
   margin-top: 1rem;
   width: 100%;

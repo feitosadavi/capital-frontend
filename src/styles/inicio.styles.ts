@@ -94,7 +94,6 @@ export const QuemSomos = styled.div`
   justify-content: space-between;
   
   width: 100%;
-  text-align: end;
   margin-top: 7rem;
 
   .foto-loja {
@@ -107,6 +106,7 @@ export const QuemSomos = styled.div`
     font-size: 16pt;
     font-weight: 500;
     line-height: 2rem;
+    text-align: center;
   }
 
   @media screen and (max-width: ${({ theme }) => theme.breakpoints.md}) {

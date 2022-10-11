@@ -4,7 +4,7 @@ import "keen-slider/keen-slider.min.css"
 
 import * as S from './styles'
 import { Photo } from '../../types'
-import Image from 'next/image'
+import Image from 'next/future/image'
 
 function ThumbnailPlugin (mainRef: any) {
   return (slider: any) => {
@@ -128,10 +128,14 @@ export const Carousel: React.FC<CarouselProps> = ({ photos, slides }) => {
   const [loaded, setLoaded] = React.useState(false)
 
 
-  const listImgs = () =>
+  const listImgs = (width?: string) =>
     photos?.map(({ src, alt }) =>
       <div key={src} className='keen-slider__slide number-slide'>
-        <Image src={src} alt={alt} layout='fill' />
+        <Image src={src} alt={alt}
+          width="0"
+          height="0"
+          sizes="100vw"
+          style={{ width: width ?? 'auto', height: '100%', borderRadius: '.5rem' }} />
       </div>
     )
 
@@ -142,7 +146,7 @@ export const Carousel: React.FC<CarouselProps> = ({ photos, slides }) => {
       </div>
     )
 
-  const listContent = () => photos ? listImgs() : listSlides()
+  const listContent = (width?: string) => photos ? listImgs(width) : listSlides()
 
   return (
     <S.Container>
@@ -152,7 +156,7 @@ export const Carousel: React.FC<CarouselProps> = ({ photos, slides }) => {
 
 
       <div ref={thumbnailRef} className="keen-slider thumbnail">
-        {listContent()}
+        {listContent('100%')}
       </div>
       {loaded && instanceRef.current && (
         <S.ArrowContainer>

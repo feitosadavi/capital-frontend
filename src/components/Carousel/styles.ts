@@ -7,7 +7,7 @@ export const Container = styled.div`
   flex-direction: column;
 
 .number-slide {
-  background: grey;
+  background: ${({ theme }) => theme.colors.secondary};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -42,6 +42,10 @@ export const Container = styled.div`
 .thumbnail {
   width: 90%;
   align-self: center;
+
+  img {
+    
+  }
 
   @media screen and (max-width: ${({ theme }) => theme.breakpoints.sm}) {
     width: 85%;

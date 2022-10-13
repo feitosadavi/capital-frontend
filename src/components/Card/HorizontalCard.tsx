@@ -40,7 +40,7 @@ export const HorizontalCard: React.FC<HorizontalCard> = ({ vehicle: { id, photos
         </div>
 
         <div className="content__footer">
-          <span>{currencyFormatter.format(preco)}</span>
+          <span className='preco'>{currencyFormatter.format(preco)}</span>
         </div>
       </ContentStyled>
     </ContainerStyled>
@@ -53,9 +53,9 @@ const ContainerStyled = styled.div`
   justify-content: space-between;
   background-color: ${({ theme }) => theme.colors.primary};
   border-radius: .5rem;
-  max-width: 23rem;
+  width: 25rem;
   height: 10rem;
-  margin: auto 1rem auto .2rem;
+  margin: auto 10rem auto .2rem;
   gap: 1rem;
   cursor: pointer;
 `
@@ -76,13 +76,23 @@ const ContentStyled = styled.div`
   flex-direction: column;
   justify-content: space-between;
   width: 10rem;
-  padding: .6rem 0 .6rem 0;
+  padding: .6rem .3rem 1rem 0;
 
   .marca-info {
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;
+  }
+
+  .marca-info span {
+    font-weight: 900;
+    color: ${({ theme }) => theme.colors.white};
+  }
+
+  .preco {
+    font-weight: 900;
+    color: ${({ theme }) => theme.colors.yellow};
   }
 
   /* .content__header {

@@ -45,7 +45,7 @@ export const LoopCarousel: React.FC<LoopCarouselProps> = ({ cards }) => {
         slides: { perView: 2 },
       },
       "(min-width: 1000px)": {
-        slides: { perView: 4 },
+        slides: { perView: 3 },
       },
     },
     slides: { perView: 1 },

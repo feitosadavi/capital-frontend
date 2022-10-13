@@ -156,7 +156,7 @@ export const Carousel: React.FC<CarouselProps> = ({ photos, slides }) => {
 
 
       <div ref={thumbnailRef} className="keen-slider thumbnail">
-        {listContent('100%')}
+        {listContent()}
       </div>
       {loaded && instanceRef.current && (
         <S.ArrowContainer>

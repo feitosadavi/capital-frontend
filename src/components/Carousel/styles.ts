@@ -55,10 +55,20 @@ export const Container = styled.div`
 
 .thumbnail .keen-slider__slide {
   cursor: pointer;
+  background-color: ${({ theme }) => theme.colors.secondary};
 }
 
-.thumbnail .keen-slider__slide.active {
-  border: 2px solid ${({ theme }) => theme.colors.yellow};
+.thumbnail .keen-slider__slide img {
+  transition: .2s;
+  color: black;
+}
+
+.thumbnail .keen-slider__slide.active img {
+  scale: 1.2;
+  opacity: .5;
+
+  /* Safari seems to support, but seems deprecated and does the same thing as the others. */
+  image-rendering: -webkit-optimize-contrast;
 }
 `
 

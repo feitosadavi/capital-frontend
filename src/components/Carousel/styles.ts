@@ -42,11 +42,7 @@ export const Container = styled.div`
 .thumbnail {
   width: 90%;
   align-self: center;
-
-  img {
-    
-  }
-
+  
   @media screen and (max-width: ${({ theme }) => theme.breakpoints.sm}) {
     width: 85%;
   }
@@ -66,9 +62,6 @@ export const Container = styled.div`
 .thumbnail .keen-slider__slide.active img {
   scale: 1.2;
   opacity: .5;
-
-  /* Safari seems to support, but seems deprecated and does the same thing as the others. */
-  image-rendering: -webkit-optimize-contrast;
 }
 `
 
@@ -82,7 +75,8 @@ export const ArrowContainer = styled.div`
 
   @media screen and (max-width: ${({ theme }) => theme.breakpoints.sm}) {
     bottom: 0.3rem;
-
+    width: 103%;
+    left: -6px;
   }
 `
 
@@ -94,9 +88,9 @@ export const Arrow = styled.svg<{ left?: boolean, disabled?: boolean }>`
   fill: #fff;
   cursor: pointer;
 
-  left: ${({ left }) => left ? '5px' : 'auto'};
-  right: ${({ left }) => left ? 'auto' : '5px'};
-  
+  left: ${({ left }) => left ? '1px' : 'auto'};
+  right: ${({ left }) => left ? 'auto' : '1px'};
+
   fill: ${({ disabled }) => disabled && 'gray'};
 
 `

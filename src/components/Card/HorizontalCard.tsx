@@ -64,6 +64,7 @@ const ThumbStyled = styled.div`
   position: relative;
   width: 55%;
   img {
+    object-fit: cover;
     border-top-left-radius: .5rem;
     border-bottom-left-radius: .5rem;
   }

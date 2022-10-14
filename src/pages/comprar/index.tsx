@@ -22,48 +22,24 @@ interface Props {
 
 const Comprar: NextPage<Props> = ({
   _selects,
-  _vehicles,
-  resultsCount,
-  numberOfPages
+
 }) => {
   const context = React.useContext(AppContext)
   const [selects, setSelects] = React.useState<Select[]>(_selects)
-  const [vehicles, setVehicles] = React.useState<ComprarPageVehicle[]>(_vehicles)
-
-
-  React.useEffect(() => {
-    context.setResultsCount(resultsCount)
-    context.setNumberOfPages(numberOfPages)
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  // const fetchVehicles = async () => {
-  //   const { data, meta } = await request('/api/veiculos?populate[0]=marca.photo,modelo,anos,cor,categoria,photos')
-  //   console.log({ data });
-
-  //   setVehicles(data ?? [])
-  //   return { ok: true }
-  // }
-
-  // const { data: res, error } = useSWR<boolean>('', fetchVehicles)
-
-  // if (error) {
-  //   toast.error('Houve um erro durante a pesquisa, tente novamente!')
-  // }
-
-  // console.log(res);
+  const [vehicles, setVehicles] = React.useState<ComprarPageVehicle[]>([])
 
 
   // React.useEffect(() => {
-  //   setFiltersHasBeenFired(true)
-  // }, [context.filters])
+  //   context.setResultsCount(resultsCount)
+  //   context.setNumberOfPages(numberOfPages)
+
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [])
 
   const isFirstMount = React.useRef<boolean>(true)
   React.useEffect(() => {
     if (!isFirstMount.current) {
       const query = context.filters?.marca ? `marca=${context.filters.marca}` : ''
-      console.log({ query });
 
       fetchSelects(query)
         .then(res => setSelects(res))
@@ -108,7 +84,7 @@ const Comprar: NextPage<Props> = ({
                 vehicles.length >= 1
                   ?
                   vehicles.map((vehicle) => (
-                    <Card key={vehicle.cor} vehicle={vehicle} />
+                    <Card key={vehicle.id} vehicle={vehicle} />
                   ))
                   : 'Não foram encontrados resultados.'
               }
@@ -124,11 +100,11 @@ const Comprar: NextPage<Props> = ({
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   await setupMeiliAttrs('veiculos')
-  const { data: _vehicles, resultsCount, numberOfPages } = await fetchMeilisearch<ComprarPageVehicle>('veiculo', '', {})
+  // const { data: _vehicles, resultsCount, numberOfPages } = await fetchMeilisearch<ComprarPageVehicle>('veiculo', '', {})
   const _selects = await fetchSelects()
   // const { data: _vehicles, resultsCount: _resultsCount } = 
 
-  const props: Props = { _selects, _vehicles, resultsCount, numberOfPages }
+  const props = { _selects }
 
   return {
     props, // will be passed to the page component as props

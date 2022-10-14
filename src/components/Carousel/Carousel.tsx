@@ -5,6 +5,7 @@ import "keen-slider/keen-slider.min.css"
 import * as S from './styles'
 import { Photo } from '../../types'
 import Image from 'next/future/image'
+import { useMediaQuery } from '@mui/material'
 
 function ThumbnailPlugin (mainRef: any) {
   return (slider: any) => {
@@ -127,6 +128,7 @@ export const Carousel: React.FC<CarouselProps> = ({ photos, slides }) => {
   const [currentSlide, setCurrentSlide] = React.useState(0)
   const [loaded, setLoaded] = React.useState(false)
 
+  const isMobile = useMediaQuery('(max-width: 500px)')
 
   const listImgs = (width?: string) =>
     photos?.map(({ src, alt }) =>
@@ -156,7 +158,7 @@ export const Carousel: React.FC<CarouselProps> = ({ photos, slides }) => {
 
 
       <div ref={thumbnailRef} className="keen-slider thumbnail">
-        {listContent()}
+        {listContent(isMobile ? '100%' : 'auto')}
       </div>
       {loaded && instanceRef.current && (
         <S.ArrowContainer>

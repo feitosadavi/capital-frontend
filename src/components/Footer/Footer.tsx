@@ -53,8 +53,8 @@ export const Footer = () => {
     <footer>
       <S.Footer>
         {isMobile &&
-          <div style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-            <Logo />
+          <div style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
+            <Logo height={170} />
             <Funcionamento />
           </div>
         }

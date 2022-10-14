@@ -59,8 +59,13 @@ export const Description = styled.div`
     display: flex;
     width: 100%;
     justify-content: space-between;
-    font-size: 13pt;
+    font-size: 14pt;
     font-weight: 600;
+
+    @media screen and (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+      flex-direction: column;
+      gap: .5rem;
+    }
   }
 
   .main_info-left {
@@ -107,6 +112,7 @@ export const Info = styled.span`
   align-items: center;
   gap: .3rem;
   margin-bottom: 1rem;
+  text-align: center;
   .label {
     font-weight: 600;
     color: ${({ theme }) => theme.colors.white};

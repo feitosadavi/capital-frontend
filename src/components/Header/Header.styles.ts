@@ -56,6 +56,7 @@ export const DesktopNavModals = styled.div`
     cursor: pointer;
     font-family: 'Roboto';
     letter-spacing: .2rem;
+    z-index: 1000;
 
     :hover {
       color: ${({ theme }) => theme.colors.yellow};

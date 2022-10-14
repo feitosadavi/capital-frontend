@@ -2,7 +2,7 @@ import React from 'react'
 
 import * as S from './Card.styles'
 import { ComprarPageVehicle } from '../../types'
-import Image from 'next/image'
+import Image from 'next/future/image'
 import { useRouter } from 'next/router'
 
 type CardProps = {
@@ -22,23 +22,32 @@ export const Card: React.FC<CardProps> = ({ vehicle }) => {
   return (
     <S.Container>
       <S.Thumb onClick={handleClick}>
-        <Image src={vehicle.photos[0].src} alt={vehicle.photos[0].alt} width='500px' height='350px' className="img" />
+        <Image src={vehicle.photos[0].src} alt={vehicle.photos[0].alt} className="img"
+          sizes='100%'
+          fill
+        />
+        {/* <S.MarcaLogo>
+          <Image src={vehicle.marca.photo.src} alt={vehicle.marca.photo.alt} width='28' height='28' />
+        </S.MarcaLogo> */}
       </S.Thumb>
 
       <S.Body>
         <span className='body__top'>
-          <span>
-            {`${vehicle.marca.label} ${vehicle.modelo}`}
+          <span className='first_info'>
+            <span className='card_marca'>{vehicle.marca.label.toUpperCase()}</span>
+            <span className='price'>{currencyFormatter.format(vehicle.preco)}</span>
           </span>
-          {/* <Image src={vehicle.marca.photo.src} alt={vehicle.marca.photo.alt} width='28' height='28' /> */}
+          <span>
+            {vehicle.modelo}
+          </span>
         </span>
-        <span className='price'>{currencyFormatter.format(vehicle.preco)}</span>
+
       </S.Body>
 
       <S.Footer>
         <span>{vehicle.anos}</span>
         <b>|</b>
-        <span>{vehicle.km}</span>
+        <span>{vehicle.km}km</span>
         <b>|</b>
         <span>{vehicle.cor}</span>
       </S.Footer>

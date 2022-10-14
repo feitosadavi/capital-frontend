@@ -1,4 +1,5 @@
 import { MeiliSearchParams } from '@meilisearch/instant-meilisearch'
+import { ITENS_PER_PAGE } from '../const'
 import { searchClient } from '../services/searchClient'
 import { Photo } from '../types'
 
@@ -52,7 +53,6 @@ export const setupMeiliAttrs = async (index: string) => {
 }
 
 export const fetchMeilisearch = async <DataType = any> (index: string, search: string, params: MeiliSearchParams): Promise<Result<DataType[]>> => {
-  const ITENS_PER_PAGE = 15
   const veiculoIndex = searchClient.index(index)
 
   const res = await veiculoIndex.search<DataType>(search, {

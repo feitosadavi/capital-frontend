@@ -13,7 +13,6 @@ export const fetchSelects = async (params?: string): Promise<Select[]> => {
 
     _selects.splice(_selects.indexOf(ano), 1)
     _selects.push(anos)
-    console.log(_selects);
 
     return _selects
   } catch (error) {

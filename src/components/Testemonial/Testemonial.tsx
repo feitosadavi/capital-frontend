@@ -10,8 +10,6 @@ interface TestemonialProps {
 }
 
 export const Testemonial: React.FC<TestemonialProps> = ({ testemonial: { estrelas, titulo, descricao, photo, nome, redeSocial } }) => {
-  console.log({ estrelas });
-
   return (
     <S.Container>
       <S.Header>

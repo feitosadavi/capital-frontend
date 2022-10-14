@@ -12,6 +12,7 @@ import { ComprarPageVehicle } from '../../types';
 import { AppContext, Filters } from '../../context/app.context';
 import { Button, useMediaQuery } from '@mui/material'
 import { fetchMeilisearch } from '../../Hookes';
+import { ITENS_PER_PAGE } from '../../const';
 
 interface Props {
   setVehicles: React.Dispatch<React.SetStateAction<ComprarPageVehicle[]>>
@@ -40,9 +41,8 @@ export const SearchBar: React.FC<Props> = ({ setVehicles, vehicles }) => {
   const [search, setSearch] = React.useState<string>('')
   const [orderFilter, setOrderFilter] = React.useState<string[]>(['createdAt:desc'])
 
-  const fetchVehicles = async (offset: number) => {
+  const fetchVehicles = async (offset: number, page?: number) => {
     const filter = setupFilter(context.filters)
-    console.log({ filter });
 
     const { data, resultsCount, numberOfPages } = await fetchMeilisearch<ComprarPageVehicle>('veiculo', search, {
       filter,
@@ -55,10 +55,9 @@ export const SearchBar: React.FC<Props> = ({ setVehicles, vehicles }) => {
     // pagination
     context.setResultsCount(resultsCount)
     context.setNumberOfPages(numberOfPages)
-    context.setPage(1)
+    context.setPage(page ?? 1)
   }
 
-  const isFirstMount1 = React.useRef<boolean>(true)
   React.useEffect(() => {
     fetchVehicles(0)
   }, [search, context.filters, orderFilter])
@@ -66,8 +65,10 @@ export const SearchBar: React.FC<Props> = ({ setVehicles, vehicles }) => {
   const isFirstMount2 = React.useRef<boolean>(true)
   React.useEffect(() => {
     if (!isFirstMount2.current) {
-      const offset = (2 * (context.page ?? 0)) - 1
-      fetchVehicles(offset)
+
+      const offset = (ITENS_PER_PAGE * (context.page - 1)) // multiplica pela pagina anterior
+
+      fetchVehicles(offset, context.page)
     } else {
       isFirstMount2.current = false
     }

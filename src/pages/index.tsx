@@ -193,7 +193,11 @@ export const getStaticProps: GetStaticProps = async (context) => {
   // }
   // console.log({ _vehicles });
 
-  const props: Props = { _selects, vehicles: [...vehicles, ...vehicles, ...vehicles, ...vehicles, ...vehicles], marcas: [...marcas, ...marcas, ...marcas], testemonials }
+  const arrVehicles = vehicles?.length > 0 ? [...vehicles, ...vehicles, ...vehicles, ...vehicles, ...vehicles] : []
+
+  const arrMarcas = marcas.length > 0 ? [...marcas, ...marcas, ...marcas] : []
+
+  const props: Props = { _selects, vehicles: arrVehicles, marcas: arrMarcas, testemonials }
 
   return {
     props, // will be passed to the page component as props

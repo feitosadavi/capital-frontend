@@ -8,6 +8,7 @@ const nextConfig = {
   env: {
     HOST: 'http://seashell-app-6ylyu.ondigitalocean.app'
   },
+  output: 'standalone',
   experimental: {
     images: {
       allowFutureImage: true

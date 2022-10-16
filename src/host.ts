@@ -6,6 +6,6 @@
 //   ? 'http://localhost:1337'
 //   : 'https://seashell-app-6ylyu.ondigitalocean.app'
 
-export const MEILI = 'http://157.230.215.93/'
+export const MEILI = 'https://search.capitalveiculosdf.com'
 
-export const CMS = 'https://seashell-app-6ylyu.ondigitalocean.app'
+export const CMS = 'https://cms.capitalveiculosdf.com'

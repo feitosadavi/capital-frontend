@@ -57,6 +57,7 @@ export const Container = styled.div`
 .thumbnail .keen-slider__slide img {
   transition: .2s;
   color: black;
+  object-fit: cover;
 }
 
 .thumbnail .keen-slider__slide.active img {

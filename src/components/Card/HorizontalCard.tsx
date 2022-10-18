@@ -53,11 +53,14 @@ const ContainerStyled = styled.div`
   justify-content: space-between;
   background-color: ${({ theme }) => theme.colors.primary};
   border-radius: .5rem;
-  width: 25rem;
+  width: 20rem;
   height: 10rem;
-  margin: auto 10rem auto .2rem;
   gap: 1rem;
   cursor: pointer;
+
+  @media screen and (min-width: 1000px) {
+    scale: .9;
+  }
 `
 
 const ThumbStyled = styled.div`
@@ -65,6 +68,8 @@ const ThumbStyled = styled.div`
   width: 55%;
   img {
     object-fit: cover;
+    object-position: -72px;
+    zoom: 1000%;
     border-top-left-radius: .5rem;
     border-bottom-left-radius: .5rem;
   }
@@ -76,7 +81,7 @@ const ContentStyled = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: 10rem;
+  width: 100%;
   padding: .6rem .3rem 1rem 0;
 
   .marca-info {

@@ -3,13 +3,13 @@ import type { GetServerSideProps, NextPage } from 'next'
 import Head from 'next/head'
 
 
-import { Card, Filters, MobileFilters, Pagination, SearchBar } from '../../components'
+import { Card, Filters, Loading, MobileFilters, Pagination, SearchBar } from '../../components'
 import { ComprarPageVehicle, Select } from '../../types'
 
 import * as S from '../../styles/comprar.styles'
 import { AppContext } from '../../context/app.context'
 import { useMediaQuery } from '@mui/material'
-import { fetchMeilisearch, setupMeiliAttrs } from '../../Hookes'
+import { setupMeiliAttrs } from '../../Hookes'
 import { fetchSelects } from '../../services/fetchSelects'
 
 interface Props {
@@ -28,26 +28,11 @@ const Comprar: NextPage<Props> = ({
   const [selects, setSelects] = React.useState<Select[]>(_selects)
   const [vehicles, setVehicles] = React.useState<ComprarPageVehicle[]>([])
 
-
-  // React.useEffect(() => {
-  //   context.setResultsCount(resultsCount)
-  //   context.setNumberOfPages(numberOfPages)
-
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [])
-
-  const isFirstMount = React.useRef<boolean>(true)
   React.useEffect(() => {
-    if (!isFirstMount.current) {
-      const query = context.filters?.marca ? `marca=${context.filters.marca}` : ''
+    const query = context.filters?.marca ? `marca=${context.filters.marca}` : ''
 
-      fetchSelects(query)
-        .then(res => setSelects(res))
-    } else {
-      isFirstMount.current = false
-    }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    fetchSelects(query)
+      .then(res => setSelects(res))
   }, [context.filters?.marca])
 
 

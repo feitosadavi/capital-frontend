@@ -113,10 +113,13 @@ export const Info = styled.span`
   gap: .3rem;
   margin-bottom: 1rem;
   text-align: center;
+  width: 80%;
+
   .label {
     font-weight: 600;
     color: ${({ theme }) => theme.colors.white};
   }
+
 `
 
 export const Aside = styled.section`

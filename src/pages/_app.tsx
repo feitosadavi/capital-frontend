@@ -38,19 +38,16 @@ export default function App ({ Component, pageProps }: AppProps) {
 
         <meta
           name='description'
-          content='A sua loja de carros e automóveis em geral em Brasília - DF'
+          content='A Capital Veículos é uma loja especializada na venda e compra de automóveis, sediada em Brasília - DF (Distrito Federal). Também trabalhamos com consignação de veículos e consórcio de automovéis, casa e muito mais!'
         />
       </Head>
 
       <AppContextProvider>
         <MUIThemeProvider theme={darkTheme}>
           <ThemeProvider theme={theme}>
-            {/* <SAnimacao dispatchAnimation={dispatchAnimation.current}> */}
-            {/* <div className='abertura_esquerda'></div>
-              <div className='abertura_direita'></div>
-            </SAnimacao> */}
             <GlobalStyles />
             <Navbar />
+            {/* <SAnimacao /> */}
             <Component {...pageProps} />
             <Footer />
           </ThemeProvider>
@@ -60,30 +57,29 @@ export default function App ({ Component, pageProps }: AppProps) {
   )
 }
 
-const SAnimacao = styled.div<{ dispatchAnimation: boolean }>`
-  div {
-    position: absolute;
+const SAnimacao = styled.div`
     height: 100vh;
     background-color: black;
     z-index: 9999999;
-    width: 0;
-  }
+    width: 1000vw;
+  /* div { */
+  /* } */
 
-  .abertura_esquerda {
-    animation: leftAbertura 3.5s;
-    animation-delay: 2s;
+  /* .abertura_esquerda { */
+    /* animation: leftAbertura 3.5s;
+    animation-delay: 2s; */
     /* animation-duration: 2s; */
     /* animation-timing-function: ease-in-out */
-  }
+  /* } */
 
-  .abertura_direita {
+  /* .abertura_direita {
     right: 0;
     animation: rightAbertura 3.5s;
     animation-delay: 2s;
     
-  }
+  } */
 
-  @keyframes rightAbertura {
+  /* @keyframes rightAbertura {
     from {
       width: 50vw;
     }
@@ -95,5 +91,5 @@ const SAnimacao = styled.div<{ dispatchAnimation: boolean }>`
     to {
       display: none;
     }
-  }
+  } */
 `

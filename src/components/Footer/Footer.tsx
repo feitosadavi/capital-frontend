@@ -54,7 +54,7 @@ export const Footer = () => {
       <S.Footer>
         {isMobile &&
           <div style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
-            <Logo height={170} />
+            <Logo height={170} width={200} />
             <Funcionamento />
           </div>
         }
@@ -63,7 +63,7 @@ export const Footer = () => {
             <div className="info">
 
               <span className='icon'><LocationOnIcon /></span>
-              <span>QNE 01 LOJA 13 LOJA 1 <br /> Taguantinga, Brasília - DF</span>
+              <span>QNE 01 LOTE 13 LOJA 1 <br /> Taguantinga, Brasília - DF</span>
             </div>
             {
               icons.map(({ element, label, onClick }) => (

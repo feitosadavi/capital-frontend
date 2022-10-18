@@ -9,7 +9,8 @@ export const Container = styled.div`
   background-color: ${({ theme }) => theme.colors.white};
   color:  ${({ theme }) => theme.colors.secondary};
   border-radius: .6rem .6rem 0 .6rem;
-  box-shadow: rgba(248, 184, 9, 0.301) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;  `
+  box-shadow: rgba(248, 184, 9, 0.301) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+`
 
 
 export const Thumb = styled.div`

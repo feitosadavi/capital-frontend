@@ -83,39 +83,55 @@ export const HorizontalCard: React.FC<HorizontalCard> = ({ vehicle: { id, photos
 
 
 const ContainerStyled = styled.div`
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 70fr 30fr;
+  gap: .5rem;
+
   background-color: ${({ theme }) => theme.colors.primary};
   border-radius: .5rem;
-  width: 20rem;
+  width: 21rem;
   height: 10rem;
-  gap: 1rem;
   cursor: pointer;
-
   @media screen and (max-width: 500px) {
     scale: .92;
   }
 
-  @media screen and (min-width: 1000px) {
+  @media screen and (max-width: 1000px) {
     scale: .9;
+  }
+
+  @media screen and (min-width: 1000px) {
+    scale: .78;
+  }
+
+  @media screen and (min-width: 1400px) {
+    scale: .79;
+  }
+
+  @media screen and (min-width: 1500px) {
+    scale: .9;
+  }
+
+  @media screen and (min-width: 1610px) {
+    scale: 1;
   }
 `
 
 const ThumbStyled = styled.div`
   position: relative;
-  width: 60%;
+  width: 100%;
 
   border-top-left-radius: .5rem;
   border-bottom-left-radius: .5rem;
   overflow: hidden;
   
   img {
+    width: 100%;
     object-fit: cover;
-    zoom: 1000%;
   }
   
   .img-1200width {
-    object-position: -72px;
+    object-position: -60px;
   }
 
 `
@@ -125,7 +141,6 @@ const ContentStyled = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: 100%;
   padding: .6rem .3rem 1rem 0;
 
   .marca-info {

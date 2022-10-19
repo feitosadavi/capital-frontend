@@ -92,6 +92,10 @@ const ContainerStyled = styled.div`
   gap: 1rem;
   cursor: pointer;
 
+  @media screen and (max-width: 500px) {
+    scale: .92;
+  }
+
   @media screen and (min-width: 1000px) {
     scale: .9;
   }
@@ -101,9 +105,11 @@ const ThumbStyled = styled.div`
   position: relative;
   width: 60%;
 
+  border-top-left-radius: .5rem;
+  border-bottom-left-radius: .5rem;
+  overflow: hidden;
+  
   img {
-    border-top-left-radius: .5rem;
-    border-bottom-left-radius: .5rem;
     object-fit: cover;
     zoom: 1000%;
   }

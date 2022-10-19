@@ -1,35 +1,70 @@
 import * as React from 'react'
-import Image from 'next/future/image'
+import Img from 'next/future/image'
 import styled from 'styled-components'
 import { Vehicle } from '../../types'
 import { useRouter } from 'next/router'
-
 
 interface HorizontalCard {
   vehicle: Pick<Vehicle, 'id' | 'photos' | 'marca' | 'modelo' | 'preco'>
 }
 
+type ImgDimensions = {
+  height: number
+  width: number
+}
+
+const loadImg = (setImgDimensions: React.Dispatch<React.SetStateAction<ImgDimensions>>, imgUrl: string) => {
+  const img = new Image();
+  img.src = imgUrl;
+
+  img.onload = () => {
+    console.log({ img });
+
+    setImgDimensions({
+      height: img.height,
+      width: img.width
+    });
+  };
+  img.onerror = (err: any) => {
+    console.log("img error");
+    console.error(err);
+  };
+};
+
 export const HorizontalCard: React.FC<HorizontalCard> = ({ vehicle: { id, photos, marca, modelo, preco } }) => {
+  const [imgDimensions, setImgDimensions] = React.useState<ImgDimensions>({} as ImgDimensions);
+
   const currencyFormatter = new Intl.NumberFormat('pt-BR', {
     style: 'currency',
     currency: 'BRL',
   });
 
   const router = useRouter()
+  const img = React.useRef<any>()
+
+  React.useEffect(() => {
+    loadImg(setImgDimensions, photos[0].src);
+    console.log({ width: imgDimensions.width });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  if (!imgDimensions.width) return <></>
   return (
     <ContainerStyled onClick={() => router.push(`/carros/${id}`)}>
       <ThumbStyled>
-        <Image
+        <Img
           fill
+          className={imgDimensions?.width <= 1200 ? 'img-1200width' : ''}
           alt={photos[0].alt}
           src={photos[0].src}
         />
+
       </ThumbStyled>
       <ContentStyled>
         <div className="content__header">
           <div className='marca-info'>
             <span>{marca.label}</span>
-            <Image
+            <Img
               width={36}
               height={36}
               alt={marca.photo.alt}
@@ -66,17 +101,21 @@ const ContainerStyled = styled.div`
 const ThumbStyled = styled.div`
   position: relative;
   width: 55%;
+
   img {
+    border-top-left-radius: .5rem;
+    border-bottom-left-radius: .5rem;
+  }
+  
+  .img-1200width {
     object-fit: cover;
     object-position: -72px;
     zoom: 1000%;
-    border-top-left-radius: .5rem;
-    border-bottom-left-radius: .5rem;
   }
 
 `
 
-const ContentStyled = styled.div`
+const ContentStyled = styled.div` 
   flex: 1;
   display: flex;
   flex-direction: column;

@@ -44,7 +44,6 @@ export const HorizontalCard: React.FC<HorizontalCard> = ({ vehicle: { id, photos
 
   React.useEffect(() => {
     loadImg(setImgDimensions, photos[0].src);
-    console.log({ width: imgDimensions.width });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -100,17 +99,17 @@ const ContainerStyled = styled.div`
 
 const ThumbStyled = styled.div`
   position: relative;
-  width: 55%;
+  width: 60%;
 
   img {
     border-top-left-radius: .5rem;
     border-bottom-left-radius: .5rem;
+    object-fit: cover;
+    zoom: 1000%;
   }
   
   .img-1200width {
-    object-fit: cover;
     object-position: -72px;
-    zoom: 1000%;
   }
 
 `

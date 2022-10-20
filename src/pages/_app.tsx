@@ -38,7 +38,7 @@ export default function App ({ Component, pageProps }: AppProps) {
         <meta property="og:title" content="Capital Veículos" />
         {/* <meta property="og:type" content="{Your content}" /> */}
         <meta property="og:description" content='A Capital Veículos é uma loja especializada na venda e compra de automóveis, sediada em Brasília - DF (Distrito Federal). Também trabalhamos com consignação de veículos e consórcio de automovéis, casa e muito mais!' />
-        <meta property="og:image" content="/capital-logo.svg" color='#100f11' />
+        <meta property="og:image" content="https://res.cloudinary.com/dgpv312qk/image/upload/v1666224177/capital-capa_lkdjyk.png" color='#100f11' />
         <meta property="og:url" content="https://capitalveiculosdf.com" />
         <meta property="og:locale" content="pt_BR" />
 

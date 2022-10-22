@@ -49,6 +49,7 @@ export const SearchBar: React.FC<Props> = ({ setVehicles, vehicles }) => {
       sort: orderFilter,
       offset
     })
+    console.log(data);
 
     setVehicles(data)
 

@@ -27,6 +27,7 @@ export const Filters = styled.div`
   height: 70%;
   flex-direction: column;
   gap: 1rem;
+  width: 20rem;
   /* box-shadow: rgba(48, 46, 39, 0.267) 0px 7px 29px 0px; */
   background-image: linear-gradient(to bottom, #131214, #161618, #1a191b, #1d1c1e, #201f22);
   

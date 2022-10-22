@@ -42,21 +42,27 @@ export const SearchBar: React.FC<Props> = ({ setVehicles, vehicles }) => {
   const [orderFilter, setOrderFilter] = React.useState<string[]>(['createdAt:desc'])
 
   const fetchVehicles = async (offset: number, page?: number) => {
-    const filter = setupFilter(context.filters)
+    context.setLoading(true)
+    try {
+      const filter = setupFilter(context.filters)
+      const { data, resultsCount, numberOfPages } = await fetchMeilisearch<ComprarPageVehicle>('veiculo', search, {
+        filter,
+        sort: orderFilter,
+        offset
+      })
 
-    const { data, resultsCount, numberOfPages } = await fetchMeilisearch<ComprarPageVehicle>('veiculo', search, {
-      filter,
-      sort: orderFilter,
-      offset
-    })
-    console.log(data);
+      setVehicles(data)
 
-    setVehicles(data)
+      // pagination
+      context.setResultsCount(resultsCount)
+      context.setNumberOfPages(numberOfPages)
+      context.setPage(page ?? 1)
+    } catch (error) {
+      console.error(error);
+    } finally {
+      context.setLoading(false)
+    }
 
-    // pagination
-    context.setResultsCount(resultsCount)
-    context.setNumberOfPages(numberOfPages)
-    context.setPage(page ?? 1)
   }
 
   React.useEffect(() => {

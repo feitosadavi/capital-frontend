@@ -53,8 +53,8 @@ export const setupMeiliAttrs = async (index: string) => {
 }
 
 export const fetchMeilisearch = async <DataType = any> (index: string, search: string, params: MeiliSearchParams): Promise<Result<DataType[]>> => {
+  setupMeiliAttrs(index)
   const veiculoIndex = searchClient.index(index)
-
   const res = await veiculoIndex.search<DataType>(search, {
     ...params,
     limit: params.limit ?? ITENS_PER_PAGE,

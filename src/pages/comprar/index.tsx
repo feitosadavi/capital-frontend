@@ -65,14 +65,20 @@ const Comprar: NextPage<Props> = ({
           <SearchBar setVehicles={setVehicles} vehicles={vehicles} />
           <S.GridContainer>
             <S.Grid>
+              {context.loading && <Loading />}
               {
-                vehicles.length >= 1
+                !context.loading
+                &&
+                (
+                  vehicles.length >= 1
                   ?
                   vehicles.map((vehicle) => (
                     <Card key={vehicle.id} vehicle={vehicle} />
                   ))
                   : 'Não foram encontrados resultados.'
+                )
               }
+
             </S.Grid>
 
             <Pagination />

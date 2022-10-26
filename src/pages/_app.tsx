@@ -9,9 +9,6 @@ import { Footer } from '../components'
 import { ThemeProvider as MUIThemeProvider, createTheme } from '@mui/material/styles';
 import React from 'react'
 import { useRouter } from 'next/router'
-
-import ReactPixel from 'react-facebook-pixel'
-
 const darkTheme = createTheme({
   palette: {
     mode: 'dark',
@@ -29,12 +26,16 @@ export default function App ({ Component, pageProps }: AppProps) {
   const router = useRouter()
 
   React.useEffect(() => {
-    ReactPixel.init('1178116999770341') // facebookPixelId
-    ReactPixel.pageView()
+    import('react-facebook-pixel')
+      .then((x) => x.default)
+      .then((ReactPixel) => {
+        ReactPixel.init('1178116999770341') // facebookPixelId
+        ReactPixel.pageView()
 
-    router.events.on('routeChangeComplete', () => {
-      ReactPixel.pageView()
-    })
+        router.events.on('routeChangeComplete', () => {
+          ReactPixel.pageView()
+        })
+      })
   }, [router.events])
 
   return (

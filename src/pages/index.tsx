@@ -2,8 +2,8 @@
 import * as React from 'react'
 import type { GetStaticProps, NextPage } from 'next'
 import Head from 'next/head'
-import { DotCarousel, Filters, OndeEstamos, Testemonial } from '../components'
-import { fetchMeilisearch, setupMeiliAttrs } from '../Hookes'
+import { DotCarousel, Filters, Testemonial } from '../components'
+import { setupMeiliAttrs } from '../Hookes'
 import { fetchSelects } from '../services/fetchSelects'
 
 import * as S from '../styles/inicio.styles'
@@ -15,10 +15,10 @@ import ImageFuture from 'next/future/image'
 import { CardRoulette } from '../components/CardRoulette'
 import { HorizontalCard } from '../components/Card/HorizontalCard'
 import { request } from '../services/request'
-import { CMS } from '../host'
 import { useRouter } from 'next/router'
 import { Testemonial as TestemonialType } from '../types/Testemonial'
 
+import * as fbq from '../lib/fpixel'
 
 interface Props {
   _selects: Select[]
@@ -100,6 +100,15 @@ const Inicio: NextPage<Props> = ({ _selects, vehicles, marcas, testemonials }) =
     </S.Marca>
   ))
 
+  const handleVenderClick = () => {
+    fbq.event('Vender', { fonte: 'Botão da página de início' })
+    router.push('/vender')
+  }
+  const handleComprarClick = () => {
+    fbq.event('Comprar', { fonte: 'Botão da página de início' })
+    router.push('/comprar')
+  }
+
   const router = useRouter()
   return (
     <div>
@@ -126,8 +135,8 @@ const Inicio: NextPage<Props> = ({ _selects, vehicles, marcas, testemonials }) =
             <S.SearcherFooter>
               <span>O que você deseja?</span>
               <S.BtnGroup>
-                <Button onClick={() => router.push('/comprar')} label='Comprar' />
-                <Button onClick={() => router.push('/vender')} label='Vender' background='outline' />
+                <Button onClick={handleComprarClick} label='Comprar' />
+                <Button onClick={handleVenderClick} label='Vender' background='outline' />
               </S.BtnGroup>
             </S.SearcherFooter>
           </S.Searcher>

@@ -41,10 +41,10 @@ const Comprar: NextPage<Props> = ({
 
   const clearFilters = () => context.setFilters(null)
 
-  const renderSelects = () => <>
-    <S.ClearFiltersBtn onClick={clearFilters}>LIMPAR FILTROS<span>X</span></S.ClearFiltersBtn>
-    {selects.map(select => <Filters key={select.label} select={select} />)}
-  </>
+  // const renderSelects = () => <>
+  //   <S.ClearFiltersBtn onClick={clearFilters}>LIMPAR FILTROS<span>X</span></S.ClearFiltersBtn>
+  //   {selects.map(select => <Filters key={select.label} select={select} />)}
+  // </>
 
   return (
     <>
@@ -56,8 +56,14 @@ const Comprar: NextPage<Props> = ({
       <S.Main>
         {
           !isMobile
-            ? <S.Filters>{renderSelects()}</S.Filters>
-            : <MobileFilters>{renderSelects()}</MobileFilters>
+            ? <S.Filters>
+              <S.ClearFiltersBtn onClick={clearFilters}>LIMPAR FILTROS<span>X</span></S.ClearFiltersBtn>
+              {selects.map(select => <Filters key={select.label} select={select} />)}
+            </S.Filters>
+            : <MobileFilters>
+              <S.ClearFiltersBtn onClick={clearFilters}>LIMPAR FILTROS<span>X</span></S.ClearFiltersBtn>
+              {selects.map(select => <Filters key={select.label} select={select} />)}
+            </MobileFilters>
         }
 
 

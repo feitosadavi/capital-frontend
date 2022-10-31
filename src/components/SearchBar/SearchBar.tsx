@@ -4,7 +4,6 @@ import Paper from '@mui/material/Paper';
 import InputBase from '@mui/material/InputBase';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
-import FavoriteIcon from '@mui/icons-material/Favorite';
 import TuneIcon from '@mui/icons-material/Tune';
 import SearchIcon from '@mui/icons-material/Search';
 import { Menu } from '../Menu';
@@ -65,8 +64,15 @@ export const SearchBar: React.FC<Props> = ({ setVehicles, vehicles }) => {
 
   }
 
+  const isFirstMount1 = React.useRef<boolean>(true)
   React.useEffect(() => {
-    fetchVehicles(0)
+    console.log({ filters: context.filters });
+
+    // if (!isFirstMount2.current) {
+    //   fetchVehicles(0)
+    // } else {
+    //   isFirstMount2.current = false
+    // }
   }, [search, context.filters, orderFilter])
 
   const isFirstMount2 = React.useRef<boolean>(true)

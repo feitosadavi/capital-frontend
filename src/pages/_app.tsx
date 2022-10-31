@@ -1,3 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @next/next/no-sync-scripts */
+/* eslint-disable @next/next/no-css-tags */
 import { AppProps } from 'next/app'
 import Head from 'next/head'
 import { Navbar } from '../components/Header/Header'
@@ -5,13 +8,17 @@ import styled, { ThemeProvider } from 'styled-components'
 
 import { GlobalStyles, theme } from '../styles'
 import { AppContextProvider } from '../context/app.context'
-import { Footer } from '../components'
+import { Footer, Loading } from '../components'
 import { ThemeProvider as MUIThemeProvider, createTheme } from '@mui/material/styles';
 import React from 'react'
 import { useRouter } from 'next/router'
 
+import NProgress from 'nprogress'
+
 import * as fbq from '../lib/fpixel'
 import Script from 'next/script'
+
+import '/public/css/nprogress.min.css'
 
 const darkTheme = createTheme({
   palette: {
@@ -21,25 +28,60 @@ const darkTheme = createTheme({
 
 export default function App ({ Component, pageProps }: AppProps) {
 
-  // const dispatchAnimation = React.useRef<boolean>(false)
-
-  // React.useEffect(() => {
-  //   dispatchAnimation.current = true
-  // }, [])
-
   const router = useRouter()
 
+  type TurnLoadingScreenOffInput = {
+    loaders: HTMLCollectionOf<Element>,
+    globalLoader: Element,
+    loadingScreenLogo: Element
+  }
+  const turnLoadingScreenOff = ({ loaders, globalLoader, loadingScreenLogo }: TurnLoadingScreenOffInput) => {
+    setTimeout(() => {
+      loaders[0]?.classList.add('fade')
+      loaders[1]?.classList.add('fade')
+      loadingScreenLogo?.classList.add('loadingScreenLogo__fadeout')
+      setTimeout(() => {
+        globalLoader?.remove()
+        NProgress.done()
+      }, 1500)
+    }, 2500)
+  }
+
+  const handleLoadingScreen = () => {
+    if (typeof window !== 'undefined') {
+      NProgress.start()
+      const globalLoader = document.getElementsByClassName('globalLoader')[0];
+      const loaders = document.getElementsByClassName('loader');
+      const loadingScreenLogo = document.getElementsByClassName('loadingScreenLogo')[0];
+      if (loaders.length) turnLoadingScreenOff({ loaders, globalLoader, loadingScreenLogo })
+    }
+  }
+
   React.useEffect(() => {
+    handleLoadingScreen()
+
     // This pageview only triggers the first time (it's important for Pixel to have real information)
     fbq.pageview()
 
-    const handleRouteChange = () => {
+    const handleRouteChangeStart = (url: any) => {
+      console.log(`Loading: ${url}`);
+      NProgress.start()
+    }
+
+    const handleRouteChangeComplete = () => {
+      NProgress.done()
       fbq.pageview()
     }
 
-    router.events.on('routeChangeComplete', handleRouteChange)
+    const handleRouteChangeError = () => NProgress.done()
+
+    router.events.on('routeChangeStart', handleRouteChangeStart)
+    router.events.on('routeChangeComplete', handleRouteChangeComplete)
+    router.events.on('routeChangeError', handleRouteChangeError)
     return () => {
-      router.events.off('routeChangeComplete', handleRouteChange)
+      router.events.off('routeChangeStart', handleRouteChangeStart)
+      router.events.off('routeChangeComplete', handleRouteChangeComplete)
+      router.events.off('routeChangeError', handleRouteChangeError)
     }
   }, [router.events]) 
 
@@ -68,6 +110,7 @@ export default function App ({ Component, pageProps }: AppProps) {
       <Head>
         <title>Capital Veículos</title>
 
+
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
@@ -92,6 +135,13 @@ export default function App ({ Component, pageProps }: AppProps) {
       <AppContextProvider>
         <MUIThemeProvider theme={darkTheme}>
           <ThemeProvider theme={theme}>
+
+            <div className="globalLoader">
+              <div className="loader loader__2"></div>
+              <Loading position='fixed' logoLoading />
+              <div className="loader loader__1"></div>
+            </div>
+
             <GlobalStyles />
             <Navbar />
             {/* <SAnimacao /> */}
@@ -103,40 +153,3 @@ export default function App ({ Component, pageProps }: AppProps) {
     </>
   )
 }
-
-const SAnimacao = styled.div`
-    height: 100vh;
-    background-color: black;
-    z-index: 9999999;
-    width: 1000vw;
-  /* div { */
-  /* } */
-
-  /* .abertura_esquerda { */
-    /* animation: leftAbertura 3.5s;
-    animation-delay: 2s; */
-    /* animation-duration: 2s; */
-    /* animation-timing-function: ease-in-out */
-  /* } */
-
-  /* .abertura_direita {
-    right: 0;
-    animation: rightAbertura 3.5s;
-    animation-delay: 2s;
-    
-  } */
-
-  /* @keyframes rightAbertura {
-    from {
-      width: 50vw;
-    }
-    to {
-      width: 0vw;
-    }
-  }
-  @keyframes leftAbertura {
-    to {
-      display: none;
-    }
-  } */
-`

@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-css-tags */
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable @next/next/no-img-element */
 import Document, {
@@ -8,6 +9,7 @@ import Document, {
   NextScript,
 } from 'next/document'
 import { ServerStyleSheet } from 'styled-components'
+import { Loading } from '../components'
 import { FB_PIXEL_ID } from '../lib/fpixel'
 
 export default class MyDocument extends Document {

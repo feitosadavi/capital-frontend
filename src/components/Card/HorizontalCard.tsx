@@ -18,7 +18,6 @@ const loadImg = (setImgDimensions: React.Dispatch<React.SetStateAction<ImgDimens
   img.src = imgUrl;
 
   img.onload = () => {
-    console.log({ img });
 
     setImgDimensions({
       height: img.height,

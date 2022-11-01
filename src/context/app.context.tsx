@@ -37,8 +37,6 @@ export const AppContextProvider: React.FC<any> = ({ children }) => {
   const [isMobileFilterOpen, setIsMobileFilterOpen] = React.useState<boolean>(false);
   const toogleMobileFilter = () => setIsMobileFilterOpen(prevState => !prevState);
 
-  React.useEffect(() => { console.log({ loading }) }, [loading])
-
   return (
     <AppContext.Provider value={{
       filters,

@@ -7,5 +7,6 @@ export const MobileFilters = styled.div`
   padding: 1rem;
   width: 15rem;
   height: 100%;
+  z-index: 999999999999999;
   background-color: ${({ theme }) => theme.colors.primary};
 `

@@ -13,14 +13,13 @@ export const Filters: React.FC<{ select: Select }> = ({ select: { label, options
     context.setFilters(prevState => prevState ? ({ ...prevState, ...newFilterValue }) : ({ ...newFilterValue }) as any)
   }
 
-  // use um event listner dentro do select para realizar as mudanças
+  // // use um event listner dentro do select para realizar as mudanças
   React.useEffect(() => {
     bind({
       parent: 'marca',
       child: 'modelo'
     })
 
-    context.setFilters(prevState => prevState ? ({ ...prevState, modelo: '*' }) : ({ modelo: '*' }) as any)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [context.filters?.marca])
 

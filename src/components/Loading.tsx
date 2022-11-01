@@ -21,10 +21,6 @@ const Loading: React.FC<LoadingProps> = ({ position, logoLoading }) => {
 
 const StyledContainer = styled.div<{ position?: Position }>`
   position: ${({ position }) => position ?? 'relative'};
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-
 
   display: flex;
   justify-content: center;
@@ -35,11 +31,18 @@ const StyledContainer = styled.div<{ position?: Position }>`
   z-index: 99997;
 `
 
+const StyledLogoLoadingContainer = styled(StyledContainer)`
+  top: 50%;
+  left: 50%;
+
+  translate:-50% -50%;
+`
+
 const LogoLoading: React.FC<{ position?: Position }> = ({ position }) => {
   return (
-    <StyledContainer position={position}>
+    <StyledLogoLoadingContainer position={position}>
       <Logo className='loadingScreenLogo' width={500} height={300} />
-    </StyledContainer>
+    </StyledLogoLoadingContainer>
   )
 }
 

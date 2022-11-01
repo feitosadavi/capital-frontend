@@ -16,10 +16,10 @@ export const Select: React.FC<Props> = ({ id, label, options, onChange, value })
   return (
     <S.Select>
       <label htmlFor={id}>{label.toUpperCase()}</label>
-      <select defaultValue={value} onChange={onChange} name={id} id={id}>
-        <option selected={value === '*'}>Todos</option>
+      <select value={value} onChange={onChange} name={id} id={id}>
+        <option>Todos</option>
         {options.map(option => (
-          <option selected={option === value} key={option} value={option}>{option}</option>
+          <option key={option} value={option}>{option}</option>
         ))}
       </select>
     </S.Select>

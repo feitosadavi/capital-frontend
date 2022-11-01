@@ -64,13 +64,8 @@ export const SearchBar: React.FC<Props> = ({ setVehicles, vehicles }) => {
 
   }
 
-  const isFirstMount1 = React.useRef<boolean>(true)
   React.useEffect(() => {
-    if (!isFirstMount1.current) {
-      fetchVehicles(0)
-    } else {
-      isFirstMount1.current = false
-    }
+    fetchVehicles(0)
   }, [search, context.filters, orderFilter])
 
   const isFirstMount2 = React.useRef<boolean>(true)

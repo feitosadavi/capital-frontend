@@ -4,16 +4,21 @@ const xyCenter = css`
   display: flex;
   justify-content: center;
   align-items: center;
-
 `
 
 export const Container = styled.div`
-  ${xyCenter}
   display: block;
   margin-left: auto;
   margin-right: auto;
-  width: 85%;
   max-width: 90rem;
+  width: 85%;
+
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
 `
 
 export const Wrapper = styled.div`
@@ -62,10 +67,6 @@ export const Description = styled.div`
     font-size: 14pt;
     font-weight: 600;
 
-    @media screen and (max-width: ${({ theme }) => theme.breakpoints.sm}) {
-      flex-direction: column;
-      gap: .5rem;
-    }
   }
 
   .main_info-left {
@@ -79,6 +80,15 @@ export const Description = styled.div`
   p {
     margin-top: 1rem;
   }
+
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    width: 85%;
+
+    .main_info {
+      flex-direction: column;
+      gap: .5rem;
+    }
+  }
 `
 
 export const Details = styled.div`
@@ -86,8 +96,9 @@ export const Details = styled.div`
   grid-template-columns: auto auto auto;
   justify-items: center;
   margin-bottom: 3rem;
-
+  
   @media screen and (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    width: 85%;
     grid-template-columns: auto auto;
   }
 `
@@ -103,6 +114,11 @@ export const Opcionais = styled.div`
   align-items: center;
   flex-wrap: wrap;
   gap: 1rem;
+
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    width: 85%;
+  }
+
 `
 
 export const Info = styled.span`
@@ -149,6 +165,10 @@ export const Share = styled.div`
   }
   .icon {
     color: ${({ theme }) => theme.colors.yellow};
+  }
+
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    width: 85%;
   }
 `
 

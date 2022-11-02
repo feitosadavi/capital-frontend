@@ -154,13 +154,7 @@ export const Carousel: React.FC<CarouselProps> = ({ photos, slides }) => {
     <S.Container>
       <div ref={sliderRef} className="keen-slider slides-container">
         {listContent()}
-      </div>
-
-
-      <div ref={thumbnailRef} className="keen-slider thumbnail">
-        {listContent(isMobile ? '100%' : 'auto')}
-      </div>
-      {loaded && instanceRef.current && (
+        {loaded && instanceRef.current && (
         <S.ArrowContainer>
           <Arrow
             left
@@ -182,6 +176,13 @@ export const Carousel: React.FC<CarouselProps> = ({ photos, slides }) => {
           />
         </S.ArrowContainer>
       )}
+      </div>
+
+
+      <div ref={thumbnailRef} className="keen-slider thumbnail">
+        {listContent(isMobile ? '100%' : 'auto')}
+      </div>
+
     </S.Container>
   )
 }

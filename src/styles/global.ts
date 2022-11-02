@@ -69,4 +69,6 @@ export const GlobalStyles = createGlobalStyle`
   .loadingScreenLogo__fadeout {
     opacity: 0;
   }
+
+  
 `

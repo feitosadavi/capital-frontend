@@ -6,6 +6,7 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
 
+
 .number-slide {
   background: ${({ theme }) => theme.colors.secondary};
   display: flex;
@@ -14,6 +15,7 @@ export const Container = styled.div`
   font-size: 50px;
   color: #fff;
   font-weight: 500;
+  width: 100%;
 }
 
 .slides-container {
@@ -22,6 +24,7 @@ export const Container = styled.div`
 
   @media screen and (max-width: ${({ theme }) => theme.breakpoints.md}) {
     height: 25rem;
+    border-radius: 0;
   }
   @media screen and (max-width: ${({ theme }) => theme.breakpoints.sm}) {
     height: 15rem;
@@ -40,12 +43,9 @@ export const Container = styled.div`
 }
 
 .thumbnail {
-  width: 90%;
+  width: 100%;
   align-self: center;
-  
-  @media screen and (max-width: ${({ theme }) => theme.breakpoints.sm}) {
-    width: 85%;
-  }
+  border-radius: .5rem;
 }
 
 
@@ -58,12 +58,23 @@ export const Container = styled.div`
   transition: .2s;
   color: black;
   object-fit: cover;
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    width: auto;
+  }
+
 }
 
 .thumbnail .keen-slider__slide.active img {
   scale: 1.2;
   opacity: .5;
 }
+
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    .thumbnail {
+      width: 95%;
+      border-radius: .2rem;
+    }
+  }
 `
 
 export const ArrowContainer = styled.div`
@@ -72,13 +83,8 @@ export const ArrowContainer = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
-  bottom: 1rem;
-
-  @media screen and (max-width: ${({ theme }) => theme.breakpoints.sm}) {
-    bottom: 0.3rem;
-    width: 103%;
-    left: -6px;
-  }
+  top: 50%;
+  
 `
 
 export const Arrow = styled.svg<{ left?: boolean, disabled?: boolean }>`

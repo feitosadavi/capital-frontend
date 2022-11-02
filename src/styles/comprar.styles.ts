@@ -27,7 +27,8 @@ export const Filters = styled.div`
   height: 70%;
   flex-direction: column;
   gap: 1rem;
-  width: 20rem;
+  min-width: 15rem;
+  max-width: 20rem;
   /* box-shadow: rgba(48, 46, 39, 0.267) 0px 7px 29px 0px; */
   background-image: linear-gradient(to bottom, #131214, #161618, #1a191b, #1d1c1e, #201f22);
   
@@ -63,7 +64,11 @@ export const Grid = styled.div`
   flex-wrap: wrap;
   width: 47rem;
 
-  @media screen and (max-width: 800px) {
+  @media screen and (max-width: 1070px) {
+    width: 31rem;
+  }
+
+  @media screen and (max-width: 510px) {
     flex-direction: column;
     align-items: center;
     width: 100%;

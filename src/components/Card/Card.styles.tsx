@@ -82,3 +82,32 @@ export const Footer = styled.div`
   font-weight: 500;
   font-size: 11pt;
 `
+
+export const Favorite = styled.div<{ isFavorite: boolean }>`
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: .5rem;
+  right: .5rem;
+  z-index: 999999999;
+  width: 2rem;
+  height: 2rem;
+  border-radius: .5rem;
+  cursor: pointer;
+  background-color: ${({ isFavorite }) => isFavorite ? 'white' : 'red'};
+  transition: .02s;
+
+  .favorite-icon {
+    color: ${({ isFavorite }) => isFavorite ? 'red' : 'white'};
+    transition: .5s;
+  }
+
+  :active {
+    scale: .9
+  }
+
+  :hover {
+    outline: .4rem solid #393a3a67;
+  }
+`

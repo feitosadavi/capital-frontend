@@ -5,6 +5,7 @@ import InputBase from '@mui/material/InputBase';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import TuneIcon from '@mui/icons-material/Tune';
+import FavoriteIcon from '@mui/icons-material/Favorite'
 import SearchIcon from '@mui/icons-material/Search';
 import { Menu } from '../Menu';
 import { ComprarPageVehicle } from '../../types';
@@ -12,6 +13,7 @@ import { AppContext, Filters } from '../../context/app.context';
 import { Button, useMediaQuery } from '@mui/material'
 import { fetchMeilisearch } from '../../Hookes';
 import { ITENS_PER_PAGE } from '../../const';
+import { getFavorites } from '../Card';
 
 interface Props {
   setVehicles: React.Dispatch<React.SetStateAction<ComprarPageVehicle[]>>
@@ -35,10 +37,18 @@ const setupFilter = (filters: Filters | null) => {
   return ''
 }
 
+const filterFavorites = (vehicles: ComprarPageVehicle[]): ComprarPageVehicle[] => {
+  const storageFavorites = getFavorites()
+  const favoriteVehicles = vehicles.filter(vehicle => storageFavorites.some(favoriteId => favoriteId === vehicle.id))
+  return favoriteVehicles
+}
+
 export const SearchBar: React.FC<Props> = ({ setVehicles, vehicles }) => {
   const context = React.useContext(AppContext)
   const [search, setSearch] = React.useState<string>('')
   const [orderFilter, setOrderFilter] = React.useState<string[]>(['createdAt:desc'])
+
+  const [shouldFilterFavorites, setShouldFilterFavorites] = React.useState<boolean>(false)
 
   const fetchVehicles = async (offset: number, page?: number) => {
     context.setLoading(true)
@@ -50,7 +60,7 @@ export const SearchBar: React.FC<Props> = ({ setVehicles, vehicles }) => {
         offset
       })
 
-      setVehicles(data)
+      setVehicles(shouldFilterFavorites ? filterFavorites(data) : data)
 
       // pagination
       context.setResultsCount(resultsCount)
@@ -61,12 +71,11 @@ export const SearchBar: React.FC<Props> = ({ setVehicles, vehicles }) => {
     } finally {
       context.setLoading(false)
     }
-
   }
 
   React.useEffect(() => {
     fetchVehicles(0)
-  }, [search, context.filters, orderFilter])
+  }, [search, context.filters, orderFilter, shouldFilterFavorites])
 
   const isFirstMount2 = React.useRef<boolean>(true)
   React.useEffect(() => {
@@ -82,6 +91,9 @@ export const SearchBar: React.FC<Props> = ({ setVehicles, vehicles }) => {
 
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => setSearch(event.target.value)
+  const handleFilterFavoritesClick = () => {
+    setShouldFilterFavorites(prevState => !prevState)
+  }
 
   const isMobile = useMediaQuery('(max-width:950px)')
   return (
@@ -90,10 +102,10 @@ export const SearchBar: React.FC<Props> = ({ setVehicles, vehicles }) => {
         component="form"
         sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: '100%' }}
       >
-        {/* <IconButton sx={{ p: '10px' }} aria-label="menu">
-          <FavoriteIcon />
+        <IconButton onClick={handleFilterFavoritesClick} sx={{ p: '10px' }} aria-label="menu">
+          <FavoriteIcon sx={{ color: `${shouldFilterFavorites ? 'red' : 'white'}` }} />
         </IconButton>
-        <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" /> */}
+        <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
         <InputBase
           onChange={handleChange}
           sx={{ ml: 1, flex: 1 }}

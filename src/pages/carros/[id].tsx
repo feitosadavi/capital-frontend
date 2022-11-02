@@ -159,7 +159,7 @@ const Vehicle: React.FC<VehicleProps> = ({ _vehicle }) => {
 
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:image" content={_vehicle.photos[0].src} />
-      <meta name="twitter:title" content={`${_vehicle.marca} ${_vehicle.modelo}`} />
+      <meta name="twitter:title" content={`${_vehicle.marca.label} ${_vehicle.modelo}`} />
       <meta name="twitter:description" content={_vehicle.descricao} />
       <meta name="twitter:domain" content={pageUrl} />
     </Head>

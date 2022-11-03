@@ -110,6 +110,8 @@ export default function App ({ Component, pageProps }: AppProps) {
       <Head>
         <title>Capital Veículos</title>
 
+        <meta name="facebook-domain-verification" content="fssvqukl4knx9q2ahjy37ndn476t7c" />
+
 
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />

@@ -90,7 +90,7 @@ export const Favorite = styled.div<{ isFavorite: boolean }>`
   align-items: center;
   top: .5rem;
   right: .5rem;
-  z-index: 999999999;
+  z-index: 10;
   width: 2rem;
   height: 2rem;
   border-radius: .5rem;

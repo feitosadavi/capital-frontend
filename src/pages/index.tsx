@@ -146,7 +146,7 @@ const Inicio: NextPage<Props> = ({ _selects, vehicles, marcas, testemonials }) =
         <CardRoulette title='Conheça nossas marcas' cards={renderMarcas} />
 
         <S.QuemSomos>
-          <Image className='foto-loja' src='/foto_loja.jpg' alt='Foto da fachada da Capital Veículos' width='500px' height='360px' />
+          <Image className='foto-loja' src='https://res.cloudinary.com/dgpv312qk/image/upload/v1667669434/static/capital-loja.jpg' alt='Foto da loja da Capital Veículos' width='500px' height='360px' />
 
           <p className='quemsomos__text'>
             A Capital Veículos, nasceu da parceria de profissionais com mais de 20 anos de experiência no mercado automobilístico. Nosso objetivo, é poder proporcionar satisfação, confiabilidade e eficiência para nossos clientes e parceiros. Estamos preparados para encontrar o melhor negócio para VOCÊ - CLIENTE AMIGO.

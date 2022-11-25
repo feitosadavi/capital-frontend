@@ -57,14 +57,12 @@ export const ModalContainer = styled.div`
     margin-bottom: 1rem;
   }
 
-  .enfase {
-    color: ${({ theme }) => theme.colors.yellow};
+  .bold {
+    font-weight: 800;
   }
 
-  .topico {
-    text-align: start;
-    margin-left: 2rem;
-    margin-bottom: 2rem;
+  .enfase {
+    color: ${({ theme }) => theme.colors.yellow};
   }
 
   .topico {
@@ -77,6 +75,7 @@ export const ModalContainer = styled.div`
 
   .topico p {
     color: ${({ theme }) => theme.colors.white};
+    margin-bottom: 1rem;
   }
 
   @media screen and (min-width: ${({ theme }) => theme.breakpoints.md}) {

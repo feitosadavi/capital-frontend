@@ -14,6 +14,7 @@ import { Button, useMediaQuery } from '@mui/material'
 import { fetchMeilisearch } from '../../Hookes';
 import { ITENS_PER_PAGE } from '../../const';
 import { getFavorites } from '../Card';
+import { calcPagination } from '../../utils/calcPagination';
 
 interface Props {
   setVehicles: React.Dispatch<React.SetStateAction<ComprarPageVehicle[]>>
@@ -37,10 +38,20 @@ const setupFilter = (filters: Filters | null) => {
   return ''
 }
 
-const filterFavorites = (vehicles: ComprarPageVehicle[]): ComprarPageVehicle[] => {
+const filterFavorites = (vehicles: ComprarPageVehicle[], page: number) => {
   const storageFavorites = getFavorites()
+
   const favoriteVehicles = vehicles.filter(vehicle => storageFavorites.some(favoriteId => favoriteId === vehicle.id))
-  return favoriteVehicles
+
+  console.log(favoriteVehicles.slice(0, ITENS_PER_PAGE));
+
+  const slicedVehicles = page === 1
+    ? favoriteVehicles.slice(0, ITENS_PER_PAGE)
+    : favoriteVehicles.slice(page - 1 * ITENS_PER_PAGE)
+
+  console.log({ slicedVehicles: favoriteVehicles.slice(8, 0) });
+
+  return { favoriteVehicles: slicedVehicles, totalOfFavoriteVehicles: storageFavorites.length }
 }
 
 export const SearchBar: React.FC<Props> = ({ setVehicles, vehicles }) => {
@@ -54,18 +65,23 @@ export const SearchBar: React.FC<Props> = ({ setVehicles, vehicles }) => {
     context.setLoading(true)
     try {
       const filter = setupFilter(context.filters)
-      const { data, resultsCount, numberOfPages } = await fetchMeilisearch<ComprarPageVehicle>('veiculo', search, {
+      const { data, totalOfVehicles } = await fetchMeilisearch<ComprarPageVehicle>('veiculo', search, {
         filter,
         sort: orderFilter,
-        offset
+        offset,
+        limit: shouldFilterFavorites ? undefined : ITENS_PER_PAGE
       })
 
-      setVehicles(shouldFilterFavorites ? filterFavorites(data) : data)
+      const { favoriteVehicles, totalOfFavoriteVehicles } = filterFavorites(data, page ?? 1)
 
-      // pagination
+      const { numberOfPages, resultsCount } = calcPagination(shouldFilterFavorites ? totalOfFavoriteVehicles : totalOfVehicles)
+
+      setVehicles(shouldFilterFavorites ? favoriteVehicles : data)
+
       context.setResultsCount(resultsCount)
       context.setNumberOfPages(numberOfPages)
       context.setPage(page ?? 1)
+
     } catch (error) {
       console.error(error);
     } finally {

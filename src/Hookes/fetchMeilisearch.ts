@@ -4,8 +4,7 @@ import { searchClient } from '../services/searchClient'
 import { Photo } from '../types'
 
 type Result<DataType = any> = {
-  resultsCount: number,
-  numberOfPages: number,
+  totalOfVehicles: number,
   data: DataType
 }
 
@@ -57,14 +56,14 @@ export const fetchMeilisearch = async <DataType = any> (index: string, search: s
   const veiculoIndex = searchClient.index(index)
   const res = await veiculoIndex.search<DataType>(search, {
     ...params,
-    limit: params.limit ?? ITENS_PER_PAGE,
+    limit: params.limit,
   })
 
   const data = res.hits.length >= 1 ? setupFields<DataType>(res.hits, index) : []
 
+
   return {
-    resultsCount: res.estimatedTotalHits,
-    numberOfPages: Math.round(Math.ceil(res.estimatedTotalHits / ITENS_PER_PAGE)),
+    totalOfVehicles: res.estimatedTotalHits,
     data
   }
 }
